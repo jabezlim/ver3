@@ -1,0 +1,100 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+        </button>        
+        <div class="navbar-brand">
+            <a href="#/">Menuroid</a>
+        </div>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">      
+			<li ng-show="$root.globals.currentUser"><a href='#/userdetail/{{$root.globals.currentUser.userinfo.user_id}}'>ID : {{$root.globals.currentUser.username}} </a></li>
+			<li ng-show="$root.globals.currentUser"><a href='#/login'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+			<li>
+				<form class="form-inline" style="margin-top:10px;">
+				  <div class="form-group">
+					<label for="find">UID or Name</label>
+					<input type="find" class="form-control" id="find" ng-model="find">
+				  </div>	  
+				  <button type="submit" class="btn btn-default" ng-click="vm.find()">Find</button>
+				</form>
+			</li>
+		</ul>
+    </div>
+  </div>
+</nav>
+
+<section class="container">
+    <div class="row">
+		<div class="col-xs-12 col-md-12 col-sm-12" ng-show="$root.globals.currentUser">			
+            <table class="table table-sm table-hover menulist">
+              <thead>
+				<tr>
+					<th>id</th>
+					<th>name</th>
+					<th>contact</th>
+					<th>email</th>
+					<th>param1</th>
+					<th>param2</th>
+					<th>param3</th>
+					<th>count</th>
+					<th></th>
+				</tr>
+				<tr>
+					  <td></td>
+                      <td>  
+							<input type="text" size="10" class="form-control" name="name" ng-model="group.name" placeholder="Enter group name" required>
+                      </td>
+					  <td>  
+							<input type="text" size="10" class="form-control" name="contact" ng-model="group.contact" placeholder="Enter group contact" required>
+                      </td>
+					  <td>  
+							<input type="text" size="10" class="form-control" name="email" ng-model="group.email" placeholder="Enter group email" required>
+                      </td>
+					  <td>  
+							<input type="text" size="5" class="form-control" name="param1" ng-model="group.param1" placeholder="Enter group param1" required>
+                      </td>
+					  <td>  
+							<input type="text" size="5" class="form-control" name="param2" ng-model="group.param2" placeholder="Enter group param2" required>
+                      </td>
+					  <td>  
+							<input type="text" size="5" class="form-control" name="param3" ng-model="group.param3" placeholder="Enter group param3" required>
+                      </td>
+                      <td></td>
+					  <td class="pull-right">
+                          <button ng-show="vm.mode==0" type="submit" class="btn btn-default btn-sm" ng-click="vm.add()">Add Group</button>
+						  <button ng-show="vm.mode==1" type="submit" class="btn btn-default btn-sm" ng-click="vm.edit()">Edit Group</button>
+                      </td>
+					  
+                  </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="grp in vm.groups">
+					<td>{{$index+1}}</td>
+                    <td><a href="./#/cards/{{vm.siteid}}/{{grp.id}}">{{grp.name}}</a></td>
+					<td>{{grp.contact}}</td>
+					<td>{{grp.email}}</td>
+					<td>{{grp.param1}}</td>
+					<td>{{grp.param2}}</td>
+					<td>{{grp.param3}}</td>
+                    <td>{{grp.count}}</td>
+					<td>
+						<button class="btn btn-default btn-sm" ng-click="vm.search(grp.id)">Edit</button>
+						<button ng-show="grp.count==0" class="btn btn-default btn-sm" ng-click="vm.del(grp.id)">Del</button>
+					</td>
+                </tr>
+              </tbody>    
+              <tfoot>				
+                  
+				  
+              </tfoot>
+            </table>
+
+		</div>    
+    </div>
+    
+</section>

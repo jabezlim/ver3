@@ -1,0 +1,139 @@
+<nav class="navbar navbar-white navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+          </button>
+          <a class="navbar-brand" href='#/viewmenu/{{vm.siteid}}'>Menuroid</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">   
+		  <ul class="nav navbar-nav">                     
+            <li><a href='#/account/{{vm.siteid}}/{{vm.accday}}'><span class="glyphicon glyphicon-usd"></span> Daily</a></li>
+            <li><a href='#/account/{{vm.siteid}}/{{vm.accmonth}}'><span class="glyphicon glyphicon-usd"></span> Monthly</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">           
+            <li><a href='' ng-click="gotoMenu()"><span class="glyphicon glyphicon-arrow-left"></span> Back</a></li>
+          </ul>
+        </div>
+      </div>
+</nav>
+
+<section class="container">
+    <div ng-show="vm.viewmode=='cardmode'">        
+        <div  class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+                <div class="text-center">                                                   
+					<br><br>
+                    <div class = "panel panel-primary">
+                        <div class="panel-heading"><h2>{{RcvState}}</h2></div>
+                        <div class="panel-body">                        
+                            <h3 class="col-xs-12 col-sm-12">취소금액: {{cancelamount}} 원</h3>
+                        </div>
+                    </div>
+					<div ng-show="bcash">
+							<div>
+								<label for="cashrcno">현금영수증번호:</label>
+								<input type="input" class="form-control" id="cashrcno" ng-model="vm.cashrcno">
+							</div>
+							<table width="100%">
+								<tr class="keyrow1">
+									<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(1)">1</button></td>
+									<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(2)">2</button></td>
+									<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(3)">3</button></td>
+								</tr>
+								<tr class="keyrow1">
+									<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(4)">4</button></td>
+									<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(5)">5</button></td>
+									<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(6)">6</button></td>
+								</tr>
+								<tr class="keyrow1">
+									<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(7)">7</button></td>
+									<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(8)">8</button></td>
+									<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(9)">9</button></td>
+								</tr>
+								<tr class="keyrow1">
+									<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(0)">0</button></td>
+									<td class="text-center"><button type="submit" class="btn btn-success btn-md numkey1" ng-click="backsp()">&lt;-</button></td>
+									<td class="text-center"><button type="button" class="btn btn-warning btn-md numkey1" ng-click="cancelrc()">취소</button></td>
+								</tr>
+								<tr class="keyrow1">
+									<td class="text-center"></td>
+									<td class="text-center"><button type="submit" class="btn btn-success btn-md numkey1" ng-click="onok()">OK</button></td>
+									<td class="text-center"></td>
+								</tr>
+							</table>                            
+					</div>
+					<div ng-hide="bcash">
+						<img src="{{BASE_URL}}images/{{vm.order.settings.cardimg}}" border="0" alt="">
+						<br>
+						<h3>취소시 위쪽 바의 취소 버튼을 눌러 주세요</h3>
+					<br>
+					</div>
+                    <!--a ng-show="vm.state == 90" href="" ng-click="backtomenu()" class="col-xs-12 col-sm-12"-->
+					<a href="" ng-click="backtomenu()" class="col-xs-12 col-sm-12">
+                        <img src="{{BASE_URL}}images/cancel-check.png" alt="cancel">
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+    </div>
+    <div ng-show="vm.viewmode=='listmode'" class="row"> 
+        <div class = "panel panel-primary col-sm-12">
+            <div class="panel-heading">
+                <h3>
+                    <span ng-hide="vm.cardtype=='all'">{{vm.accdate}} {{vm.cardtype}}</span>
+                    <span ng-show="vm.cardtype=='all'">최근거래내역</span>
+                    <div style="float:right;">
+                    <button class="btn btn-sm btn-default" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+                        이전
+                    </button>
+                    {{currentPage+1}}/{{numberOfPages()}}
+                    <button class="btn btn-sm btn-default" ng-disabled="currentPage >= vm.payments.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+                        다음
+                    </button>
+                    </div>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover menulist">
+                  <thead>
+                  <tr>                      
+                      <th>Saletime</th>
+                      <th>Cardtype</th>                      
+                      <th class="text-right">Amount</th>
+                      <th>Cardno</th>
+                      <th>Appno</th>
+                      <th>Orderid</th>                      
+                      <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-repeat="payment in vm.payments | startFrom:currentPage*pageSize | limitTo:pageSize">                      
+                      <td>
+                          <span ng-show="vm.cardtype=='all'">{{payment.saledate}} </span>
+                          {{payment.saletime}}
+                      </td>
+                      <td>{{payment.cardtype}}</td>
+                      <td class="text-right">{{payment.amount | number}}</td>
+                      <td>{{payment.cardno}}</td>
+                      <td>{{payment.appno}}</td>
+                      <td>{{payment.orderid}}</td>                      
+                      <td>
+                          <div ng-hide="vm.bcancel">
+                          <!--button ng-click="reprint(payment.orderid)" class="btn btn-sm btn-default">티켓재출력</button-->
+                          <button ng-click="reprint(payment)" class="btn btn-xs btn-default">영수증재발행</button>
+                          <button ng-click="cardcancel(payment)" class="btn btn-xs btn-default">Cancel</button>
+                          </div>
+                      </td>
+                  </tr>
+                  </tbody>    
+                </table>
+                
+            </div>
+        </div>        
+    </div>
+</section>

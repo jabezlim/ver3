@@ -1,0 +1,152 @@
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid cont-nav">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+        </button>        
+        <!-- div class="navbar-brand">
+            <a href="#/">{{vm.site.name}}</a>
+        </div -->
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+            <li ng-repeat="cat in vm.categories track by $index" ng-class="{'active': cat.id==vm.categoryid}" class="category2">
+                <span ng-click="setCategory(cat)">
+                    <input class="form-control editbox" type="text" ng-model-options="{ updateOn: 'blur' }" ng-change="vm.catedit(cat)" ng-model="cat.name">
+                </span>
+            </li>     
+            <li class="navitem">
+                <div class="newcat">
+                    <form class="form-inline" role="form" ng-submit="vm.addcat()">
+                        <input type="text" class="form-control" size="5" name="name" ng-model="vm.newcat.name" placeholder="new category" required>
+                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+                    </form>
+                </div>
+            </li>
+        </ul>      
+        <ul class="nav navbar-nav navbar-right">        
+			<li class="navitem"><a href='#/'><span class="glyphicon glyphicon-arrow-left"></span> Back</a></li>
+            <!--li class="navitem"><a href='#/viewmenu/{{vm.siteid}}'><span class="glyphicon glyphicon-log-out"></span> View</a></li -->
+			<li class="navitem">
+				<a ng-show="vm.order.settings.ctype.length>0" href='../{{vm.site.indexurl}}#/viewmenu/{{vm.site.id}}'><span class="glyphicon glyphicon-log-out"></span> View</a>
+				<a ng-hide="vm.order.settings.ctype.length>0" href='./{{vm.site.indexurl}}#/viewmenu/{{vm.site.id}}'><span class="glyphicon glyphicon-log-out"></span> View</a>
+			</li>
+        </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="container editbody">
+    <div class="row">
+        <div class="col-xs-12 col-md-12 col-sm-12">
+            <div style="overflow-x:auto;">
+			<div class="pull-right">
+				<form class="form-inline">
+					<div class="form-group">
+						<label for="dsporder">dsp. order</label>
+						<input class="form-control editbox" type="text" id="dsporder" size="5" ng-model-options="{ updateOn: 'blur' }" ng-change="vm.catedit(vm.category)" ng-model="vm.category.dsporder">						
+						<input class="bigchk" type="checkbox" ng-change="vm.catedit(vm.category)" ng-model="vm.category.active" ng-true-value="'1'" ng-false-value="'0'">						
+					</div>
+					<button ng-hide="vm.menus.length>0" class="btn btn-danger" ng-click="vm.catdelete(vm.categoryid)">Delete Category</button>
+				</form>
+			</div>
+            <table class="table table-sm table-hover menulist">
+              <thead>
+				  <tr>
+					<th class="menutd">Order</th>  
+					<th class="menutd">active</th>
+					<th class="menutd">Name</th>
+					<th class="hidden-xs">Description</th>
+					<th class="menutd">price</th>
+					<th class="menutd">Qty</th> 
+					<th class="menutd">Opt</th>     
+					<th class="menutd">Time1</th>
+					<th class="menutd">Time2</th>
+					<th class="menutd"></th>
+				  </tr>
+              </thead>
+              <tbody ng-show="vm.menus.length>0">
+				  <tr ng-repeat="menu in vm.menus">
+					  <td>
+						  <input size="2" class="menutd form-control editbox" type="text" ng-model="menu.dsporder">
+					  </td>  
+					  <td style="text-align:center">
+						  <input  size="1" class="menutd form-control editbox" type="checkbox" ng-change="vm.edit(menu)" ng-model="menu.active" ng-true-value="'1'" ng-false-value="'0'">
+					  </td>
+					  <td>
+						  <input size="10" class="menutd form-control editbox" type="text" ng-model="menu.name">
+					  </td>
+					  <td class="hidden-xs">
+						  <textarea class="menutd form-control editbox" type="text" ng-model="menu.description" rows="2" cols="40"></textarea>
+					  </td>
+					  <td class="menutd">
+						  <input  size="3" class="menutd form-control editbox" type="text" ng-model="menu.price">
+					  </td>
+					  <td class="menutd">
+						  <input  size="2" class="menutd form-control editbox" type="text" ng-model="menu.qty">                  
+					  </td> 
+					  <td class="menutd">
+						  <input  size="2" class="menutd form-control editbox" type="text" ng-model="menu.opt">
+					  </td>    
+					  <td class="hidden-xs menutd">
+						  <input  size="1" class="menutd form-control editbox" type="text" ng-model="menu.time1">  
+					  </td>
+					  <td class="hidden-xs menutd">
+						  <input  size="1" class="menutd form-control editbox" type="text" ng-model="menu.time2">  
+					  </td> 
+					  <td style="text-align:center">
+						  <a class="menutd btn btn-xs btn-default" ng-click="vm.delete(menu)"><span class="glyphicon glyphicon-trash"></span></a>
+					  </td>        
+				  </tr>
+              </tbody>    
+			  
+              <tfoot ng-show="vm.categoryid>0">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>  
+                        <input type="hidden" name="siteid" value="{{vm.siteid}}" ng-model="vm.menu.siteid">
+                        <input type="hidden" name="catid" value="{{vm.categoryid}}" ng-model="vm.menu.catid">
+                        <div class="form-group">
+                            <label class="sr-only" for="name">name</label>
+                            <input size="10" type="text" class="form-control" name="name" ng-model="vm.menu.name" placeholder="Enter menu name" required>
+                        </div>
+                    </td>
+                    <td class="hidden-xs">
+                        <div class="form-group">
+                            <label class="sr-only" for="description">description</label>
+                            <textarea type="text" class="form-control" name="description" ng-model="vm.menu.description" placeholder="Enter menu description" rows="2" cols="40"></textarea>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label class="sr-only" for="price">price</label>
+                            <input  size="1" type="text" class="form-control" name="price" ng-model="vm.menu.price" placeholder="Enter menu price" required>
+                        </div>
+                    </td>
+					<td>
+                        <div class="form-group">
+                            <label class="sr-only" for="qty">qty</label>
+                            <input  size="1" type="text" class="form-control" name="qty" ng-model="vm.menu.qty" placeholder="Enter menu qty" required>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label class="sr-only" for="opt">opt</label>
+                            <input  size="1" type="text" class="form-control" name="opt" ng-model="vm.menu.opt" placeholder="Enter menu opt" required>
+                        </div>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-default" ng-click="vm.addmenu()">Add</button>
+                    </td>
+                  </tr>
+              </tfoot>
+            </table>
+            </div>
+            <!--/form-->
+        </div>
+    </div>
+</section>

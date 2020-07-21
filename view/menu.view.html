@@ -1,0 +1,276 @@
+<!-- div oncontextmenu="return false" ondragstart="return false" onselectstart="return false" -->
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid mynavbar">
+    <div class="navbar-header navbar-right">
+      <button ng-show="vm.viewmode=='menumode'" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+      </button>
+      <a class="navbar-brand" href="" ng-click="vm.reloadsite()">
+		<div class="sitename">{{vm.site.name}}</div>
+	  </a>
+	  <a ng-show="vm.type==2" class="navbar-brand homebtn" href="" onclick="window.history.back();"><span class="glyphicon glyphicon-home"></span></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul ng-show="vm.viewmode=='menumode'" class="nav navbar-nav">
+        <li ng-repeat="cat in vm.categories | filter:catefilter() as filteredcat" class="category" ng-class="{'active': cat.id==vm.category.id, 'catnorm': cat.name.length<10, 'catsm': cat.name.length>=10, 'category6':filteredcat.length>5}" data-toggle="collapse" data-target="#myNavbar" ng-click="vm.setcat(cat)" >
+			<span ng-hide="cat.image" class="cattext" ><strong>{{cat.name}}</strong></span>
+            <img ng-show="cat.image" src="{{CI_URL}}uploads/{{cat.image}}" alt="{{cat.name}}">
+		</li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="footlogo">	
+    <!-- button ng-show="vm.order.check.cashcheck" type="button" class="btn btn-info btn-sm btn-my" ng-click="cacherrorcheck()"><span class="glyphicon glyphicon-alert"></span> 현금에러확인</button -->
+    <button type="button" class="btn btn-info btn-lg btn-my" ng-click="cardcheck()"><span class="glyphicon glyphicon-erase"></span> </button>
+</div>
+<div ng-show="vm.viewmode=='menumode'" class="footnote">	
+    <!-- h4 class="floatleft">&nbsp;&nbsp;* 참고 : 음식의 이미지는 실제와는 다를 수 있습니다 &nbsp;&nbsp;</h4 --> 
+    <!--p>상호:{{vm.cr.regname}} 대표자:{{vm.cr.owner}}</p-->
+</div>
+
+<section class="container menubody"> 
+	<div ng-show="vm.viewmode=='menumode'">
+		<div id="myModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog optbox">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+			  <div class="modal-header">
+				<!-- button type="button" class="close" data-dismiss="modal">&times;</button -->
+				<h4 class="modal-title text-center">{{vm.selmenu.name}}</h4>
+			  </div>
+			  <div class="modal-body optbody">					
+										
+					<div class="optitem" ng-repeat="menuItem in vm.menus | filter:optfilter() as optfiltered">
+						<div class="thumbnail tbnorm" ng-click="setMenu(menuItem)" >							
+							<img class="menuimage" src="{{CI_URL}}uploads/{{menuItem.image}}" alt="{{menuItem.name}}">
+							<div class="caption text-center">
+								<p ng-class="{menutitlemd:menuItem.mname[0].length<6, menutitlesm:menuItem.mname[0].length>5}">
+									<strong>{{menuItem.mname[0]}}</strong>
+								</p>                                                        
+							</div>
+							<pre ng-show="menuItem.description.length>0" ng-class="{'descfnt1':filtered.length>9, 'descfnt':filtered.length<10}" class="desc">{{menuItem.description}}</pre>
+							<p class="price optprice text-center">{{(vm.selmenu.price+menuItem.price) | number}}원</p>
+						</div>
+					</div>
+					
+					<div class="optitem">						
+						<table>
+						<tr class="doughitem" ng-repeat="menuItem in vm.menus | filter:setfilter()">
+							<td width="40%">
+								<input style="display:inline-block;" type="checkbox" class="form-control" value="{{$index}}" ng-click="setOption(menuItem)" ng-checked="selection.indexOf(menuItem.mname[0]) > -1">
+							</td>
+							<td>
+								<strong>{{menuItem.mname[0]}}</strong>
+								<p ng-hide="menuItem.price==0">{{menuItem.price | number}}원추가</p>
+							</td> 
+						</tr>
+						</table>
+					</div>
+					
+			  </div>
+			  <div class="modal-footer text-center">
+				<button ng-show="vm.selmenu.opt==500 && vm.selmenu1 && vm.selmenu2" type="button" class="btn btn-info" data-dismiss="modal" ng-click="setselect()">Select</button>
+				<button type="button" class="btn btn-default" ng-click="optclose()" data-dismiss="modal">취소 Cancel</button>
+				<button ng-show="optfiltered==0" type="button" class="btn btn-default" ng-click="optok()" data-dismiss="modal">완료 OK</button>
+			  </div>
+			</div>
+
+		  </div>
+		</div>
+		<div class="orderlist">
+			<table ng-show="vm.order.selmenu.length>0" width="100%" border="1">
+				<tr>
+					<th style="text-align:center">메뉴</th>
+					<th style="text-align:center">수량</th>
+					<th style="text-align:center">가격</th>
+					<th></th>
+				</tr>
+				<tr ng-repeat="menu in vm.order.selmenu track by $index">
+					<td>{{menu.name}}</td>
+					<td style="text-align:center">{{menu.num}}</td>
+					<td style="text-align:right">{{menu.price | number}} 원</td>
+					<td><a ng-click="cancelMenu(vm.order.selmenu[$index])"><span class="glyphicon glyphicon-remove gi"></span></a></td>
+				</tr>  
+				<tr>
+					<td style="text-align:center" colspan=2>합계 : <span id="totalamt">{{vm.order.amount | number}}</span> 원</td>
+					<td style="text-align:center"><button ng-click="cardcheckout()" class="btn btn-default btn-xs">Checkout</button></td>
+					<td style="text-align:center"><button ng-click="clearMenu()" class="btn btn-info btn-xs">Cancel</button></td>
+				</tr>
+			</table>
+		</div>
+        <div class="mainwidth">				
+            <div ng-repeat="menuItem in vm.menus | filter:catfilter() as filtered">
+                <div class="menubox" ng-class="{'menuwidth16':filtered.length>15, 'menuwidth9':filtered.length>6 && filtered.length<16, 'menuwidth':filtered.length<7, 'leftclear':menuItem.opt==499}">
+					<div ng-click="setMenu(menuItem)" class="menuitem" ng-class="{'tblg':filtered.length<10}">
+                        <img class="menuimage" ng-class="{'menuimage1':filtered.length>9}" src="{{CI_URL}}uploads/{{menuItem.image}}" alt="{{menuItem.name}}">
+						<p class="caption" ng-class="{menutitle: filtered.length<9, menutitlemd: filtered.length>=9 && filtered.length<20, menutitlesm: filtered.length>=20}">
+							<strong>{{menuItem.mname[0]}}</strong>
+							<strong ng-show="menuItem.qty>1">x {{menuItem.qty}}</strong>
+							<strong ng-show="menuItem.mname.length>1"><br>{{menuItem.mname[1]}}</strong>
+						</p> 						
+                        <pre ng-show="menuItem.description.length>0" ng-class="{'descfnt1':filtered.length>9 || menuItem.description.length>20, 'descfnt':filtered.length<10 && menuItem.description.length<=20}" class="desc">{{menuItem.description}}</pre>
+						<p ng-show="menuItem.price>0" class="price">{{menuItem.price*menuItem.qty | number}}원</p>
+                    </div>
+                </div>
+            </div>
+			<br>
+            <div ng-show="numMenu==0" class = "panel">
+				<div class="panel-heading">
+					<h1>준비 중 입니다</h1>
+				</div>
+			</div>
+        </div>
+        
+        <div class="sidewidth">
+            <div ng-show="vm.category.description.length>1 && vm.order.selmenu.length<3">
+                <pre class="catdesc">{{vm.category.description}}</pre>
+            </div>
+			<div ng-show="vm.site.description.length>10 && vm.order.selmenu.length<3">
+				<pre class="desc1">{{vm.site.description}}</pre>
+			</div>
+            <div class="ticket">
+                <p class="ticket1"><span class="ordtype">{{vm.order.saletype}}</span> 주문내역</p>
+                <table ng-show="vm.order.selmenu.length>0" class="table table-striped" width="100%">
+                    <tr class="info">
+                        <th style="text-align:center; width:40%">메뉴</th>
+                        <th style="text-align:center; width:25%">수량</th>
+                        <th style="text-align:center; width:30%">가격</th>
+                        <th style="text-align:center; width:5%"></th>
+                    </tr>
+                    <tr ng-repeat="menu in vm.order.selmenu track by $index">
+                        <td>{{menu.name}}</td>
+                        <td style="text-align:center">{{menu.num}}</td>
+                        <td style="text-align:right">{{menu.price | number}} 원</td>
+                        <td><a ng-click="cancelMenu(vm.order.selmenu[$index])"><span class="glyphicon glyphicon-remove gi-2x"></span></a></td>
+                    </tr>                    
+                </table>
+                <p class="ticket1">합계 : {{vm.order.amount | number}} 원</p>
+            </div>
+            <div class="chkbtn text-center">				
+				<br/>
+				<a ng-show="vm.order.check.cardcheck" href="" class="roundbt blue" ng-click="cardcheckout()">카드 <span>CARD</span></a>
+				<a ng-show="vm.order.check.cashcheck" href="" class="roundbt orange" ng-click="cachcheckout()">현금 <span>CASH</span></a>
+				<a ng-show="vm.order.check.zeropay" href="" class="roundbt cobalt" ng-click="zerocheckout()">제로 <span>Pay</span></a>
+				<a href="" class="roundbt red" ng-click="clearMenu()">취소 <span>CANCEL</span></a>
+            </div>
+            
+        </div>
+    </div>
+    
+
+	<div ng-show="vm.viewmode=='cardqry'" class="row passcode">          
+        <div class="col-sm-2"></div>
+        <form class="col-sm-8">          
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="pwd" ng-model="vm.password">
+            </div>
+            <div>
+                <table width="100%">
+                    <tr class="keyrow">
+                        <td class="text-center"><button type="button" class="btn btn-default btn-lg numkey" ng-click="keynum(1)">1</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-default btn-lg numkey" ng-click="keynum(2)">2</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-default btn-lg numkey" ng-click="keynum(3)">3</button></td>
+                    </tr>
+                    <tr class="keyrow">
+                        <td class="text-center"><button type="button" class="btn btn-default btn-lg numkey" ng-click="keynum(4)">4</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-default btn-lg numkey" ng-click="keynum(5)">5</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-default btn-lg numkey" ng-click="keynum(6)">6</button></td>
+                    </tr>
+                    <tr class="keyrow">
+                        <td class="text-center"><button type="button" class="btn btn-default btn-lg numkey" ng-click="keynum(7)">7</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-default btn-lg numkey" ng-click="keynum(8)">8</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-default btn-lg numkey" ng-click="keynum(9)">9</button></td>
+                    </tr>
+                    <tr class="keyrow">
+                        <td class="text-center"><button type="button" class="btn btn-default btn-lg numkey" ng-click="keynum(0)">0</button></td>
+                        <td class="text-center"><button type="submit" class="btn btn-success btn-lg numkey" ng-click="adenter()">OK</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-warning btn-lg numkey" ng-click="backtomenu()">Back</button></td>
+                    </tr>
+                </table>                            
+            </div>
+            
+        </form>
+        <div class="col-sm-2"></div>
+    </div>
+    
+    
+    <div ng-show="vm.viewmode=='coindrain'" class="row">  
+        <div class = "panel panel-primary">
+            <div class="panel-heading">
+				<table width="100%"><tr>
+					<td>
+						<span class="menutitle">장치 관리</span>
+					</td>
+					<td>
+						<button type="button" class="btn btn-danger btn-md" ID="ButtonCancel">Exit Kiosk</button>
+					</td>
+					<td class="pull-right">
+						<button type="button" class="btn btn-warning btn-md" ng-click="backtomenu()">Back</button>
+					</td>
+				</tr></table>
+			</div>
+            <div class="panel-body">              
+				<table class="col-sm-12">
+				<tr>
+					<td>동전 종류 :</td>
+					<td>
+						<label class="radio-inline"><input type="radio" ng-model="vm.site.coinval" value="100" name="coinval" ng-click="vm.editproject(vm.site)">100원</label>
+						<label class="radio-inline"><input type="radio" ng-model="vm.site.coinval" value="500" name="coinval" ng-click="vm.editproject(vm.site)">500원</label>
+					</td>
+					<td>코인에러:{{vm.coinerr}} </td>
+					<td><button type="button" class="btn btn-danger btn-md" ng-click="coinReset()">Reset</button></td>
+					<td><button type="button" class="btn btn-default btn-md" ng-click="coinDrain()">코인 방출</button></td>
+					<td>방출 금액 : {{vm.coinout}}</td>
+				</tr>
+				</table>
+				<br><br><br>
+                <table>                      
+                    <tr>
+                        <td>Card check&nbsp;&nbsp;<input type="checkbox" ng-change="vm.saveCheck()" ng-model="vm.order.check.cardcheck" ng-true-value="1" ng-false-value="0"></td>                    
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>Cash check&nbsp;&nbsp;<input type="checkbox" ng-change="vm.saveCheck()" ng-model="vm.order.check.cashcheck" ng-true-value="1" ng-false-value="0"></td>	
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>Card receipt&nbsp;&nbsp;<input type="checkbox" ng-change="vm.saveCheck()" ng-model="vm.order.check.manualcheck" ng-true-value="1" ng-false-value="0"></td>                    
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>Cash receipt&nbsp;&nbsp;<input type="checkbox" ng-change="vm.saveCheck()" ng-model="vm.order.check.texrecpt" ng-true-value="1" ng-false-value="0"></td>								
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>Gen. receipt&nbsp;&nbsp;<input type="checkbox" ng-change="vm.saveCheck()" ng-model="vm.order.check.genrecpt" ng-true-value="1" ng-false-value="0"></td>                    
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td></td>								
+                    </tr> 
+                </table>
+				
+            </div>
+        </div>
+        
+    </div>
+	
+	<div ng-show="vm.viewmode=='typemode'" class="row">  
+		<div class="col-sm-12 text-center">
+			<div class="hidden-xs"><br><br><br></div>
+			<h1 ng-hide="vm.site.image">어서오세요 {{vm.site.name}}입니다</h1>
+			<h1 ng-show="vm.site.image">어서오세요 <img src="{{CI_URL}}uploads/{{vm.site.image}}" alt="{{vm.site.name}}"> 입니다</h1>
+			<div class="hidden-xs"><br><br><br><br></div>
+			<div class="selbtn">
+				<button type="button" class="btn btn-primary btn-xlarge" ng-click="dinein()">
+					드시고 가시나요?<br>For Here<br>こちらでお召し上がりですか<br>在这里吃
+				</button>
+				<br>
+				<h3>아니면 Or</h3>
+				<br>
+				<button type="button" class="btn btn-success btn-xlarge" ng-click="takeout()">
+					포장해 가시나요?<br>To Go<br>お持ち帰りですか？<br>还是打包
+				</button>
+			</div>
+		<div>
+	</div>
+</section>
+</div>
+

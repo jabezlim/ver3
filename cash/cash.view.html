@@ -1,0 +1,99 @@
+<div oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
+<nav class="navbar navbar-white navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+        </button>
+        <div ng-show="vm.site.image" class="navbar-brand brandimage">           
+            <a href="" ng-click="vm.reloadsite()" >
+                <img class="brandimage" ng-show="vm.site.image" src="{{BASE_URL}}ci/uploads/{{vm.site.image}}" alt="{{vm.site.name}}">
+                <span>&nbsp;{{vm.order.site.name}}</span>
+            </a>
+        </div>
+        <div ng-hide="vm.site.image" class="navbar-brand">
+            <a href="" ng-click="vm.reloadsite()" >{{vm.order.site.name}}</a>
+        </div>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li ng-repeat="cat in vm.categories | filter:{active:1}" ng-class="{'active': cat.id==vm.category.id}" class="category" ng-click="vm.setcat(cat)">
+            <span ng-hide="cat.image" class="cattext" ><strong>{{cat.name}}</strong></span>
+            <img ng-show="cat.image" src="{{BASE_URL}}ci/uploads/{{cat.image}}" alt="{{cat.name}}">
+        </li>            
+      </ul>
+      <ul class="nav navbar-nav">        	    
+        <!--li><a href='#/editmenu/{{vm.siteid}}/{{vm.category.id}}'><span class="glyphicon glyphicon-edit"></span> Edit</a></li -->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="container"> 
+       
+    <div ng-show="vm.viewmode=='cashmode'" class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <div class="text-center">            
+                
+                <div class = "panel panel-primary">
+                    <div class="panel-heading"><h2>{{RcvState}}</h2></div>
+                    <div ng-show="vm.balance>0" class="panel-body">                        
+                        <h3 class="col-xs-12 col-sm-12">잔액: {{vm.balance}} 원</h3>
+                        <div class="col-sm-12 col-md-12">
+                            <table width="100%">
+                                <tr ng-show="vm.order.check.texrecpt">
+                                    <td>
+                                        <strong>현금영수증</strong>
+                                    </td>
+                                    <td>
+                                        <label>소비자:</label>
+                                    </td>
+                                    <td>
+                                        <input style="display:inline-block;" type="radio" class="form-control editbox" name="cashrcp" ng-model="breceipt1" value="3">
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <label>사업자:</label>
+                                    </td>
+                                    <td>
+                                        <input style="display:inline-block;" type="radio" class="form-control editbox" name="cashrcp" ng-model="breceipt1" value="13">             
+                                    </td>
+                                </tr>
+								<tr ng-show="vm.order.check.genrecpt">
+									<td>
+                                        <strong ng-hide="vm.order.check.texrecpt">영수증</strong>
+                                    </td>									
+                                    <td>
+                                        <input ng-hide="vm.order.check.texrecpt" type="checkbox" class="form-control editbox" ng-model="breceipt1" ng-true-value="1" ng-false-value="0">
+										<label ng-show="vm.order.check.texrecpt">일반:</label>&nbsp;
+                                    </td>	
+									<td>
+										<input ng-show="vm.order.check.texrecpt" style="display:inline-block;" type="radio" class="form-control editbox" name="cashrcp" ng-model="breceipt1" value="1">&nbsp;
+									</td>
+									<td>&nbsp;</td>
+									<td>&nbsp;</td>
+									<td>&nbsp;&nbsp;&nbsp;</td>
+								</tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <img src="{{BASE_URL}}images/cash-in.png" border="0" alt="">
+                <p></p>
+                <!-- a href="" ng-click="backtomenu1()" class="col-xs-12 col-sm-12">
+                    <img src="{{BASE_URL}}images/cancel-check.png" alt="cancel">
+                </a -->
+				<div class="text-center col-xs-12 col-sm-12">
+					<a href="" class="roundbt red" ng-click="backtomenu1()">취소 <span>CANCEL</span></a>
+				</div>
+            </div>
+		</div>
+        <div class="col-sm-2"></div>
+    </div>    
+    
+</section>
+</div>
+

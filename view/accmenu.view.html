@@ -1,0 +1,108 @@
+<nav class="navbar navbar-white navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+          </button>
+          
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">        
+              <li><a href='' ng-click="vm.print()"><span class="glyphicon glyphicon-print"></span>Print</a></li>
+              <li><a href='#/account/{{vm.siteid}}/{{accdate}}'><span class="glyphicon glyphicon-usd"></span> by Checkout</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href='#/payments/{{vm.siteid}}' back-button class="link-back"><span class="glyphicon glyphicon-arrow-left"></span> Back</a></li>
+          </ul>
+        </div>
+      </div>
+</nav>
+
+<section class="container">
+    <div class="row">
+        <h3>
+            <button ng-click="prevDate()" class="btn btn-default btn-mini"><span class="glyphicon glyphicon-arrow-left"></span></button>
+            {{accdate}}
+            <button ng-click="nextDate()" class="btn btn-default btn-mini"><span class="glyphicon glyphicon-arrow-right"></span></button>
+        </h3>        
+    </div>
+    
+	<div ng-show="vm.site.active==4" class="row">
+		<iframe id="txtArea1" style="display:none"></iframe>
+		<button id="btnExport" ng-click="vm.export();"> EXPORT </button>
+		<table class="table table-hover menulist" id="table1">
+		  <thead>
+		  <tr>
+			  <th>Menu</th>
+			  <th colspan=2 class="text-center">조식</th>
+			  <th colspan=2 class="text-center">중식</th>
+			  <th colspan=2 class="text-center">석식</th>
+			  <th colspan=2 class="text-center">기타</th>
+			  <th colspan=2 class="text-center">Total</th>
+		  </tr>
+		  <tr>
+			  <th>Group</th>
+			  <th class="text-right">Qty</th>
+			  <th class="text-right">Amount</th>
+			  <th class="text-right">Qty</th>
+			  <th class="text-right">Amount</th>
+			  <th class="text-right">Qty</th>
+			  <th class="text-right">Amount</th>
+			  <th class="text-right">Qty</th>
+			  <th class="text-right">Amount</th>
+			  <th class="text-right">Qty</th>
+			  <th class="text-right">Amount</th>
+		  </tr>
+		  </thead>
+		  <tbody>
+			  <tr ng-repeat="totitem in vm.comptotals">
+				  <td>
+					<a href="./#/personal/{{vm.siteid}}/{{totitem.gid}}/{{accdate}}">{{totitem.group}}</a>
+					&nbsp;<a ng-show="vm.monthly" style="color:black;" href="./#/personal2/{{vm.siteid}}/{{totitem.gid}}/{{accdate}}">[일별정산]</a>
+				  </td>
+				  <td class="text-right">{{totitem.cnt1 | number}}</td>
+				  <td class="text-right">{{totitem.sum1 | number}}</td>
+				  <td class="text-right">{{totitem.cnt2 | number}}</td>
+				  <td class="text-right">{{totitem.sum2 | number}}</td>              
+				  <td class="text-right">{{totitem.cnt3 | number}}</td>
+				  <td class="text-right">{{totitem.sum3 | number}}</td>  
+				  <td class="text-right">{{totitem.cnt4 | number}}</td>
+				  <td class="text-right">{{totitem.sum4 | number}}</td>  
+				  <td class="text-right">{{(totitem.cnt1+totitem.cnt2+totitem.cnt3+totitem.cnt4) | number}}</td>
+				  <td class="text-right">{{(totitem.sum1+totitem.sum2+totitem.sum3+totitem.sum4) | number}}</td>  
+			  </tr>			  
+		  </tbody>    
+		</table>
+		
+		<br>
+    </div>
+    <div class="row">
+		<table class="table table-hover menulist">
+		  <thead>
+		  <tr>
+			  <th>Category</th>
+			  <th>Menu</th>
+			  <th class="text-right">Quantity</th>
+			  <th class="text-right">Amount</th>
+		  </tr>
+		  </thead>
+		  <tbody>
+			  <tr class="trtotal">
+				  <td></td>
+				  <td>Total : </td>
+				  <td class="text-right">{{totalnum | number}}</td>
+				  <td class="text-right">{{totalamount | number}}</td>              
+			  </tr>
+			  <tr ng-repeat="accitem in vm.checkouts">
+				  <td>{{accitem.category}}</td>
+				  <td>{{accitem.name}}</td>
+				  <td class="text-right">{{accitem.num | number}}</td>              
+				  <td class="text-right">{{accitem.price | number}}</td>              
+			  </tr>
+			  
+		  </tbody>    
+		</table>
+    </div>
+</section>

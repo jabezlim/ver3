@@ -1,0 +1,519 @@
+* {
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	        box-sizing: border-box;
+	outline: none;
+}
+
+html {
+	font-size: 21px;
+}
+
+@media (orientation:landscape) {
+	html {
+		font-size: 16px;
+	}
+	.mainwidth {
+		width : 70%;
+		padding : 0;
+		margin : 0;
+		float: left;
+	}
+	.sidewidth {
+		width : 30%;
+		padding : 0;
+		margin : 0;
+		float: left;
+	}
+	.menuwidth {
+		width : 25%;
+		padding: 1rem;
+	}
+	.menuwidth9 {
+		width : 20%;
+		padding: 0.5rem;
+	}
+	.menuwidth16 {
+		width : 20%;
+		padding: 0.3rem;
+	}
+	.orderlist {
+        display : none;
+    }
+}
+
+@media (min-width:768px) and (orientation:portrait) {
+	
+    .mainwidth {
+		width : 70%;
+		padding : 0;
+		margin : 0;
+		float: left;
+	}
+	.sidewidth {
+		width : 30%;
+		padding : 0;
+		margin : 0;
+		float: left;		
+	}
+	.menuwidth {
+		width : 50%;
+		padding : 1rem 2rem 0 0;
+	}
+	.menuwidth9 {
+		width : 33%;
+		padding : 1rem 1rem 0 0;
+	}
+	.menuwidth16 {
+		width : 33%;
+		padding : 1rem 1rem 0 0;
+	}
+	.orderlist {
+        display : none;
+    }	
+}
+
+@media (max-width:767px) and (orientation:portrait) {
+	html {
+		font-size: 10px;
+	}
+	body {
+		padding-top: 50px;
+	}
+    .mainwidth {
+		width : 100%;		
+	}
+	.sidewidth {
+		width : 100%;
+	}
+	.menuwidth {
+		width : 50%;
+		padding: 0.5rem 0.2rem;
+	}
+	.menuwidth9 {
+		width : 33.33%;
+		padding: 0.2rem 0.1rem;
+	}
+	.menuwidth16 {
+		width : 25%;
+		padding: 0.2rem;
+	}	
+	.orderlist {
+		margin-top : -6px;
+		background-color: white;
+	}
+	.sidewidth, .chkbtn, .footlogo {
+		display : none;
+	}
+	.navbar-brand {	
+		margin-left : 1rem;
+	}
+	.menutitle {    
+		font-size: 1em;
+	}
+	#myNavbar {
+		background-color:#4d4d4d;
+	}
+}
+
+/*#myNavbar>ul>li>a {
+	color : white;
+}*/
+
+body {
+    padding-top: 3.5rem; 
+
+	background-color:#fcf9e9;
+	background-image: url("../images/menuroidbg.png");
+    background-repeat: no-repeat;
+    background-position: right bottom;
+	background-attachment: fixed;
+}
+
+.nocursor {
+    cursor: none;
+}
+
+.navbar-fixed-top {
+	border-width : 0px;
+}
+
+.navbar {
+	min-height : 3.5rem;
+}
+
+.mynavbar {
+	min-height : 3.5rem;
+	padding-right : 0px;
+	padding-left : 0px;
+	background-color:#4d4d4d;
+	color : #d7d7d7;
+}
+
+.navbar-brand {	
+	padding : 1.2rem 1rem 0 1rem;
+	font-size: 1.5rem;
+}
+
+.sitename {
+	color : #d7d7d7;
+}
+
+.navbar-nav >.active {   
+	background: #fcf9e9; 
+}
+
+.category {		
+	height : 3.5rem;
+	min-width : 6.5rem;
+	padding : 0px;
+}
+
+.category6 {		
+	min-width : 5.5rem;
+}
+
+.catnorm > .cattext {
+	font-size: 1rem;
+}
+
+.catsm > .cattext{
+	font-size: 0.8rem;
+}
+
+.cattext {			 
+	width : 100%; 
+    position: absolute;
+    text-align: center;    
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.active > .cattext {
+	color : black;
+	font-weight : bold;
+}
+
+.menubody {
+	margin : 0;
+	width : 100%;
+	padding : 0rem 1rem;
+}
+
+.menutitle {    
+    font-size: 2rem;
+}
+
+.menutitlemd {
+    font-size: 1.5rem;
+}
+
+.menutitlesm {
+    font-size: 0.8rem;
+}
+
+.menubox {
+	margin: 0px;	
+	float: left;
+	text-align : center;
+}
+
+.menuitem {
+	position:relative;
+    padding: 0;    
+    background-color: white; 
+	border: 2px solid grey;
+    border-radius: 1rem;	
+	min-height:12rem;
+    max-height:12rem;	
+	font-size: 1em;
+}
+
+.tblg {
+    min-height:17rem;
+    max-height:17rem;	
+	font-size: 1.5rem;
+}
+
+.menuimage {
+    min-height:8rem;
+    max-height:8rem;
+	width : 100%;
+    border-radius: 0.8rem 0.8rem 0 0;
+}
+
+.menuimage1 {
+    min-height:6rem;
+    max-height:6rem;
+}
+
+.caption {
+	margin:0;	
+}
+
+.price {
+	position:absolute; 
+	bottom:0px;
+	width:100%;
+	background-color: #0d2b4b;
+	color : white;
+	font-size: 1.6rem;
+	margin : 0px;
+    padding: 0px;
+	border-radius: 0rem 0rem 0.8rem 0.8rem;
+}
+
+.desc {
+    font-size: 1rem;
+	color : black;
+	padding : 0;
+	background-color: rgba(0,0,0,0);
+	border-style : none;
+}
+
+.descfnt {
+	font-size: 0.9rem;
+}
+
+.descfnt1 {
+	font-size: 0.7rem;
+}
+
+.ticket {	
+	background-color: white;
+	border: 1px solid black;
+	text-align: center;
+	font-size: 1rem;
+	margin-top: 1rem;
+}
+
+.ticket1 {
+	font-size: 1.2rem;
+}
+
+.ordtype {
+	color : red;
+}
+
+a:link { text-decoration: none;}
+a:visited { text-decoration: none;}
+a:hover { text-decoration: none;}
+
+.roundbt {
+    display: inline-block;
+    position: relative;
+    margin: 0.1rem;
+    text-align: center;
+    text-decoration: none;	
+    text-transform: uppercase;
+	font-weight : bold;
+	text-decoration: none;	
+	color: black; 
+    background: white;
+	text-decoration: none;
+	font-size: 2rem;
+	padding-top: 0.8rem;
+	width : 8rem; 
+    height: 8rem;
+	border-radius: 4rem;
+}
+
+.blue {
+ 	border: 1rem solid #0098cd;
+}
+  
+.orange {
+	border: 1rem solid #98cd00;
+}
+ 
+.red {
+	border: 1rem solid #ff7034;
+}
+
+.cobalt {
+	border: 1rem solid #0047ab;
+}
+
+.roundbt span {
+    display: block;
+	font-size: 1rem;
+	text-decoration: none;
+}
+
+.modal {
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) { 
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.optbox {
+	width : 50%;
+}
+
+.optbody {	
+	display: table;
+	margin: 0 auto;
+}
+
+.optitem {
+	position: relative;
+	float: left;
+	width : 10rem;
+	margin-left : 1rem;
+}
+
+.warntext {
+	color : red;
+}
+
+.blink_me {
+	animation: blinker 1s linear infinite;
+	color : red;
+}
+
+.catdesc {
+	background-color: lightcyan;
+	color : black;
+}
+
+.desc1 {
+	background-color: yellow;
+	color : black;
+}
+
+
+.footlogo {
+    position : fixed;
+	bottom : 40px;
+    right : 10px;
+}
+
+.footnote {
+	border: 1px;
+	border-radius: 10px 10px 10px 10px;
+	background-color: lightgrey;
+    position : fixed;
+	bottom : 40px;
+    left : 10px;
+}
+
+.footer {
+	position : fixed;
+	bottom : 0;
+	margin : 0;
+	background-color:#999999;
+	color : white;
+	width : 100%;
+	text-align:center;
+}
+
+/**** editmenu *******/
+
+.editbody {
+	margin-top : 0px;
+}
+
+.category2 {
+    width : 6rem;  
+    text-align: center;
+    background: #e5e5e5;
+    padding: 5px 1px;
+    margin: 0px 0px;
+}
+
+.newcat {
+    background-color: lightcoral;
+	padding : 5px 1px;
+}
+
+.editbox {
+	padding : 2px;
+	margin : 0px;
+}
+
+
+/**** pos *******/
+.imgform {
+	margin-top:-20px;
+}
+
+/*
+.trtotal {
+    background-color: lightgray;
+}
+
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
+*/
+
+.passcode {
+	margin-top : 5rem;
+}
+
+.numkey {
+    width : 100px;
+}
+
+.keyrow {
+    height : 70px;
+}
+
+
+.btn-xlarge {
+    padding: 1.1rem 1.8rem;
+    font-size: 1.5rem; 
+    line-height: normal;
+    -webkit-border-radius: 8px;
+       -moz-border-radius: 8px;
+            border-radius: 8px;
+}
+
+.numkey1 {
+    width : 100px;
+}
+
+.keyrow1 {
+    height : 50px;
+}
+
+.menulist {
+    background-color: #ffffff;
+	padding:10px;
+	width : 100%;
+}
+
+/*
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+	padding : 3px;
+}
+
+.hidden-xs>.form-group {
+	margin : 3px;
+}
+.menulist>.table {
+	margin : 3px;
+}
+*/
+
+.cardlist {
+	margin-top : 5rem;
+}
+
+.holyday {
+	background-color : cyan;
+}

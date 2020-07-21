@@ -1,0 +1,117 @@
+<!--div oncontextmenu="return false" ondragstart="return false" onselectstart="return false" -->
+<nav class="navbar navbar-white navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+        </button>
+        <div ng-show="vm.site.image" class="navbar-brand brandimage">           
+            <a href="" ng-click="vm.reloadsite()" >
+                <img class="brandimage" ng-show="vm.site.image" src="{{BASE_URL}}ci/uploads/{{vm.site.image}}" alt="{{vm.site.name}}">
+                <span>&nbsp;{{vm.order.site.name}}</span>
+            </a>
+        </div>
+        <div ng-hide="vm.site.image" class="navbar-brand">
+            <a href="" ng-click="vm.reloadsite()" >{{vm.order.site.name}}</a>
+        </div>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li ng-repeat="cat in vm.categories | filter:{active:1}" ng-class="{'active': cat.id==vm.category.id}" class="category" ng-click="vm.setcat(cat)">
+            <span ng-hide="cat.image" class="cattext" ><strong>{{cat.name}}</strong></span>
+            <img ng-show="cat.image" src="{{BASE_URL}}ci/uploads/{{cat.image}}" alt="{{cat.name}}">
+        </li>            
+      </ul>
+      <ul class="nav navbar-nav">        	    
+        <!--li><a href='#/editmenu/{{vm.siteid}}/{{vm.category.id}}'><span class="glyphicon glyphicon-edit"></span> Edit</a></li -->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<section class="container"> 
+    <div  ng-show="vm.viewmode=='cardmode'" class="row">        
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <div class="text-center">                            
+                <br><br><br>               
+                <div class = "panel panel-primary">
+                    <div class="panel-heading"><h2>결제금액: {{vm.balance}} 원</h2></div>
+                    <div class="panel-body">                        
+                        <h3 class="col-xs-12 col-sm-12 blink_me">{{RcvState}}</h3>
+                        <div class="col-sm-12 col-md-9">
+                            <h3><strong>영수증이 필요하시면 체크하세요 :</strong></h3> 
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <input type="checkbox" class="form-control editbox" ng-model="breceipt1" ng-true-value="1" ng-false-value="0">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <img src="{{BASE_URL}}images/{{vm.order.settings.cardimg}}" border="0" alt="">
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12">   
+                        <br>
+						<h3>취소시 위쪽 바의 취소 버튼을 먼저 눌러 주세요</h3>
+						<br>
+						<!-- a ng-show="vm.timecnt>15 || vm.state>=90" href="" ng-click="backtomenu()">
+                            <img src="{{BASE_URL}}images/cancel-check.png" alt="cancel">
+                        </a -->
+						<a ng-show="vm.timecnt>15 || vm.state>=90" href="" class="roundbt red" ng-click="backtomenu()">취소 <span>CANCEL</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>		
+    </div>
+    <div ng-show="vm.viewmode=='cashmode'" class="row">        
+        <div class="col-sm-2"></div>
+		<div class="col-sm-8">
+			<div class="text-center panel panel-primary">
+				<div class="panel-heading">
+					<label for="cashrcno"><h2>현금영수증번호를 입력하세요</h2></label>
+					<input type="input" class="form-control" id="cashrcno" ng-model="vm.cashrcno">
+					<h3 class="col-xs-12 col-sm-12 blink_me">{{RcvState}}</h3>
+				</div>
+				<div class="panel-body">
+					<table width="100%">
+						<tr class="keyrow1">
+							<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(1)">1</button></td>
+							<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(2)">2</button></td>
+							<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(3)">3</button></td>
+						</tr>
+						<tr class="keyrow1">
+							<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(4)">4</button></td>
+							<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(5)">5</button></td>
+							<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(6)">6</button></td>
+						</tr>
+						<tr class="keyrow1">
+							<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(7)">7</button></td>
+							<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(8)">8</button></td>
+							<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(9)">9</button></td>
+						</tr>
+						<tr class="keyrow1">
+							<td class="text-center"><button type="button" class="btn btn-default btn-md numkey1" ng-click="keynum1(0)">0</button></td>
+							<td class="text-center"><button type="submit" class="btn btn-success btn-md numkey1" ng-click="backsp()">&lt;-</button></td>
+							<td class="text-center"><button type="button" class="btn btn-warning btn-md numkey1" ng-click="go()">확인</button></td>
+						</tr>
+					</table>   
+				</div>
+				<div>
+					<a href="" ng-click="cancelrc()">
+						<img src="{{BASE_URL}}images/cancel-check.png" alt="cancel">
+                    </a>
+				</div>
+			</div>
+			
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
+
+</section>
+</div>
+

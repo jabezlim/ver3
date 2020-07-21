@@ -1,0 +1,37 @@
+.login-form {
+	margin: 10px auto;
+	max-width: 320px;
+}
+
+	.login-form > section {
+		text-align: center;
+		margin-top: 15px;
+	}
+	.login-form > section a {
+		color: #fff;
+	}
+	.login-form > section:first-child {
+		margin-bottom: 38px;
+	}
+
+	.login-form .panel {
+		background: #fff !important;
+		border-radius: 0 !important;
+		-moz-border-radius: 0;
+		-webkit-border-radius: 0;
+		-webkit-box-shadow: 0 3px 3px 0 rgba(50, 50, 50, 0.2) !important;
+		   -moz-box-shadow: 0 3px 3px 0 rgba(50, 50, 50, 0.2) !important;
+				box-shadow: 0 3px 3px 0 rgba(50, 50, 50, 0.2) !important;
+	}
+
+	.login-form .panel .panel-body {
+		padding: 25px !important;
+	}
+	.login-form .panel .panel-footer {
+		padding: 15px 25px !important;
+		border-top: none !important;
+		background: #e5e5e5 !important;
+	}
+	.login-form .panel .panel-footer a {
+		color: #898a8a !important;
+	}

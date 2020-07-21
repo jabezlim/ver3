@@ -1,0 +1,126 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="navbar-brand">
+                <a href="#/cards/{{vm.siteid}}/{{card.gid}}">CardList - {{card.id}}</a>
+            </div>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href='#/cards/{{vm.siteid}}/{{card.gid}}'>Back </a>
+                </li>
+                <li ng-show="$root.globals.currentUser">
+                    <a href='#/userdetail/{{$root.globals.currentUser.userinfo.user_id}}'>ID : {{$root.globals.currentUser.username}} </a>
+                </li>
+                <li ng-show="$root.globals.currentUser">
+                    <a href='#/login'>
+                        <span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                </li>
+                <li>
+                    <form class="form-inline" style="margin-top:10px;">
+                        <div class="form-group">
+                            <label for="find">UID or Name</label>
+                            <input type="find" class="form-control" id="find" ng-model="find">
+                        </div>
+                        <button type="submit" class="btn btn-default" ng-click="vm.find()">Find</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <table class="table table-sm table-hover menulist">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>group</th>
+                    <th>name</th>
+                    <th>phone</th>
+                    <th>dept.</th>
+                    <th>uid</th>
+                    <th>type</th>
+                    <th>bal:{{card.balance}}</th>
+                </tr>
+            </thead>
+            <tfoot ng-show="$root.globals.currentUser">
+                <tr>
+                    <td class="form-inline">
+                        <input type="text" class="form-control" size="10" name="id" ng-model="card.id" style="flow:left;">
+                    </td>
+                    <td>
+                        <!-- <input type="text" size="10" class="form-control" name="gid" ng-model="card.gid" placeholder="select group"
+                            required> -->
+                        <select class="form-control" ng-model="card.gid">
+                            <option ng-repeat="grp in vm.groups" value="{{grp.id}}">{{grp.name}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" size="10" class="form-control" name="name" ng-model="card.name" placeholder="Enter name"
+                            required>
+                    </td>
+                    <td>
+                        <input type="text" size="10" class="form-control" name="phone" ng-model="card.phone" placeholder="Enter phone"
+                            required>
+                    </td>
+                    <td>
+                        <input type="text" size="10" class="form-control" name="gid" ng-model="card.dept" placeholder="Enter gid"
+                            required>
+                    </td>
+                    <td>
+                        <input type="text" size="10" class="form-control" name="uid" ng-model="card.uid" placeholder="Enter uid"
+                            required>
+                    </td>
+                    <td>
+                        <input type="text" size="5" class="form-control" name="active" ng-model="card.active" placeholder="Enter type"
+                            required>
+                    </td>
+                    <td class="form-inline">
+                        <input type="text" size="3" class="form-control" name="amount" ng-model="amt1">
+                        <button class="btn btn-default btn-sm" ng-click="vm.paid()">차감</button>
+                        <button class="btn btn-default btn-sm" ng-click="vm.charge()">충전</button>
+                        <button ng-show="card.balance>0" class="btn btn-default btn-sm" ng-click="vm.refund(card.id)">Refund</button>
+                        <button class="btn btn-default btn-sm" ng-click="vm.edit()">Edit</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</nav>
+
+<section class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-12 col-sm-12" ng-show="$root.globals.currentUser">
+
+            <table class="table table-sm table-hover menulist cardlist">
+                <thead>
+                    <tr>
+                        <th>no.</th>
+                        <th>date</th>
+                        <th>usage</th>
+                        <th>amount</th>
+                        <th>balance</th>
+                        <th>gid</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="usage in vm.histories">
+                        <td>{{$index+1}}</td>
+                        <td>{{usage.created_on}}</td>
+                        <td>{{usage.name}}</td>
+                        <td>{{usage.price | number}}</td>
+                        <td>{{usage.balance | number}}</td>
+                        <td>{{usage.gid}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</section>
