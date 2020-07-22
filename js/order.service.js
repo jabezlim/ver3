@@ -61,16 +61,35 @@
 			option10 : 0
 		};
 
+		order.paytype = paytype;
 		order.InitOrder = initOrder;
 		order.recordOrder = recordOrder;
 		order.recordPayment = recordPayment;
 		order.recordOrderItem = recordOrderItem;
 		order.updateOrderItem = updateOrderItem;
 
-        initOrder(0);
+        initOrder(order.site);
 
         return order;
 
+		function paytype(checked) {
+            if (checked==2 || checked==3 || checked==13) {
+                return "현금";
+			}
+			else if (checked==11) {
+                return "페이온";
+            }
+            else if (checked==17) {
+                return "제로페이";
+            }
+            else if (checked==8) {
+                return "페이스페이";
+            }
+            else {
+                return "신용카드";
+            }
+		}
+		
         function initOrder(site) {
 			order.id = 0;
 			order.amount = 0;

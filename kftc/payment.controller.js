@@ -84,7 +84,11 @@
 			//if (ocxcmd('LG'+logdata)<0) {
 			//	console.log(logdata);
 			//};			
-		}
+        }
+        
+        $scope.paytype = function(checked) {
+            return Order.paytype(checked);
+        }
 
 		$scope.gotoMenu = function() 
 		{
@@ -246,7 +250,7 @@
 			var i;
             var totalamt = payment.amount; 
             var tax = parseInt(totalamt/11+0.5);
-            var rcstr = "PP0L영 수 증;S;P상 호 : ";
+            var rcstr = "PP0L영수증재발행;S;P상 호 : ";
             rcstr += Order.site.regname + ';P사업자번호:';
             rcstr += Order.site.busno + '  대표자:'+ Order.site.ownername+';P';
             rcstr += Order.site.addr + ';P전화번호:';
@@ -434,35 +438,35 @@
 			}
 					
         }
+
+
         
         $scope.cardcancel = function(payment) {  
-			if (!confirm("취소하시겠습니까?"))
-				return ;
+			
 			var status = 0;
 			var cancelcmd = '';
             vm.cancelpayment = payment;
             $scope.cancelamount = payment.amount;
             if (payment.appno != '') {                
+                if (!confirm("승인번호 "+payment.appno+ " 거래를 취소하시겠습니까?")) {
+                    return ;
+                }
+                vm.RevTitle = "영수증취소";
                 if (payment.cardtype=="현금") {
 					ocxlog('현금영수증취소시작 '+payment.orderid);
 					vm.cashrcno = '';
 					$scope.bcash = 1;
-					$scope.RcvState = "현금영수증취소";   
-					vm.RevTitle = "현금거래취소";					
+					$scope.RcvState = "현금영수증취소";   										
 					/*if (payment.checked_by==13)						
 						status = ocxcmd('K9' + cancelcmd);
 					else
 						status = ocxcmd('K8' + cancelcmd);*/
 					vm.viewmode = 'cardmode';
 				} else {
-					//ocxlog('카드취소시작 '+payment.orderid);
 					cancelcmd = payment.amount+';'+payment.saledate.substring(4)+';'+payment.appno;
 					$scope.bcash = 0;
 					$scope.RcvState = "카드취소";   
-					vm.RevTitle = "신용거래취소";
                     vm.viewmode = 'cardmode';
-                    //ocxlog('카드취소 '+payment.orderid+' '+payment.checked_by);
-                    //ocxlog('제로페이취소');
 					if (Number(payment.checked_by)==1) {
                         ocxlog('카드취소');
 						status = ocxcmd('K4' + cancelcmd);								
@@ -477,25 +481,14 @@
 						vm.state = 2;
 						mytimeout = $timeout(checkres,1000);
 					} else {
-						/*// retry
-						if (payment.checked_by==1) {
-                            status = ocxcmd('K4' + cancelcmd);	
-                        } else if (payment.checked_by==17) { // zeropay
-                            status = ocxcmd('Z2' + cancelcmd);									
-						} else {
-							status = ocxcmd('G8' + cancelcmd);								
-						}
-						if (status>0) {
-							vm.state = 2;
-							mytimeout = $timeout(checkres,1000);
-                        } else */
-                        {
-							vm.state = 90;
-							$scope.RcvState = "오류";   
-						}
+                        vm.state = 90;
+                        $scope.RcvState = "오류";   					
 					}
 				}
             } else {                
+                if (!confirm("취소하시겠습니까?")) {
+                    return ;
+                }
                 vm.PrtMsgs = "";
                 vm.RevTitle = "현금취소";
                 cancelPayment(payment);

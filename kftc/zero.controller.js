@@ -78,6 +78,7 @@
         {            
 			printOrder();
 			if ($scope.breceipt1==1) {
+				vm.RevTitle = "영수증";
 				PrintService.receiptPrint(vm, Order.selmenu, vm.payment);			
 			}
 			gotoMenu(1);		

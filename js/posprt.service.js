@@ -53,7 +53,7 @@
             return num;
         };
         
-        function TicketPrint(vm, menu, bopen) {            
+        function TicketPrint(vm, menu, order) {            
             var tkstr; 
 			if (menu.dsporder==997) {				
 				tkstr = menu.name + ";L----------------;B";
@@ -62,15 +62,12 @@
 			}
 			tkstr += menu.ticketno + ";S";
 			tkstr += menu.ticketno + ";S"; 
-            tkstr += $filter('number')(menu.price) + "원 "+menu.category+" No:"+vm.order.id+";";            
-            tkstr += "F%-20s %20s|["+vm.order.site.name +"]|";
+            tkstr += $filter('number')(menu.price) + "원 "+menu.category+" No:"+order.id+";";            
+            tkstr += "F%-20s %20s|["+order.site.name +"]|";
             tkstr += $filter('date')(new Date(),'yyyy/MM/dd HH:mm.ss'); 
 			if (menu.dsporder==997) {
 				tkstr += ";L----------------";
-			}
-			if (bopen) {
-                tkstr += ";C0;C1";
-            }			
+			}				
             return Prtout(vm, "PP0L"+tkstr);   
         }
 
@@ -108,7 +105,7 @@
 			if (cnt>0) {			
 				tkstr += "B"+order.ticketno + "0;S";
 				tkstr += order.ticketno + ";S[";
-				tkstr += vm.order.site.name +"];S";
+				tkstr += order.site.name +"];S";
 				tkstr += $filter('date')(new Date(),'yyyy/MM/dd HH:mm.ss');
 				return Prtout(vm, tkstr);   
 			}

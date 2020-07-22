@@ -102,13 +102,13 @@
                 <table class="table table-hover menulist">
                   <thead>
                   <tr>                      
-                      <th>Saletime</th>
-                      <th>Cardtype</th>                      
-                      <th class="text-right">Amount</th>
-                      <th>Cardno</th>
-                      <th>Appno</th>
-                      <th>Orderid</th>  
-                      <th>paid by</th>                      
+                      <th>거래시간</th>
+                      <th>카드종류</th>                      
+                      <th class="text-right">금액</th>
+                      <th>카드번호</th>
+                      <th>승인번호</th>
+                      <th>주문번호</th>  
+                      <th>결제방식</th>                      
                       <th></th>
                   </tr>
                   </thead>
@@ -123,12 +123,12 @@
                       <td>{{payment.cardno}}</td>
                       <td>{{payment.appno}}</td>
                       <td>{{payment.orderid}}</td>                      
-                      <td>{{payment.checked_by == 17 ? '제로페이' : payment.checked_by}}</td>
+                      <td>{{ paytype(payment.checked_by) }}</td>
                       <td>
                           <div ng-hide="vm.bcancel">
                           <!--button ng-click="reprint(payment.orderid)" class="btn btn-sm btn-default">티켓재출력</button-->
                           <button ng-click="reprint(payment)" class="btn btn-xs btn-default">영수증재발행</button>
-                          <button ng-click="cardcancel(payment)" class="btn btn-xs btn-default">Cancel</button>
+                          <button ng-click="cardcancel(payment)" class="btn btn-xs btn-default">결제취소</button>
                           </div>
                       </td>
                   </tr>
