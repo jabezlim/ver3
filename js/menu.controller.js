@@ -96,7 +96,7 @@
                 localStorage.checkconf = JSON.stringify(vm.order.check);									
             }
 			vm.order.check = JSON.parse(localStorage.checkconf);
-			vm.order.check.zeropay = 1;
+			//vm.order.check.zeropay = 1;
         }
 
 		$scope.setmenu1 = function(menu) {

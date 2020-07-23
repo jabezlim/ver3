@@ -60,12 +60,12 @@
                             <h3>제로페이 앱에서 QR코드 스캔, 결제진행(요청)후 아래 "확인(OK)" 버튼을 클릭해주세요.</h3>
                         </div>
                     </div>
-                    <div ng-show="vm.state==17" class="col-sm-12 col-md-12 col-lg-12">   
+                    <div  class="col-sm-12 col-md-12 col-lg-12">   
                         <br>
 						<!-- <h3>구매취소시 아래의 취소 버튼을 눌러 주세요</h3> -->
 						<br> 
-                        <a href="" class="roundbt cobalt" ng-click="zeropaycheck()">확인 <span>OK</span></a>
-						<a href="" class="roundbt red" ng-click="backtomenu()">취소 <span>CANCEL</span></a>
+                        <a ng-show="vm.state==17" href="" class="roundbt cobalt" ng-click="zeropaycheck()">확인 <span>OK</span></a>
+						<a ng-show="vm.state==17 || vm.timecnt>15 || vm.state>=90" href="" class="roundbt red" ng-click="backtomenu()">취소 <span>CANCEL</span></a>
                     </div>
                 </div>
             </div>

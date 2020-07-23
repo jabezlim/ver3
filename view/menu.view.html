@@ -209,10 +209,10 @@
 						<span class="menutitle">장치 관리</span>
 					</td>
 					<td>
-						<button type="button" class="btn btn-danger btn-md" ID="ButtonCancel">Exit Kiosk</button>
+						<button type="button" class="btn btn-danger btn-md" ID="ButtonCancel">키오스크 종료</button>
 					</td>
 					<td class="pull-right">
-						<button type="button" class="btn btn-warning btn-md" ng-click="backtomenu()">Back</button>
+						<button type="button" class="btn btn-warning btn-md" ng-click="backtomenu()">뒤로</button>
 					</td>
 				</tr></table>
 			</div>
@@ -225,7 +225,7 @@
 						<label class="radio-inline"><input type="radio" ng-model="vm.site.coinval" value="500" name="coinval" ng-click="vm.editproject(vm.site)">500원</label>
 					</td>
 					<td>코인에러:{{vm.coinerr}} </td>
-					<td><button type="button" class="btn btn-danger btn-md" ng-click="coinReset()">Reset</button></td>
+					<td><button type="button" class="btn btn-danger btn-md" ng-click="coinReset()">초기화</button></td>
 					<td><button type="button" class="btn btn-default btn-md" ng-click="coinDrain()">코인 방출</button></td>
 					<td>방출 금액 : {{vm.coinout}}</td>
 				</tr>
@@ -233,15 +233,17 @@
 				<br><br><br>
                 <table>                      
                     <tr>
-                        <td>Card check&nbsp;&nbsp;<input type="checkbox" ng-change="vm.saveCheck()" ng-model="vm.order.check.cardcheck" ng-true-value="1" ng-false-value="0"></td>                    
+                        <td>카드결제&nbsp;&nbsp;<input type="checkbox" class="form-control editbox" ng-change="vm.saveCheck()" ng-model="vm.order.check.cardcheck" ng-true-value="1" ng-false-value="0"></td>                    
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td>Cash check&nbsp;&nbsp;<input type="checkbox" ng-change="vm.saveCheck()" ng-model="vm.order.check.cashcheck" ng-true-value="1" ng-false-value="0"></td>	
+                        <td>현금결제&nbsp;&nbsp;<input type="checkbox" class="form-control editbox" ng-change="vm.saveCheck()" ng-model="vm.order.check.cashcheck" ng-true-value="1" ng-false-value="0"></td>	
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td>Card receipt&nbsp;&nbsp;<input type="checkbox" ng-change="vm.saveCheck()" ng-model="vm.order.check.manualcheck" ng-true-value="1" ng-false-value="0"></td>                    
+                        <td>카드영수증&nbsp;&nbsp;<input type="checkbox" class="form-control editbox" ng-change="vm.saveCheck()" ng-model="vm.order.check.manualcheck" ng-true-value="1" ng-false-value="0"></td>                    
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td>Cash receipt&nbsp;&nbsp;<input type="checkbox" ng-change="vm.saveCheck()" ng-model="vm.order.check.texrecpt" ng-true-value="1" ng-false-value="0"></td>								
+                        <td>현금영수증&nbsp;&nbsp;<input type="checkbox" class="form-control editbox" ng-change="vm.saveCheck()" ng-model="vm.order.check.texrecpt" ng-true-value="1" ng-false-value="0"></td>								
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td>Gen. receipt&nbsp;&nbsp;<input type="checkbox" ng-change="vm.saveCheck()" ng-model="vm.order.check.genrecpt" ng-true-value="1" ng-false-value="0"></td>                    
+                        <td>일반영수증&nbsp;&nbsp;<input type="checkbox" class="form-control editbox" ng-change="vm.saveCheck()" ng-model="vm.order.check.genrecpt" ng-true-value="1" ng-false-value="0"></td>                    
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						<td>제로페이&nbsp;&nbsp;<input type="checkbox" class="form-control editbox" ng-change="vm.saveCheck()" ng-model="vm.order.check.zeropay" ng-true-value="1" ng-false-value="0"></td>                    
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         <td></td>								
                     </tr> 
