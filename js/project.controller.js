@@ -43,7 +43,7 @@
         }
 
         function loadAllProjects() {
-			if (vm.CTYPE.length==0)
+			//if (vm.CTYPE.length==0) 
 			{
 				$http.get(API_URL+'projects/')
                 .then(
@@ -54,7 +54,8 @@
                         
                     }
                 );
-			} else {
+			} 
+			/* else {
 				$http.get(API_URL+'projects/type/'+vm.CTYPE)
 					.then(
 						function successCallback(response) {
@@ -64,7 +65,7 @@
 							
 						}
 					);
-			}
+			}*/
         }
 
         function deleteProject(Project) {
@@ -121,6 +122,92 @@
 		function editInfo(siteid) {
             $location.path('project/'+siteid);
         }
+
+        $scope.form = [];
+		$scope.files = [];
+		
+		vm.uploadstatus = 0;
+
+		$scope.submit1 = function(project) 
+		{
+			$scope.form.project = project;
+			vm.uploadstatus = 1;
+		}
+
+		$scope.submit2 = function(project) 
+		{
+			$scope.form.project = project;
+			vm.uploadstatus = 2;
+		}
+
+		$scope.onUpload = function() 
+		{
+			if (vm.uploadstatus>0)
+			{
+				var data = window.frames[0].document.body.innerHTML;
+				//alert("Upload completed !"+data);
+				if (vm.uploadstatus==1) {				
+					$scope.form.project.background = data;
+				} else {
+					$scope.form.project.image = data;
+				}				
+				setTimeout(function() {
+					$scope.$apply(function() {
+						if (vm.uploadstatus==1)
+							angular.element('body').css('background-image', 'url(\''+$scope.BASE_URL+'ci/uploads/' + data + '\')');
+						vm.uploadstatus = 0;
+					});
+				}, 500);				
+			}
+		}
+		
+		$scope.submit = function(project) {
+
+			$scope.form.image = $scope.files; 
+			$scope.form.project = project;
+
+			$http({
+				method  : 'POST',
+				url     : Order.BASE_URL+'ci/index.php/Auth/upload',  
+				processData: false,
+				transformRequest: function (data) {
+					var formData = new FormData();
+					formData.append("image", $scope.form.image);  
+					formData.append("siteid", $scope.form.project.id);  
+					formData.append("menuid", 0);  
+					return formData;  
+				},  
+				data : $scope.form,
+				headers: {
+					'Content-Type': undefined
+				}
+			})			
+			.then(function onSuccess(response) {
+				project.background = response.data;
+			}).catch(function onError(response) {
+				// Handle error
+				alert(response.message);
+			});
+
+		}
+
+
+		$scope.uploadedFile = function(element) {
+			if (element.files) {
+				$scope.files = element.files[0];
+			} else {
+				$scope.files = element.value;				
+			}
+			var reader = new FileReader();
+			reader.onload = function(event) {
+				//var elem = angular.element("#img"+element.id);
+				//elem[0].src = event.target.result;
+				//angular.element('body').css('background-image', 'url(\'./ci/uploads/' + event.target.result + '\')');
+				//$scope.$apply(function($scope) {
+				//});
+			}
+			reader.readAsDataURL($scope.files);
+		}
     }
 	
 

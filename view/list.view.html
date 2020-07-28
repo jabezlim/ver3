@@ -22,43 +22,64 @@
 <section class="container">
     <div class="row">
 		<div class="col-xs-12 col-md-12 col-sm-12" ng-show="$root.globals.currentUser">
-        
+            <iframe id="uploadIFrame" name="uploadIFrame" style="display:none;visibility:hidden"></iframe> 
             <table class="table table-sm table-hover menulist">
               <thead>
               <tr>
-                <th>Menu</th>
-                <th class="hidden-xs">Description</th>
-				<th class="hidden-xs">logo image</th>
-                <th class="hidden-xs">background image</th>
+                <th>ID</th>
+                <th>사이트이름</th>
+                <th class="hidden-xs">설명</th>
+				<th class="hidden-xs">로고이미지</th>
+                <th class="hidden-xs">바탕이미지</th>
                 <th></th>
               </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="project in vm.projects | filter:listfilter">
+                    <td>{{project.id}}</td>
                     <td>               
 						<a ng-show="vm.CTYPE.length>0" href="../{{project.indexurl}}#/viewmenu/{{project.id}}">{{project.name}}</a>
 						<a ng-hide="vm.CTYPE.length>0" href="./{{project.indexurl}}#/viewmenu/{{project.id}}">{{project.name}}</a>
                     </td>
                     <td class="hidden-xs">
-                        <textarea type="text" class="form-control" name="description" ng-model="project.description" placeholder="Enter site description" rows="2" cols="30" ng-change="vm.edit(project)"></textarea>
+                        <textarea type="text" class="form-control" name="description" ng-model="project.description" placeholder="사이트 설명" rows="2" cols="30" ng-change="vm.edit(project)"></textarea>
                     </td>
-					<td class="hidden-xs">
+					<td class="hidden-xs">                        
                         <input class="form-control editbox" size="10" type="text" ng-model-options="{ updateOn: 'blur' }" ng-change="vm.edit(project)" ng-model="project.image">
+						<!-- <form class="form-inline" action="../ci/index.php/auth/upload/" enctype="multipart/form-data" method="post" accept-charset="utf-8" id="uploadForm" ng-submit="submit2(project)" target="uploadIFrame">
+							<p>
+								<input type="hidden" name="menuimg" value="{{project.image}}">
+								<input id="{{project.id}}" class="col-xs-8" size="1" type="file" name="image" placeholder="select logo image" onchange="angular.element(this).scope().uploadedFile(this)">
+								<input type="hidden" name="siteid" value="{{project.id}}">
+								<input type="hidden" name="menuid" value="logo">								
+								<button type="submit" class="btn btn-xs btn-default">update</button>		
+							</p>							
+						</form> -->
                     </td>
                     <td class="hidden-xs">
                         <input class="form-control editbox" size="10" type="text" ng-model-options="{ updateOn: 'blur' }" ng-change="vm.edit(project)" ng-model="project.background">
+						<!-- <form class="form-inline" action="../ci/index.php/auth/upload/" enctype="multipart/form-data" method="post" accept-charset="utf-8" id="uploadForm" ng-submit="submit1(project)" target="uploadIFrame">
+							<p>
+								<input type="hidden" name="menuimg" value="{{project.background}}">
+								<input id="{{project.id}}" class="col-xs-8" size="1" type="file" name="image" placeholder="select bg image" onchange="angular.element(this).scope().uploadedFile(this)">
+								<input type="hidden" name="siteid" value="{{project.id}}">
+								<input type="hidden" name="menuid" value="bg">								
+								<button type="submit" class="btn btn-xs btn-default">update</button>		
+							</p>							
+						</form> -->
                     </td>
                     <td class="pull-right">
                         <div >    
-                            <button ng-click="vm.printmenu(project.id)" class="btn btn-default btn-sm">POS</button>
-							<button ng-click="vm.editmenu(project.id)" class="btn btn-info btn-sm">Menu</button>
-							<button ng-click="vm.editinfo(project.id)" class="btn btn-default btn-sm">Info</button>
+                            <button ng-click="vm.printmenu(project.id)" class="btn btn-default btn-sm">포스모드</button>
+							<button ng-click="vm.editmenu(project.id)" class="btn btn-info btn-sm">메뉴편집</button>
+							<button ng-click="vm.editinfo(project.id)" class="btn btn-default btn-sm">설정</button>
                         </div>
                     </td>
                 </tr>
               </tbody>    
               <tfoot ng-show="$root.globals.currentUser.userinfo.is_admin==true">				
                   <tr>
+                      <td></td>
                       <td>  
 							<input type="text" size="10" class="form-control" name="name" ng-model="project.name" placeholder="Enter site title" required>
                       </td>
@@ -70,7 +91,7 @@
 					  <td class="hidden-xs">
 					  </td>
                       <td class="pull-right">
-                          <button type="submit" class="btn btn-default btn-sm" ng-click="vm.add()">Add Site</button>
+                          <button type="submit" class="btn btn-default btn-sm" ng-click="vm.add()">사이트 추가</button>
                       </td>
                   </tr>
 				  

@@ -304,7 +304,7 @@
 							vm.order.MENU_URL = '/viewmenu/'+vm.siteid+'/13';
 						}
                         if (vm.site.background && vm.site.background.length) {
-                            angular.element('body').css('background-image', 'url(\'./ci/uploads/' + vm.site.background + '\')');
+                            angular.element('body').css('background-image', 'url(\'../ci/uploads/' + vm.site.background + '\')');
                         }
 						if (vm.site.active==2) {
 							vm.initmode = 'typemode';
