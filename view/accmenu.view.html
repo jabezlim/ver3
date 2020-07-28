@@ -10,11 +10,11 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">        
-              <li><a href='' ng-click="vm.print()"><span class="glyphicon glyphicon-print"></span>Print</a></li>
-              <li><a href='#/account/{{vm.siteid}}/{{accdate}}'><span class="glyphicon glyphicon-usd"></span> by Checkout</a></li>
+              <li><a href='' ng-click="vm.print()"><span class="glyphicon glyphicon-print"></span>인쇄</a></li>
+              <li><a href='#/account/{{vm.siteid}}/{{accdate}}'><span class="glyphicon glyphicon-usd"></span> 결제별</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href='#/payments/{{vm.siteid}}' back-button class="link-back"><span class="glyphicon glyphicon-arrow-left"></span> Back</a></li>
+            <li><a href='#/payments/{{vm.siteid}}' back-button class="link-back"><span class="glyphicon glyphicon-arrow-left"></span> 뒤로</a></li>
           </ul>
         </div>
       </div>
@@ -31,29 +31,29 @@
     
 	<div ng-show="vm.site.active==4" class="row">
 		<iframe id="txtArea1" style="display:none"></iframe>
-		<button id="btnExport" ng-click="vm.export();"> EXPORT </button>
+		<button id="btnExport" ng-click="vm.export();"> EXCEL 내려받기 </button>
 		<table class="table table-hover menulist" id="table1">
 		  <thead>
 		  <tr>
-			  <th>Menu</th>
+			  <th>메뉴</th>
 			  <th colspan=2 class="text-center">조식</th>
 			  <th colspan=2 class="text-center">중식</th>
 			  <th colspan=2 class="text-center">석식</th>
 			  <th colspan=2 class="text-center">기타</th>
-			  <th colspan=2 class="text-center">Total</th>
+			  <th colspan=2 class="text-center">합계</th>
 		  </tr>
 		  <tr>
-			  <th>Group</th>
-			  <th class="text-right">Qty</th>
-			  <th class="text-right">Amount</th>
-			  <th class="text-right">Qty</th>
-			  <th class="text-right">Amount</th>
-			  <th class="text-right">Qty</th>
-			  <th class="text-right">Amount</th>
-			  <th class="text-right">Qty</th>
-			  <th class="text-right">Amount</th>
-			  <th class="text-right">Qty</th>
-			  <th class="text-right">Amount</th>
+			  <th>그룹</th>
+			  <th class="text-right">수량</th>
+			  <th class="text-right">금액</th>
+			  <th class="text-right">수량</th>
+			  <th class="text-right">금액</th>
+			  <th class="text-right">수량</th>
+			  <th class="text-right">금액</th>
+			  <th class="text-right">수량</th>
+			  <th class="text-right">금액</th>
+			  <th class="text-right">수량</th>
+			  <th class="text-right">금액</th>
 		  </tr>
 		  </thead>
 		  <tbody>
@@ -82,16 +82,16 @@
 		<table class="table table-hover menulist">
 		  <thead>
 		  <tr>
-			  <th>Category</th>
-			  <th>Menu</th>
-			  <th class="text-right">Quantity</th>
-			  <th class="text-right">Amount</th>
+			  <th>카테고리</th>
+			  <th>메뉴</th>
+			  <th class="text-right">수량</th>
+			  <th class="text-right">금액</th>
 		  </tr>
 		  </thead>
 		  <tbody>
 			  <tr class="trtotal">
 				  <td></td>
-				  <td>Total : </td>
+				  <td>합계 : </td>
 				  <td class="text-right">{{totalnum | number}}</td>
 				  <td class="text-right">{{totalamount | number}}</td>              
 			  </tr>

@@ -12,9 +12,9 @@
           <ul class="nav navbar-nav navbar-right">
 			
             <li ng-show="$root.globals.currentUser"><a href='#/userdetail/{{$root.globals.currentUser.userinfo.user_id}}'>ID : {{$root.globals.currentUser.username}} </a></li>
-            <li ng-show="$root.globals.currentUser"><a href='#/login'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-            <li ng-hide="$root.globals.currentUser"><a href='#/register'><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li ng-hide="$root.globals.currentUser"><a href='#/login'><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li ng-show="$root.globals.currentUser"><a href='#/login'><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a></li>
+            <li ng-hide="$root.globals.currentUser"><a href='#/register'><span class="glyphicon glyphicon-user"></span> 등록</a></li>
+            <li ng-hide="$root.globals.currentUser"><a href='#/login'><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
           </ul>
         </div>
       </div>
@@ -24,43 +24,43 @@
 		<div class="panel-body">
 			<form name="myForm" class="form-horizontal">
 				<div class="form-group" ng-class="{error: myForm.name.$invalid}">
-					<label class="control-label col-sm-2" for="name">Name</label>
+					<label class="control-label col-sm-2" for="name">이름</label>
 					<div class="col-sm-10">
 						<input type="name" class="form-control" id="name" placeholder="Enter site name" ng-model="vm.project.name" required>
-						<span ng-show="myForm.name.$error.required" class="help-inline">Required</span>
+						<span ng-show="myForm.name.$error.required" class="help-inline">필수</span>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="busno">bus. no</label>
+					<label class="control-label col-sm-2" for="busno">사업자번호</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" id="busno" placeholder="Enter bus no" ng-model="vm.project.busno">
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="regname">regname</label>
+					<label class="control-label col-sm-2" for="regname">상호</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" id="regname" ng-model="vm.project.regname">
 					</div>
 				</div>
 			  
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="ownername">ownername</label>
+					<label class="control-label col-sm-2" for="ownername">대표자</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" id="ownername" ng-model="vm.project.ownername">
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="tel">tel</label>
+					<label class="control-label col-sm-2" for="tel">전화</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" id="tel" ng-model="vm.project.tel">
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="addr">addr</label>
+					<label class="control-label col-sm-2" for="addr">주소</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" id="addr" ng-model="vm.project.addr">
 					</div>
@@ -96,9 +96,9 @@
 			  
 				<div class="form-group"> 
 					<div class="col-sm-offset-2 col-sm-10">
-					  <button ng-click="save()" ng-disabled="isClean() || myForm.$invalid" class="btn btn-primary"><i class="icon-ok icon-white"></i> Save</button>
-					<a href="#/" class="btn btn-link">Cancel</a>
-					<button ng-click="destroy()" ng-show="project.id" class="btn btn-danger pull-right"><i class="icon-trash icon-white"></i> Delete</button>
+					  <button ng-click="save()" ng-disabled="isClean() || myForm.$invalid" class="btn btn-primary"><i class="icon-ok icon-white"></i> 저장</button>
+					<a href="#/" class="btn btn-link">취소</a>
+					<button ng-click="destroy()" ng-show="project.id" class="btn btn-danger pull-right"><i class="icon-trash icon-white"></i> 삭제</button>
 					</div>
 				</div>
 			  

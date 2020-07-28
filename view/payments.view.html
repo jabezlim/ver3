@@ -10,11 +10,11 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">   
 		  <ul class="nav navbar-nav">                     
-            <li><a href='#/account/{{vm.siteid}}/{{vm.accday}}'><span class="glyphicon glyphicon-usd"></span> Daily</a></li>
-            <li><a href='#/account/{{vm.siteid}}/{{vm.accmonth}}'><span class="glyphicon glyphicon-usd"></span> Monthly</a></li>
+            <li><a href='#/account/{{vm.siteid}}/{{vm.accday}}'><span class="glyphicon glyphicon-usd"></span> 일별</a></li>
+            <li><a href='#/account/{{vm.siteid}}/{{vm.accmonth}}'><span class="glyphicon glyphicon-usd"></span> 월별</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">           
-            <li><a href='' ng-click="gotoMenu()"><span class="glyphicon glyphicon-arrow-left"></span> Back</a></li>
+            <li><a href='' ng-click="gotoMenu()"><span class="glyphicon glyphicon-arrow-left"></span> 뒤로</a></li>
           </ul>
         </div>
       </div>
@@ -61,7 +61,7 @@
 								</tr>
 								<tr class="keyrow1">
 									<td class="text-center"></td>
-									<td class="text-center"><button type="submit" class="btn btn-success btn-md numkey1" ng-click="onok()">OK</button></td>
+									<td class="text-center"><button type="submit" class="btn btn-success btn-md numkey1" ng-click="onok()">확인</button></td>
 									<td class="text-center"></td>
 								</tr>
 							</table>                            
@@ -102,11 +102,11 @@
                 <table class="table table-hover menulist">
                   <thead>
                   <tr>                      
-                      <th>Saletime</th>
-                      <th>Cardtype</th>                      
-                      <th class="text-right">Amount</th>
-                      <th>Cardno</th>
-                      <th>Appno</th>
+                      <th>시간</th>
+                      <th>매입사</th>                      
+                      <th class="text-right">금액</th>
+                      <th>카드번호</th>
+                      <th>승인번호</th>
                       <th>Orderid</th>                      
                       <th></th>
                   </tr>
@@ -126,7 +126,7 @@
                           <div ng-hide="vm.bcancel">
                           <!--button ng-click="reprint(payment.orderid)" class="btn btn-sm btn-default">티켓재출력</button-->
                           <button ng-click="reprint(payment)" class="btn btn-xs btn-default">영수증재발행</button>
-                          <button ng-click="cardcancel(payment)" class="btn btn-xs btn-default">Cancel</button>
+                          <button ng-click="cardcancel(payment)" class="btn btn-xs btn-default">취소</button>
                           </div>
                       </td>
                   </tr>

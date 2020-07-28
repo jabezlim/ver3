@@ -29,7 +29,7 @@
 		order.selmenu = [];
 		order.checked_by = 0;
 		order.detail = '';
-		order.saletype = '';
+		order.saletype = 0;
 		order.home = false;
 		order.site = {
 			id : 0,
@@ -96,7 +96,7 @@
 			order.selmenu = [];
 			order.checked_by = 0;
 			order.detail = '';
-			order.saletype = '';
+			order.saletype = 0;
 			order.site = site;
 			order.MENU_URL = '/viewmenu/'+site.id;
 			order.payment = {

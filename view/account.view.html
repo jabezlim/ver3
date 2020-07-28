@@ -10,11 +10,11 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">                 
-              <li><a href='' ng-click="vm.print()"><span class="glyphicon glyphicon-print"></span>Print</a></li>
-              <li><a href='#/accmenu/{{vm.siteid}}/{{accdate}}'><span class="glyphicon glyphicon-usd"></span> by Menu</a></li>
+              <li><a href='' ng-click="vm.print()"><span class="glyphicon glyphicon-print"></span>인쇄</a></li>
+              <li><a href='#/accmenu/{{vm.siteid}}/{{accdate}}'><span class="glyphicon glyphicon-usd"></span> 메뉴별</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href='#/payments/{{vm.siteid}}' back-button class="link-back"><span class="glyphicon glyphicon-arrow-left"></span> Back</a></li>
+            <li><a href='#/payments/{{vm.siteid}}' back-button class="link-back"><span class="glyphicon glyphicon-arrow-left"></span> 뒤로</a></li>
           </ul>
         </div>
       </div>
@@ -33,21 +33,21 @@
     <table class="table table-hover menulist">
       <thead>
       <tr>
-          <th>Cardtype</th>
-          <th class="text-right">Quantity</th>
-          <th class="text-right">Amount</th>
+          <th>매입사</th>
+          <th class="text-right">수량</th>
+          <th class="text-right">금액</th>
           <th></th>
       </tr>
       </thead>
       <tbody>          
           <tr class="trtotal">
-              <td>Card Total : </td>
+              <td>카드 합계 : </td>
               <td class="text-right">{{cardnumtotal | number}}</td>
               <td class="text-right">{{cardtotal | number}}</td>
               <td></td>
           </tr>
           <tr class="trtotal">
-              <td>Total : </td>
+              <td>합계 : </td>
               <td class="text-right">{{numtotal | number}}</td>
               <td class="text-right">{{totalamount | number}}</td>
               <td></td>
@@ -57,18 +57,18 @@
               <td class="text-right">{{accitem.count | number}}</td>
               <td class="text-right">{{accitem.amount | number}}</td>              
               <td>
-                  <a ng-hide="vm.monthly" class="btn btn-default btn-mini" href='#/payments/{{vm.siteid}}/{{accdate}}/{{accitem.cardtype}}'>Detail..</a>
+                  <a ng-hide="vm.monthly" class="btn btn-default btn-mini" href='#/payments/{{vm.siteid}}/{{accdate}}/{{accitem.cardtype}}'>내역</a>
               </td>
           </tr>
 
 		  <tr class="trtotal" ng-show="cardcancel>0" >
-              <td>Card Cancel Total : </td>
+              <td>카드 취소 합계 : </td>
               <td class="text-right">{{numcardcancel | number}}</td>
               <td class="text-right">{{cardcancel | number}}</td>
               <td></td>
           </tr>
           <tr class="trtotal" ng-show="totalcancel>0" >
-              <td>Cancel Total : </td>
+              <td>취소 합계 : </td>
               <td class="text-right">{{numcancel | number}}</td>
               <td class="text-right">{{totalcancel | number}}</td>
               <td></td>
@@ -78,7 +78,7 @@
               <td class="text-right">{{accitem.count | number}}</td>
               <td class="text-right">{{accitem.amount | number}}</td>
               <td>
-                  <a ng-hide="vm.monthly" class="btn btn-default btn-mini" href='#/payments/{{vm.siteid}}/{{accdate}}/cancel_{{accitem.cardtype}}'>Detail..</a>
+                  <a ng-hide="vm.monthly" class="btn btn-default btn-mini" href='#/payments/{{vm.siteid}}/{{accdate}}/cancel_{{accitem.cardtype}}'>내역</a>
               </td>
           </tr>
           

@@ -11,8 +11,7 @@
         var i = 0;
         var status;        
         var mytimeout; 
-        
-		vm.cashif = cashif;	
+        		
 		vm.initmode = 'menumode';
         vm.viewmode = vm.initmode;		
         vm.cashocxver = 0;
@@ -43,25 +42,17 @@
         loadSiteData(vm.siteid);                   
         
 		function ocxcmd(cmd) {
-			if ("ActiveXObject" in window) {		
+			if (window.external.Test) {			
+				return window.external.BNCmd(cmd);
+			} else if (("ActiveXObject" in window) && cashif) {			
 				return cashif.BNCmd(cmd);
-			}
+			}			
 			return -1;
 		}
 
 		function ocxlog(logdata) {
 			ocxcmd('LG'+logdata);
-		}
-		
-		$scope.dinein = function() {
-			vm.order.saletype = '매장';
-	        vm.viewmode = 'menumode';
-		}
-
-		$scope.takeout = function() {
-			vm.order.saletype = '포장';
-	        vm.viewmode = 'menumode';			
-		}
+		}		
 
         function saveCheck() {
             localStorage.checkconf = JSON.stringify(vm.order.check);
@@ -272,12 +263,9 @@
 						Order.InitOrder(vm.site);
 						Order.MENU_URL = '/posview/'+vm.siteid;
                         /*if (vm.site.background && vm.site.background.length) {
-                            angular.element('body').css('background-image', 'url(\'./ci/uploads/' + vm.site.background + '\')');
+                            angular.element('body').css('background-image', 'url(\'../ci/uploads/' + vm.site.background + '\')');
                         }
-						if (vm.site.active==2) {
-							vm.initmode = 'typemode';
-							vm.viewmode = vm.initmode;	
-						}*/
+						*/
                         loadCategory(siteid);
                     }, 
                     function errorCallback(response) {
@@ -336,11 +324,11 @@
                                     vm.categories[i].active = 0;
                                 }
                             }
-                            if (Number(vm.categories[i].active)>0) {
+                            //if (Number(vm.categories[i].active)>0) {
                                 if (vm.category == undefined) {
                                     vm.category = vm.categories[i];
                                 }    
-                            }
+                            //}
 							spstr = vm.categories[i].name.split(':');
 					        vm.categories[i].name = spstr.join('\n');
                         }
@@ -403,11 +391,6 @@
 				if (vm.category){				
 					return item['catid'] == vm.category.id; // && item['active'] != 0;
 				} else return true;
-				/*if (vm.order.saletype == '포장') {
-					return item['catid'] == vm.category.id && item['active'] != 0 && item['dsporder']>=100 && item['dsporder']<1000;
-				} else {
-	                return item['catid'] == vm.category.id && item['active'] != 0 && item['dsporder']<1000;
-				}*/
             }
         }
 

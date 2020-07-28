@@ -12,7 +12,6 @@
         var status;        
         var mytimeout; 
         
-		//vm.cashif = cashif;	
 		vm.initmode = 'menumode';
         vm.viewmode = vm.initmode;		
         vm.cashocxver = 0;
@@ -45,8 +44,8 @@
 		function ocxcmd(cmd) {
 			if (window.external.Test) {			
 				return window.external.BNCmd(cmd);
-			//} else if ("ActiveXObject" in window) {			
-			//	return cashif.BNCmd(cmd);
+			} else if ("ActiveXObject" in window) {			
+				return cashif.BNCmd(cmd);
 			}
 			return -1;
 		}		
@@ -56,13 +55,12 @@
 		}
 		
 		$scope.dinein = function() {
-			vm.order.saletype = '매장';
-			if ((vm.category == undefined) || ((vm.category.dsporder % 100) == 99))
-			{
+			vm.order.saletype = 98; //'매장';
+			if ((vm.category == undefined) || ((vm.category.dsporder % 100) == 99)) {
 				var i;
 				for (i=0; i<vm.categories.length; i++) {
-					if ((vm.categories[i].dsporder % 100)<99)
-					{
+					//if ((vm.categories[i].dsporder % 100)<99) {
+						if ((vm.categories[i].dsporder % 100)<90 || (vm.categories[i].dsporder % 100)==vm.order.saletype) {
 						vm.category = vm.categories[i];
 						break;
 					}
@@ -72,13 +70,11 @@
 		}
 
 		$scope.takeout = function() {
-			vm.order.saletype = '포장';
-			if ((vm.category == undefined) || ((vm.category.dsporder % 100) == 98))
-			{
+			vm.order.saletype = 99; //'포장';
+			if ((vm.category == undefined) || ((vm.category.dsporder % 100) == 98)) {
 				var i;
 				for (i=0; i<vm.categories.length; i++) {
-					if ((vm.categories[i].dsporder % 100)<90 || (vm.categories[i].dsporder % 100)==99)
-					{
+					if ((vm.categories[i].dsporder % 100)<90 || (vm.categories[i].dsporder % 100)==vm.order.saletype) {
 						vm.category = vm.categories[i];
 						break;
 					}
@@ -410,25 +406,17 @@
 				if (item['dsporder'] >= 1000) return false;
 				var optmod = item['dsporder'] % 100;
 				if (optmod<90) return true;
-				if (vm.order.saletype == '포장') {
-					return optmod==99;
-				} else {
-	                return optmod==98;
-				}
+				return (vm.order.saletype == optmod);
             }
         }
         
-        $scope.catfilter = function(){
+        $scope.menufilter = function(){
             return function(item){
                 if (item['catid'] != vm.category.id || item['active'] == 0 || item['dsporder']>=1000) return false;
 				//if (item['opt']<100 || item['opt']>=1000) return true;
 				var optmod = item['opt'] % 1000;
-				if (optmod<900) return true;
-				if (vm.order.saletype == '포장') {
-					return (optmod==999);
-				} else {
-	                return (optmod==998);
-				}
+				if (optmod<990) return true;
+				return (vm.order.saletype == optmod-900);
             }
         }
 

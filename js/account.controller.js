@@ -44,6 +44,15 @@
 			$scope.accdate = $filter('date')($scope.today,'yyyy-MM'); 
 		} else {
 			$scope.accdate = $filter('date')($scope.today,'yyyy-MM-dd'); 
+        }
+        
+        function ocxcmd(cmd) {
+			if (window.external.Test) {			
+				return window.external.BNCmd(cmd);
+			} else if (("ActiveXObject" in window) && cashif) {			
+				return cashif.BNCmd(cmd);
+			}			
+			return -1;
 		}
             
         $scope.prevDate = function() {
@@ -181,7 +190,7 @@
 					tkstr += ";----------------------------------------";
 				}
             }
-            status = cashif.BNCmd(tkstr);   
+            status = ocxcmd(tkstr);   
         }
         
     }
@@ -221,6 +230,14 @@
 			$scope.accdate = $filter('date')($scope.today,'yyyy-MM-dd'); 
 		}
         
+        function ocxcmd(cmd) {
+			if (window.external.Test) {			
+				return window.external.BNCmd(cmd);
+			} else if (("ActiveXObject" in window) && cashif) {			
+				return cashif.BNCmd(cmd);
+			}			
+			return -1;
+		}
         
         $scope.prevDate = function() {
             if (vm.monthly) {
@@ -367,7 +384,7 @@
             tkstr += ";----------------------------------------";
             tkstr += ";F%-25s%5s%10s|합계|"+$filter('number')($scope.totalnum)+"|"+$filter('number')($scope.totalamount);
             tkstr += ";----------------------------------------";
-            status = cashif.BNCmd(tkstr);   
+            status = ocxcmd(tkstr);   
         }
 
 		function fnExcelReport()

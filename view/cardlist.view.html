@@ -7,21 +7,21 @@
             <span class="icon-bar"></span> 
         </button>        
         <div class="navbar-brand">
-            <a href="#/cards/{{vm.siteid}}">CardList</a>
+            <a href="#/cards/{{vm.siteid}}">카드목록</a>
         </div>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">      
-			<li><a href='#/cards/{{vm.siteid}}'>Back </a></li>
+			<li><a href='#/cards/{{vm.siteid}}'>뒤로 </a></li>
 			<li ng-show="$root.globals.currentUser"><a href='#/userdetail/{{$root.globals.currentUser.userinfo.user_id}}'>ID : {{$root.globals.currentUser.username}} </a></li>
-			<li ng-show="$root.globals.currentUser"><a href='#/login'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+			<li ng-show="$root.globals.currentUser"><a href='#/login'><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a></li>
 			<li>
 				<form class="form-inline" style="margin-top:10px;">
 				  <div class="form-group">
-					<label for="find">UID or Name</label>
+					<label for="find">UID 또는 이름</label>
 					<input type="find" class="form-control" id="find" ng-model="find">
 				  </div>	  
-				  <button type="submit" class="btn btn-default" ng-click="vm.find()">Find</button>
+				  <button type="submit" class="btn btn-default" ng-click="vm.find()">찾기</button>
 				</form>
 			</li>
         </ul>
@@ -32,18 +32,18 @@
               <thead>
               <tr>
                 <th>id</th>
-                <th>name</th>				
-				<th>dept</th>
-				<th>phone</th>				
+                <th>이름</th>				
+				<th>부서</th>
+				<th>전화</th>				
 				<th>uid</th>
-				<th>type</th>
+				<th>타입</th>
 				<th></th>
               </tr>
               </thead>
 			  <tfoot ng-show="$root.globals.currentUser">				
                   <tr>
                       <td class="form-inline"><input type="text" size="10" class="form-control" name="id" ng-model="card.id" placeholder="Enter card id" required style="flow:left;">
-					  <button ng-show="card.id.length>7" ng-click="vm.search(card.id)" class="btn btn-info btn-sm">Search</button>
+					  <button ng-show="card.id.length>7" ng-click="vm.search(card.id)" class="btn btn-info btn-sm">찾기</button>
 					  </td>
 					  <td><input type="text" size="10" class="form-control" name="name" ng-model="card.name" placeholder="Enter name" required></td>
 					  <td><input type="text" size="10" class="form-control" name="gid" ng-model="card.dept" placeholder="Enter dept" required></td>
@@ -51,8 +51,8 @@
 					  <td><input type="text" size="10" class="form-control" name="uid" ng-model="card.uid" placeholder="Enter uid" required></td>
 					  <td><input type="text" size="10" class="form-control" name="active" ng-model="card.active" placeholder="Enter type" required></td>
                       <td>
-                          <button ng-show="vm.mode==0 && listtype==0" class="btn btn-default btn-sm" ng-click="vm.add()">Add Card</button>
-						  <button ng-show="vm.mode==1" class="btn btn-default btn-sm" ng-click="vm.edit()">Edit</button>
+                          <button ng-show="vm.mode==0 && listtype==0" class="btn btn-default btn-sm" ng-click="vm.add()">새카드</button>
+						  <button ng-show="vm.mode==1" class="btn btn-default btn-sm" ng-click="vm.edit()">수정</button>
                       </td>
                   </tr>				  
               </tfoot>
@@ -69,12 +69,12 @@
               <tr>
                 <th>no</th>
                 <th>id</th>
-				<th>name</th>				
-				<th>dept</th>
-				<th>phone</th>
-				<th>balance</th>
+				<th>이름</th>				
+				<th>부서</th>
+				<th>전화</th>
+				<th>잔액</th>
 				<th>uid</th>
-				<th>type</th>
+				<th>타입</th>
 				<th></th>
               </tr>
               </thead>
@@ -89,7 +89,7 @@
 					<td width='20%'>{{card.uid}}</td>
 					<td width='5%'>{{card.active}}</td>
 					<td width='10%'>
-						<button class="btn btn-default btn-sm" ng-click="vm.del(card.id)">delete</button>
+						<button class="btn btn-default btn-sm" ng-click="vm.del(card.id)">삭제</button>
 					</td>
                 </tr>
               </tbody>                  

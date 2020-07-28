@@ -7,28 +7,28 @@
                 <span class="icon-bar"></span>
             </button>
             <div class="navbar-brand">
-                <a href="#/cards/{{vm.siteid}}/{{card.gid}}">CardList - {{card.id}}</a>
+                <a href="#/cards/{{vm.siteid}}/{{card.gid}}">카드리스트 - {{card.id}}</a>
             </div>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href='#/cards/{{vm.siteid}}/{{card.gid}}'>Back </a>
+                    <a href='#/cards/{{vm.siteid}}/{{card.gid}}'>뒤로 </a>
                 </li>
                 <li ng-show="$root.globals.currentUser">
                     <a href='#/userdetail/{{$root.globals.currentUser.userinfo.user_id}}'>ID : {{$root.globals.currentUser.username}} </a>
                 </li>
                 <li ng-show="$root.globals.currentUser">
                     <a href='#/login'>
-                        <span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                        <span class="glyphicon glyphicon-log-out"></span> 로그아웃</a>
                 </li>
                 <li>
                     <form class="form-inline" style="margin-top:10px;">
                         <div class="form-group">
-                            <label for="find">UID or Name</label>
+                            <label for="find">UID 또는 이름</label>
                             <input type="find" class="form-control" id="find" ng-model="find">
                         </div>
-                        <button type="submit" class="btn btn-default" ng-click="vm.find()">Find</button>
+                        <button type="submit" class="btn btn-default" ng-click="vm.find()">찾기</button>
                     </form>
                 </li>
             </ul>
@@ -39,13 +39,13 @@
             <thead>
                 <tr>
                     <th>id</th>
-                    <th>group</th>
-                    <th>name</th>
-                    <th>phone</th>
-                    <th>dept.</th>
+                    <th>그룹</th>
+                    <th>이름</th>
+                    <th>전화</th>
+                    <th>부서</th>
                     <th>uid</th>
-                    <th>type</th>
-                    <th>bal:{{card.balance}}</th>
+                    <th>타입</th>
+                    <th>잔액:{{card.balance}}</th>
                 </tr>
             </thead>
             <tfoot ng-show="$root.globals.currentUser">
@@ -84,8 +84,8 @@
                         <input type="text" size="3" class="form-control" name="amount" ng-model="amt1">
                         <button class="btn btn-default btn-sm" ng-click="vm.paid()">차감</button>
                         <button class="btn btn-default btn-sm" ng-click="vm.charge()">충전</button>
-                        <button ng-show="card.balance>0" class="btn btn-default btn-sm" ng-click="vm.refund(card.id)">Refund</button>
-                        <button class="btn btn-default btn-sm" ng-click="vm.edit()">Edit</button>
+                        <button ng-show="card.balance>0" class="btn btn-default btn-sm" ng-click="vm.refund(card.id)">환불</button>
+                        <button class="btn btn-default btn-sm" ng-click="vm.edit()">수정</button>
                     </td>
                 </tr>
             </tfoot>
@@ -101,11 +101,11 @@
                 <thead>
                     <tr>
                         <th>no.</th>
-                        <th>date</th>
-                        <th>usage</th>
-                        <th>amount</th>
-                        <th>balance</th>
-                        <th>gid</th>
+                        <th>날짜</th>
+                        <th>내역</th>
+                        <th>금액</th>
+                        <th>잔액</th>
+                        <th>그룹ID</th>
                     </tr>
                 </thead>
                 <tbody>

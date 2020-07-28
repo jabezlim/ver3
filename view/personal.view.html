@@ -10,11 +10,11 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">        
-              <li><a href='' ng-click="vm.print()"><span class="glyphicon glyphicon-print"></span>Print</a></li>
-              <li><a href='#/account/{{vm.siteid}}/{{accdate}}'><span class="glyphicon glyphicon-usd"></span> by Checkout</a></li>
+              <li><a href='' ng-click="vm.print()"><span class="glyphicon glyphicon-print"></span>인쇄</a></li>
+              <li><a href='#/account/{{vm.siteid}}/{{accdate}}'><span class="glyphicon glyphicon-usd"></span> 결제별</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href='#/payments/{{vm.siteid}}' back-button class="link-back"><span class="glyphicon glyphicon-arrow-left"></span> Back</a></li>
+            <li><a href='#/payments/{{vm.siteid}}' back-button class="link-back"><span class="glyphicon glyphicon-arrow-left"></span> 뒤로</a></li>
           </ul>
         </div>
       </div>
@@ -31,7 +31,7 @@
     
 	<div class="row">
 		<iframe id="txtArea1" style="display:none"></iframe>
-		<button id="btnExport" ng-click="vm.export();"> EXPORT </button>
+		<button id="btnExport" ng-click="vm.export();"> 내보내기 </button>
 		<table class="table table-hover menulist" id="table1">
 		  <thead>
 		  <tr>
@@ -42,20 +42,20 @@
 			  <th colspan=2 class="text-center">중식</th>
 			  <th colspan=2 class="text-center">석식</th>
 			  <th colspan=2 class="text-center">기타</th>
-			  <th colspan=2 class="text-center">Total</th>
+			  <th colspan=2 class="text-center">합계</th>
 		  </tr>
 		  <tr>
 			  <th colspan=3></th>
-			  <th class="text-right">Qty</th>
-			  <th class="text-right">Amount</th>
-			  <th class="text-right">Qty</th>
-			  <th class="text-right">Amount</th>
-			  <th class="text-right">Qty</th>
-			  <th class="text-right">Amount</th>
-			  <th class="text-right">Qty</th>
-			  <th class="text-right">Amount</th>
-			  <th class="text-right">Qty</th>
-			  <th class="text-right">Amount</th>
+			  <th class="text-right">수량</th>
+			  <th class="text-right">금액</th>
+			  <th class="text-right">수량</th>
+			  <th class="text-right">금액</th>
+			  <th class="text-right">수량</th>
+			  <th class="text-right">금액</th>
+			  <th class="text-right">수량</th>
+			  <th class="text-right">금액</th>
+			  <th class="text-right">수량</th>
+			  <th class="text-right">금액</th>
 		  </tr>
 		  </thead>
 		  <tbody>

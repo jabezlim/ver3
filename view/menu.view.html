@@ -105,7 +105,7 @@
 			</table>
 		</div>
         <div class="mainwidth">				
-            <div ng-repeat="menuItem in vm.menus | filter:catfilter() as filtered">
+            <div ng-repeat="menuItem in vm.menus | filter:menufilter() as filtered">
                 <div class="menubox" ng-class="{'menuwidth16':filtered.length>15, 'menuwidth9':filtered.length>6 && filtered.length<16, 'menuwidth':filtered.length<7, 'leftclear':menuItem.opt==499}">
 					<div ng-click="setMenu(menuItem)" class="menuitem" ng-class="{'tblg':filtered.length<10}">
                         <img class="menuimage" ng-class="{'menuimage1':filtered.length>9}" src="{{CI_URL}}uploads/{{menuItem.image}}" alt="{{menuItem.name}}">
@@ -135,7 +135,8 @@
 				<pre class="desc1">{{vm.site.description}}</pre>
 			</div>
             <div class="ticket">
-                <p class="ticket1"><span class="ordtype">{{vm.order.saletype}}</span> 주문내역</p>
+				<!-- <p class="ticket1"><span class="ordtype">{{vm.order.saletype}}</span> 주문내역</p> -->
+				<p class="ticket1">주문내역</p>
                 <table ng-show="vm.order.selmenu.length>0" class="table table-striped" width="100%">
                     <tr class="info">
                         <th style="text-align:center; width:40%">메뉴</th>
@@ -168,7 +169,7 @@
         <div class="col-sm-2"></div>
         <form class="col-sm-8">          
             <div class="form-group">
-                <label for="pwd">Password:</label>
+                <label for="pwd">비밀번호:</label>
                 <input type="password" class="form-control" id="pwd" ng-model="vm.password">
             </div>
             <div>

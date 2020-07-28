@@ -119,7 +119,8 @@
 
 		<!-- Menu List -->
         <div class="text-center main mainwidth">	
-			<iframe id="uploadIFrame" name="uploadIFrame" style="display:none;visibility:hidden" onLoad="onUpload();"></iframe>
+			<!-- <iframe id="uploadIFrame" name="uploadIFrame" style="display:none;visibility:hidden" onLoad="onUpload();"></iframe> -->
+			<iframe id="uploadIFrame" name="uploadIFrame" style="display:none;visibility:hidden"></iframe>
             <div ng-repeat="menuItem in vm.menus | filter:catfilter() as filtered">
 				<div class="menubox" ng-class="{'menuwidth16':filtered.length>18, 'menuwidth9':filtered.length>6 && filtered.length<19, 'menuwidth':filtered.length<7, 'leftclear':menuItem.opt==499}">
 					<div class="menuitem" ng-class="{'tblg':filtered.length<10, 'tbnorm':filtered.length>9}">						
@@ -178,9 +179,8 @@
 			<div ng-show="vm.site.description.length>50 && vm.order.selmenu.length<3">
 				<pre class="desc1">{{vm.site.description}}</pre>
 			</div>
-            <div class="ticket text-center" id="ticket">
-				
-                <h3 style="text-align:center"><span class="ordtype">{{vm.order.saletype}}</span> 주문내역</h3>
+            <div class="ticket text-center" id="ticket">				
+                <h3 style="text-align:center">주문내역</h3>
                 <table ng-show="vm.order.selmenu.length>0" class="table table-striped ordertable" width="100%">
                     <tr class="info">
                         <th style="text-align:center; width:40%">메뉴</th>
@@ -293,26 +293,9 @@
                 </table>
 				
             </div>
-        </div>
-        
+        </div>        
     </div>
 	
-	<div ng-show="vm.viewmode=='typemode'" class="row">  
-		<div class="col-sm-12 text-center">
-			<div class="hidden-xs"><br><br><br></div>
-			<h1>어서오세요 {{vm.site.name}}입니다</h1>
-			<div class="hidden-xs"><br><br><br><br></div>
-			<button type="button" class="btn btn-primary btn-xlarge" ng-click="dinein()">
-				드시고 가시나요?<br>For Here<br>こちらでお召し上がりですか<br>在这里吃
-			</button>
-			<br>
-			<h3>아니면 Or</h3>
-			<br>
-			<button type="button" class="btn btn-success btn-xlarge" ng-click="takeout()">
-				포장해 가시나요?<br>To Go<br>お持ち帰りですか？<br>还是打包
-			</button>
-		<div>
-	</div>
 </section>
 </div>
 
