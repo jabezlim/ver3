@@ -5,8 +5,8 @@
         .module('app')		
 		.controller('ViewMenuController', ViewMenuController);
     
-    ViewMenuController.$inject = ['$routeParams', '$http', '$scope', '$timeout', '$filter', '$location', '$rootScope','Order'];
-    function ViewMenuController($routeParams, $http, $scope, $timeout, $filter, $location, $rootScope, Order) {
+    ViewMenuController.$inject = ['$routeParams', '$http', '$scope', '$timeout', '$filter', '$location', '$rootScope','Order','$interval'];
+    function ViewMenuController($routeParams, $http, $scope, $timeout, $filter, $location, $rootScope, Order, $interval) {
         var vm = this;        
         var i = 0;
         var status;        
@@ -38,6 +38,11 @@
 
 		vm.totalcnt = 0;
 
+		vm.modetimer = new Date();
+		vm.bPinin = false;
+		vm.pinnum = '1234';		 
+		vm.password = '';
+
 		loadCheck();
         loadSiteData(vm.siteid);                   
         
@@ -56,6 +61,7 @@
 		
 		$scope.dinein = function() {
 			vm.order.saletype = 98; //'매장';
+			vm.modetimer = new Date();
 			if ((vm.category == undefined) || ((vm.category.dsporder % 100) == 99)) {
 				var i;
 				for (i=0; i<vm.categories.length; i++) {
@@ -71,6 +77,7 @@
 
 		$scope.takeout = function() {
 			vm.order.saletype = 99; //'포장';
+			vm.modetimer = new Date();
 			if ((vm.category == undefined) || ((vm.category.dsporder % 100) == 98)) {
 				var i;
 				for (i=0; i<vm.categories.length; i++) {
@@ -84,46 +91,20 @@
 		}
 
         function saveCheck() {
-            localStorage.checkconf = JSON.stringify(vm.order.check);
+			localStorage.checkconf = JSON.stringify(vm.order.check);
+			localStorage.pinnum = JSON.stringify(vm.pinnum);
         }
         
         function loadCheck() {
             if(!localStorage.checkconf){
                 localStorage.checkconf = JSON.stringify(vm.order.check);									
+			}
+			if(!localStorage.pinnum){
+                localStorage.pinnum = JSON.stringify(vm.pinnum);									
             }
 			vm.order.check = JSON.parse(localStorage.checkconf);
-			//vm.order.check.zeropay = 1;
+			vm.pinnum = JSON.parse(localStorage.pinnum);
         }
-
-		$scope.setmenu1 = function(menu) {
-			vm.selmenu1 = menu;
-		}
-
-		$scope.setmenu2 = function(menu) {
-			vm.selmenu2 = menu;
-		}
-        
-		$scope.setselect = function() {
-			var newmenu = {
-				mname : [vm.selmenu.name + '(' + vm.selmenu1.mname[0] + '+' + vm.selmenu2.mname[0]+')'], 
-				price : Number(vm.selmenu.price),
-				qty : vm.selmenu.qty,
-				dsporder : vm.selmenu.dsporder,
-				opt : 0
-			};
-			
-			$scope.setMenu(newmenu);
-			vm.selmenu1 = null;
-			vm.selmenu2 = null;
-			vm.set1 = -1;
-			vm.set2 = -1;
-			
-		}
-
-		$scope.setDough = function(menu) {
-			vm.doughname = menu.mname[0];
-			vm.doughprice = menu.price;
-		}
 
 		$scope.optclose = function() {
 			vm.selmenu = {name : ''};
@@ -156,6 +137,7 @@
 		}
 
         $scope.setMenu = function(menu) {    
+			vm.modetimer = new Date();
 			if (vm.viewmode == 'menumode') {
 				if ((vm.totalcnt+menu.qty)>50) {
 					alert('총수량 50개 이하로 주문해주세요');
@@ -260,16 +242,8 @@
             Order.selmenu = []; 
 			$scope.selection = [];
 			vm.viewmode = vm.initmode;
-			draworder();
-			if (vm.type==2){
-				window.location.assign("../charger/")
-			}
-			else if (vm.type==11){
-				window.location.assign("../kftc/")
-			}
-			else if (vm.type==12){
-				window.location.assign("../payon/")
-			}
+			vm.bPinin = false;
+			draworder();			
         }
 
         function draworder() {
@@ -304,6 +278,10 @@
                         }
 						if (vm.site.active==2) {
 							vm.initmode = 'typemode';
+							vm.viewmode = vm.initmode;	
+						}
+						else if (vm.site.active==5) {
+							vm.initmode = 'pinmode';
 							vm.viewmode = vm.initmode;	
 						}
 
@@ -448,16 +426,7 @@
 
         $scope.cardcheckout = function() {
             draworder();    
-            if (Order.amount>0) {  
-				if (vm.type==2) {
-					vm.order.MENU_URL = '/viewmenu/'+vm.siteid+'/3'; // back to charger
-				}
-				else if (vm.type==11) {
-					vm.order.MENU_URL = '/viewmenu/'+vm.siteid+'/21'; // back to kftc
-				}
-				else if (vm.type==12) {
-					vm.order.MENU_URL = '/viewmenu/'+vm.siteid+'/13'; // back to payon
-				}
+            if (Order.amount>0) {  				
 				Order.detail = $scope.menuname;
                 $location.path('/paycard/'+vm.order.check.manualcheck);
             } else {
@@ -476,25 +445,23 @@
         }
                        
         $scope.cacherrorcheck = function() {
-            var status = ocxcmd('CV'+vm.site.coinval); //CashifService.setcoinval(cashif,vm.site.coinval);
-            var cashocxver = ocxcmd('VERSION'); //CashifService.getcashver(cashif);
-            var reval = ocxcmd('CHECKERR'); //CashifService.cacherrorcheck(cashif);
-            vm.coinerr = ocxcmd('CE'); //CashifService.getcoinerr(cashif);
+            var status = ocxcmd('CV'+vm.site.coinval); 
+            var cashocxver = ocxcmd('VERSION'); 
+            var reval = ocxcmd('CHECKERR'); 
+            vm.coinerr = ocxcmd('CE'); 
             if (reval>0) {
                 var user = confirm(reval+'원이 미반환되었습니다.\n'
                                    +'관리자에게 확인 후 재시도하시려면 확인을 눌러주세요\n cashif ver'+cashocxver
                                    +'\ncoin errcode:'+vm.coinerr
                                   );
                 if (user) {                               
-                    reval = ocxcmd('REFUND'+reval); //CashifService.refund(cashif, reval);
+                    reval = ocxcmd('REFUND'+reval); 
                     if (reval!=0) alert(reval);
                 }
             } else {                
                 alert('미반환 금액이 확인되지 않습니다.\nver:'+cashocxver+'\ncoin errcode:'+vm.coinerr);
             }
-        }
-        
-        
+        }        
               
 		function getTermInfo()
         {
@@ -515,28 +482,36 @@
             vm.viewmode = 'cardqry';
         }
         
-		$scope.backtomenu = function() {			
-			if (vm.type==2){
-				window.location.assign("../charger/")
-			} else if (vm.type==11){
-				window.location.assign("../kftc/")
-			} else if (vm.type==12){
-				window.location.assign("../payon/")
-			} else {
-				$scope.clearMenu();
-				vm.viewmode = vm.initmode;
-			}
+		$scope.backtomenu = function() {						
+			$scope.clearMenu();
+			vm.viewmode = vm.initmode;
         }
 
         $scope.keynum = function(digit) {
             vm.password += digit;
-        }
+		}
+		
+		$scope.clearpwd = function() {
+			var len = vm.password.length;
+			if (len>0) {
+				vm.password = vm.password.slice(0,len-1);
+			}
+		}
         
         vm.numcoin = 10;
         vm.coinout = 0;
         
         $scope.adenter = function() {
-            if (vm.password == vm.site.cardpw) { 
+			if (vm.viewmode=='pinmode') {
+				if (vm.password == vm.pinnum) {
+					vm.bPinin = true;
+					vm.password = '';
+					$scope.dinein();
+				} else {
+					vm.password = '';
+				}
+			}
+            else if (vm.password == vm.site.cardpw) { 
 				ocxlog('카드취소모드');
                 var tmpuser = {
                     'is_admin' : false,
@@ -602,32 +577,18 @@
         
 		function blinker() {
 			$('.blink_me').fadeOut(500).fadeIn(500);
+			var curtime = new Date();			
+			if (vm.initmode != 'menumode' && vm.viewmode == 'menumode')  {				
+				var diff = curtime-vm.modetimer;
+				if ((diff)>=20*1000) {
+					$interval.cancel(vm.mytmout);
+					$scope.backtomenu();					
+				}
+			}
 		}
 
-		setInterval(blinker, 500); //Runs every second
-
-		if (vm.type==2) {
-			vm.order.MENU_URL = '/viewmenu/'+vm.siteid+'/2';
-		}
-		else if (vm.type==11) {
-			vm.order.MENU_URL = '/viewmenu/'+vm.siteid+'/21';
-			vm.password = '';
-            vm.viewmode = 'cardqry';
-		}
-		else if (vm.type==12) {
-			vm.order.MENU_URL = '/viewmenu/'+vm.siteid+'/13';
-			vm.password = '';
-            vm.viewmode = 'cardqry';
-		}
-		else if (vm.type==3){
-			window.location.assign("../charger/")
-		}
-		else if (vm.type==21){
-			window.location.assign("../kftc/")
-		}
-		else if (vm.type==13){
-			window.location.assign("../payon/")
-		}
+		//setInterval(blinker, 500); //Runs every second		
+		$interval(blinker, 1000);
     }	
 	
 })();

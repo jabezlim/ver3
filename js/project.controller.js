@@ -223,7 +223,9 @@
 		// 2: takeout / dinein
 		// 3: print ticket
 		// 4: mealcard
-		$scope.prjopts = ['0','1','2','3','4'];
+		// 5: pinonly 
+		$scope.prjopts = ['0','1','2','3','4','5'];
+		$scope.prjoptstr = ['비활성','일반','매장/포장','인쇄식권','밀카드','핀입력'];
 
 
 		function loadSiteData(siteid) {
