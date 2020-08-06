@@ -16,7 +16,7 @@
 		$scope.BASE_URL = Order.BASE_URL;
 		vm.totalpaid = 0;
 
-        vm.viewmode = 'cardmode';
+        //vm.viewmode = 'cardmode';
         $scope.breceipt1 = Number($routeParams.checktype);
 
         vm.balance = 0;
@@ -59,6 +59,7 @@
         
 		function gotoMenu(res) 
 		{
+			//ocxlog('gotoMenu 1 '+Order.MENU_URL);
 			$location.path(Order.MENU_URL);	
 		}
 
@@ -76,6 +77,7 @@
 
         function handleReceipt()
         {            
+			//ocxlog('handleReceipt 1');
 			printOrder();
 			if ($scope.breceipt1==1) {
 				vm.RevTitle = "영수증";
@@ -84,12 +86,15 @@
 			gotoMenu(1);		
         }
         
-		function recordPayment(payment) {     
+		function recordPayment(payment) {   
+			//ocxlog('recordPayment 1');  
 			Order.recordPayment(payment).then(function(res) {
 				if (res) {
+					//ocxlog('recordPayment 2');  
 					var idx = 0;
 					for (idx=0; idx<Order.selmenu.length; idx++) {
 						Order.recordOrderItem(idx).then(function(res) {
+							//ocxlog('recordOrderItem 1');  
 							if (res>=0) {
 								if (res==Order.selmenu.length) {
 									handleReceipt();
@@ -117,8 +122,10 @@
 		}
 
 		function recordOrder(checktype) {     
+			//ocxlog('recordOrder 1');
 			Order.recordOrder(checktype).then(function(res) {				
 				if (res) {
+					//ocxlog('recordOrder 2');
 					vm.retry = 3;
 					vm.payment.orderid = Order.id;
 					vm.payment.checked_by = Order.checked_by;	
@@ -279,7 +286,7 @@
                 }
             }
 			if (vm.state==99) {                
-                vm.viewmode = 'menumode';
+                //vm.viewmode = 'menumode';
                 ocxcmd('KE'); //CardService.cardfinish();
             } else {
                 if (vm.state==15) {
@@ -302,7 +309,7 @@
 		
 		$scope.zeropaycheck = function() { 
 			ocxlog('ZEROPAY 결제요청 qr:'+vm.zeroqr);
-			vm.viewmode = 'cardmode';
+			//vm.viewmode = 'cardmode';
 			vm.RevTitle = "결제중입니다";
 			var status;
 			status = ocxcmd('Z1' + vm.balance+','+vm.zeroqr);
@@ -326,7 +333,7 @@
 			vm.order.id = 0;
 			vm.payment.amount = amount;
 			vm.balance = amount;
-			vm.viewmode = 'cardmode';
+			//vm.viewmode = 'cardmode';
 			vm.RevTitle = "ZEROPAY";
 			var status;
 			status = ocxcmd('Z0' + amount);
@@ -365,7 +372,7 @@
 			vm.order.id = 0;
 			vm.payment.amount = amount;
 			vm.balance = amount;
-			vm.viewmode = 'cardmode';
+			//vm.viewmode = 'cardmode';
 			vm.RevTitle = "신용거래";
 			var status;
 			status = ocxcmd('K1' + amount);

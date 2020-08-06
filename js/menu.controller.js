@@ -264,15 +264,12 @@
         }
         
         function loadSiteData(siteid) {
-			ocxlog('loadSiteData');
+			ocxlog('loadSiteData '+siteid);
             $http.get(API_URL+'projects/edit/'+siteid)
                 .then(
                     function successCallback(response) {
                         vm.site = response.data;
-						Order.InitOrder(vm.site);
-						if (vm.type==12) {
-							vm.order.MENU_URL = '/viewmenu/'+vm.siteid+'/13';
-						}
+						Order.InitOrder(vm.site);						
                         if (vm.site.background && vm.site.background.length) {
                             angular.element('body').css('background-image', 'url(\'../ci/uploads/' + vm.site.background + '\')');
                         }
@@ -516,15 +513,8 @@
                 var tmpuser = {
                     'is_admin' : false,
                     'user_id' : 0
-                }          
-				if (vm.type==2) {
-					$location.path('chgpayments/'+vm.siteid);
-				} else {
-					if (vm.type==11) {
-						vm.order.MENU_URL = '/viewmenu/'+vm.siteid+'/21';
-					}
-					$location.path('payments/'+vm.siteid);
-				}
+                }          								
+				$location.path('payments/'+vm.siteid);				
             } else if (Number(vm.password) == Number(vm.site.cardpw)+1) {
 				ocxlog('동전방출모드');
                 vm.password = '';
