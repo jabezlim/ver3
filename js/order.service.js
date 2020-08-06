@@ -26,7 +26,7 @@
         order.id = 0;
 		order.siteid = 0;
 		order.amount = 0;
-		order.selmenu = [];
+		//order.selmenu = [];
 		order.checked_by = 0;
 		order.detail = '';
 		order.saletype = 0;
@@ -68,7 +68,7 @@
 		order.recordOrderItem = recordOrderItem;
 		order.updateOrderItem = updateOrderItem;
 
-        initOrder(order.site);
+        //initOrder(order.site);
 
         return order;
 

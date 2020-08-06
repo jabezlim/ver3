@@ -59,17 +59,17 @@
         
 		function gotoMenu(res) 
 		{
-			//ocxlog('gotoMenu 1 '+Order.MENU_URL);
+			ocxlog('gotoMenu('+res+') '+Order.MENU_URL);
 			$location.path(Order.MENU_URL);	
 		}
 
 		function printOrder()
 		{
-			var prtres = PrintService.OrderPrint1(vm, vm.order, Order.selmenu);
+			var prtres = PrintService.OrderPrint1(vm, vm.order, vm.order.selmenu);
 			if (prtres!=123) {
 				$scope.RcvState += 'print1 error :'+prtres;
 			}
-			prtres = PrintService.OrderPrint2(vm, vm.order, Order.selmenu);
+			prtres = PrintService.OrderPrint2(vm, vm.order, vm.order.selmenu);
 			if (prtres!=123) {
 				$scope.RcvState += ' print2 error :'+prtres;
 			}
@@ -81,22 +81,23 @@
 			printOrder();
 			if ($scope.breceipt1==1) {
 				vm.RevTitle = "영수증";
-				PrintService.receiptPrint(vm, Order.selmenu, vm.payment);			
+				PrintService.receiptPrint(vm, vm.order.selmenu, vm.payment);			
 			}
 			gotoMenu(1);		
         }
         
 		function recordPayment(payment) {   
-			//ocxlog('recordPayment 1');  
+			//ocxlog('recordPayment enter, vm.order.selmenu.length='+vm.order.selmenu.length);  
 			Order.recordPayment(payment).then(function(res) {
 				if (res) {
-					//ocxlog('recordPayment 2');  
+					//ocxlog('recordPayment finish, vm.order.selmenu.length='+vm.order.selmenu.length);  
 					var idx = 0;
-					for (idx=0; idx<Order.selmenu.length; idx++) {
+					for (idx=0; idx<vm.order.selmenu.length; idx++) {
+						//ocxlog('recordOrderItem start idx='+idx); 
 						Order.recordOrderItem(idx).then(function(res) {
-							//ocxlog('recordOrderItem 1');  
+							//ocxlog('recordOrderItem finish res='+res);  
 							if (res>=0) {
-								if (res==Order.selmenu.length) {
+								if (res==vm.order.selmenu.length) {
 									handleReceipt();
 								}
 							} else {
@@ -122,13 +123,13 @@
 		}
 
 		function recordOrder(checktype) {     
-			//ocxlog('recordOrder 1');
+			//ocxlog('recordOrder '+checktype+', vm.order.selmenu.length='+vm.order.selmenu.length);
 			Order.recordOrder(checktype).then(function(res) {				
 				if (res) {
-					//ocxlog('recordOrder 2');
+					//ocxlog('recordOrder success');
 					vm.retry = 3;
-					vm.payment.orderid = Order.id;
-					vm.payment.checked_by = Order.checked_by;	
+					vm.payment.orderid = vm.order.id;
+					vm.payment.checked_by = vm.order.checked_by;	
 					vm.payment.id = undefined; // make sure
 					recordPayment(vm.payment);
 				} else {
@@ -153,7 +154,7 @@
                 .then(
                     function successCallback(response) {         
 						vm.RevTitle = "현금영수증";
-                        var prtres = PrintService.receiptPrint(vm, Order.selmenu, vm.payment);
+                        var prtres = PrintService.receiptPrint(vm, vm.order.selmenu, vm.payment);
                         gotoMenu(1);
                     }, 
                     function errorCallback(response) {
@@ -178,7 +179,7 @@
 					res =  cashif.GetBuffer('tbuf');
 				}
                 ocxlog('kftc_rsp:'+res);
-                
+                //ocxlog('vm.order.selmenu.length='+vm.order.selmenu.length); 
                 var items = res.split(';');
                 var i;
                 var resCode = '999';
@@ -209,7 +210,7 @@
                             vm.payment.appno = items[i].substr(1);
                             break;
                         case 'd' :
-                            vm.order.JumpoNo = items[i].substr(1);
+                            //vm.order.JumpoNo = items[i].substr(1);
                             break;
                         case 'e' :
                             break;
@@ -217,7 +218,7 @@
                             $scope.RcvState = items[i].substr(1);
                             break;
                         case 'h' : // serial no.
-                            vm.order.MaeipSeq = items[i].substr(1);
+                            //vm.order.MaeipSeq = items[i].substr(1);
                             break;
                         case 'j' : // installment
                             break;
@@ -239,7 +240,7 @@
                         case 'u' :
                             break;
                         case 'y' :
-                            vm.order.BalgubCodeName = items[i].substr(1);
+                            //vm.order.BalgubCodeName = items[i].substr(1);
                             break;                        
                     }
                 }
@@ -253,7 +254,7 @@
 							colorDark : "#000000",
 							colorLight : "#ffffff",
 							correctLevel : QRCode.CorrectLevel.H
-						});
+						});						
 						vm.state = 17;
 					}
 					else if (Trcode=='Z1') {
@@ -262,7 +263,8 @@
 					}
 					else if (Trcode.charAt(0)=='A') {					
 						vm.state = 10;                
-					} else if (Trcode.charAt(0)=='B') {
+					} 
+					else if (Trcode.charAt(0)=='B') {
 						vm.state = 13;                
 					} else {
 						$scope.RcvState += ":"+resCode;  
@@ -271,46 +273,52 @@
                 } else {
 					ocxlog('kftc_err:'+resCode);
 					$scope.RcvState += ":"+resCode;  
-					if (resCode=='E87') // 취소
-					{
+					if (resCode=='E87') { // 취소					
 						$scope.backtomenu();
 					}
-					else if (resCode=='614') // 카드번호 오류
-					{
+					else if (resCode=='614')  { // 카드번호 오류					
 						vm.cashrcno = '';
 						vm.curmode = 10;
 						vm.state = 0;
-					} else {
+					} 
+					else {
 						vm.state = 90;
 					}
                 }
             }
 			if (vm.state==99) {                
-                //vm.viewmode = 'menumode';
-                ocxcmd('KE'); //CardService.cardfinish();
-            } else {
-                if (vm.state==15) {
-                    vm.state = 99;                
-                } else if (vm.state==10) {
+				ocxcmd('KE'); 
+				$timeout.cancel(mytimeout);
+			}
+			else if (vm.state==17) {
+				// wait zeropay ok
+				ocxcmd('KE'); 
+				$timeout.cancel(mytimeout);
+				//mytimeout = $timeout(checkres,1000);
+			} 
+			else {				                
+				if (vm.state==10) {
+					//ocxlog('vm.state==10 orderid='+vm.order.id);
                     if (vm.order.id==0) {
                         recordOrder(17);
                     } else {
                         recordPayment();
                     }                    
                     vm.state = 99;                    
-                } else if (vm.state==13) {
+				} 
+				else if (vm.state==13) {
 					vm.payment.checked_by = $scope.breceipt1; 
                     updatePayment();
                     vm.state = 99;
-                }
+				}
+				$timeout.cancel(mytimeout);              
 				mytimeout = $timeout(checkres,1000);
             }			
 		}
 		
 		$scope.zeropaycheck = function() { 
-			ocxlog('ZEROPAY 결제요청 qr:'+vm.zeroqr);
-			//vm.viewmode = 'cardmode';
-			vm.RevTitle = "결제중입니다";
+			ocxlog('ZEROPAY 결제요청 qr:'+vm.zeroqr+', vm.order.selmenu.length='+vm.order.selmenu.length);
+			$scope.RcvState = "결제중입니다";
 			var status;
 			status = ocxcmd('Z1' + vm.balance+','+vm.zeroqr);
 			if (status>0) {
@@ -328,12 +336,11 @@
 				gotoMenu(0);				
 				return ;
 			}
-			ocxlog('ZEROPAY 거래시작 금액:'+amount+', 주문내역:'+Order.detail);
+			ocxlog('ZEROPAY 거래시작 금액:'+amount+', 주문내역:'+vm.order.detail+', vm.order.selmenu.length='+vm.order.selmenu.length);
 			$scope.RcvState = "QR 생성중..";
 			vm.order.id = 0;
 			vm.payment.amount = amount;
 			vm.balance = amount;
-			//vm.viewmode = 'cardmode';
 			vm.RevTitle = "ZEROPAY";
 			var status;
 			status = ocxcmd('Z0' + amount);
@@ -347,68 +354,6 @@
 			}  
 		}
 		
-        $scope.cardcheckout = function(amount) {
-			if ($scope.breceipt1==5){
-				var d = new Date();
-                vm.payment.saledate = $filter('date')(d,'yyyyMMdd');
-                vm.payment.saletime = $filter('date')(d,'HHmmss'); 
-				vm.payment.amount = amount;
-				vm.payment.appno = '';
-				$scope.RcvState = '외부결제';
-                vm.order.MaeipSeq = '0000';
-                vm.payment.cardtype = '외부결제';
-                vm.payment.cardno = '****************';
-                vm.order.BalgubCodeName = '0000';
-				$scope.breceipt1 = 0;
-				recordOrder(1);
-				return ;
-			}
-			if (amount<=0) {
-				gotoMenu(0);				
-				return ;
-			}
-			ocxlog('카드거래시작 금액:'+amount+', 주문내역:'+Order.detail);
-			$scope.RcvState = "카드를 넣고 티켓이 나올 때까지 절대로 카드를 빼지 마세요";
-			vm.order.id = 0;
-			vm.payment.amount = amount;
-			vm.balance = amount;
-			//vm.viewmode = 'cardmode';
-			vm.RevTitle = "신용거래";
-			var status;
-			status = ocxcmd('K1' + amount);
-			if (status>0) {
-				vm.timecnt = 0;
-				vm.state = 1;
-				mytimeout = $timeout(checkres,1000);
-			} else {
-				vm.state = 90;
-				$scope.RcvState = "카드결제오류";   
-			}  
-        }
-        
-		$scope.cashreceipt = function(amount, type) { 			
-            vm.payment.orderid = vm.order.id;
-            vm.payment.amount = amount;
-			vm.payment.checked_by = type;            
-			$scope.RcvState = "현금영수증";            
-			var status;
-			var rcnostr='';
-			if (vm.cashrcno.length>=0) {
-				rcnostr += ';0'+vm.cashrcno;
-			}
-			if (type==3) 
-				status = ocxcmd('K6' + amount + rcnostr);
-			else 
-				status = ocxcmd('K7' + amount + rcnostr);
-            if (status>0) {
-                vm.state = 1;
-				mytimeout = $timeout(checkres,1000);   
-            } else {
-                vm.state = 90;
-                $scope.RcvState = "통신오류";   
-            }                                  
-        }
-
         $scope.backtomenu = function() {   
 			ocxlog('카드거래취소');
 			ocxcmd('KE');
@@ -417,40 +362,16 @@
         }
         
         vm.reloadsite = function() {
-            gotoMenu(0);
+            $scope.backtomenu();
         }
        
 		function blinker() {
 			$('.blink_me').fadeOut(500).fadeIn(500);
 		}
 
-		setInterval(blinker, 500); //Runs every second
-				
-		$scope.keynum1 = function(digit) {
-            vm.cashrcno += digit;
-        }
-
-		$scope.backsp = function() {
-			var len = vm.cashrcno.length;
-			if (len){
-				vm.cashrcno = vm.cashrcno.substring(0,len-1);
-			}            
-        }
-
-		$scope.go = function() {
-			if (vm.curmode==10) {			
-				vm.curmode = 11;
-				$scope.cashreceipt(Order.amount, $scope.breceipt1);
-			}
-		}
-
-		$scope.cancelrc = function() {
-			vm.cashrcno = '';
-			gotoMenu(0);
-		}
-
+		setInterval(blinker, 500); //Runs every second		
 		
-		$scope.zeropayqr(Order.amount);
+		$scope.zeropayqr(vm.order.amount);
 		
     }	
 	

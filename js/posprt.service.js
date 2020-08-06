@@ -56,6 +56,9 @@
         function TicketPrint(vm, menu, idx) {            
             var tkstr; 
             var tkcode;
+            if ((menu.dsporder>=890) && (menu.dsporder<=899)) {
+				return 123; // 인쇄식권
+			}
             tkcode = idx==0 ? menu.ticketno : menu.ticketno+zero(idx,2);
 			if (menu.dsporder==997) {				
 				tkstr = menu.name + ";L----------------;B";
@@ -124,6 +127,9 @@
             var tknum = zero(menu.id % 1000,3);
             var tkcode;            
             var tkstr = "];L" + menu.name + ";L";
+            if ((menu.dsporder>=890) && (menu.dsporder<=899)) {
+				return 123; // 인쇄식권
+			}
             tkcode = idx==0 ? menu.ticketno : menu.ticketno+zero(idx,2);
             tkstr += menu.price + "원;S["+menu.category+" order no:"+vm.order.id+"];B";
             tkstr += tkcode + ";S";
