@@ -163,7 +163,11 @@
                 );
         }
                 
-        
+		
+		function zeropaytmout() { 
+			ocxlog('zeropaytmout');
+			$scope.backtomenu();
+		}
 		/*******************
 		* Card KFTC
 		********************/
@@ -294,7 +298,7 @@
 				// wait zeropay ok
 				ocxcmd('KE'); 
 				$timeout.cancel(mytimeout);
-				//mytimeout = $timeout(checkres,1000);
+				mytimeout = $timeout(zeropaytmout,20000);
 			} 
 			else {				                
 				if (vm.state==10) {
@@ -316,7 +320,10 @@
             }			
 		}
 		
+		
+
 		$scope.zeropaycheck = function() { 
+			$timeout.cancel(mytimeout);
 			ocxlog('ZEROPAY 결제요청 qr:'+vm.zeroqr+', vm.order.selmenu.length='+vm.order.selmenu.length);
 			$scope.RcvState = "결제중입니다";
 			var status;
