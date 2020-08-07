@@ -64,18 +64,23 @@
 									<td class="text-center"><button type="submit" class="btn btn-success btn-md numkey1" ng-click="onok()">OK</button></td>
 									<td class="text-center"></td>
 								</tr>
-							</table>                            
+                            </table>       
+                            <br>
+                            <div class="col-xs-12 col-sm-12">                                                                   
+                                <a href="" class="roundbt red" ng-click="backtomenu()">취소 <span>CANCEL</span></a>
+                            </div>                     
 					</div>
 					<div ng-hide="bcash">
-						<img src="{{BASE_URL}}images/{{vm.order.settings.cardimg}}" border="0" alt="">
-						<br>
-						<h3>취소시 위쪽 바의 취소 버튼을 눌러 주세요</h3>
-					<br>
-					</div>
-                    <!--a ng-show="vm.state == 90" href="" ng-click="backtomenu()" class="col-xs-12 col-sm-12"-->
-					<a href="" ng-click="backtomenu()" class="col-xs-12 col-sm-12">
-                        <img src="{{BASE_URL}}images/cancel-check.png" alt="cancel">
-                    </a>
+                        <div class="cardlayout">
+                            <img src="{{BASE_URL}}images/{{vm.order.settings.cardimg}}" border="0" alt="">
+                        </div>
+                        <div class="cardlayout">   
+                            <br>
+                            <h3>취소시 위쪽 바의 취소 버튼을<br> 먼저 눌러 주세요</h3>
+                            <br>
+                            <a ng-show="vm.timecnt>15 || vm.state>=90" href="" class="roundbt red" ng-click="backtomenu()">취소 <span>CANCEL</span></a>
+                        </div>
+					</div>                   
                 </div>
             </div>
             <div class="col-sm-2"></div>

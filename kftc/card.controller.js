@@ -5,8 +5,8 @@
         .module('app')		
 		.controller('CardController', CardController);
     
-    CardController.$inject = ['$routeParams', '$http', '$scope', '$timeout', '$filter', '$location', 'Order', 'PrintService'];
-    function CardController($routeParams, $http, $scope, $timeout, $filter, $location, Order, PrintService) {
+    CardController.$inject = ['$routeParams', '$http', '$scope', '$timeout', '$filter', '$location', 'Order', 'PrintService', '$sce'];
+    function CardController($routeParams, $http, $scope, $timeout, $filter, $location, Order, PrintService, $sce) {
         var vm = this;
         var API_URL = Order.settings.apiurl; 
         var status;        
@@ -31,6 +31,7 @@
 		vm.cashrcno = '';
 		vm.retry = 3;
 		vm.timecnt = 0;
+		$scope.RcvState1 = $sce.trustAsHtml('카드결제');
 
 		function ocxcmd(cmd) {
 			if (window.external.Test) {			
@@ -65,11 +66,11 @@
 		{
 			var prtres = PrintService.OrderPrint1(vm, vm.order, Order.selmenu);
 			if (prtres!=123) {
-				$scope.RcvState += 'print1 error :'+prtres;
+				//$scope.RcvState += 'print1 error :'+prtres;
 			}
 			prtres = PrintService.OrderPrint2(vm, vm.order, Order.selmenu);
 			if (prtres!=123) {
-				$scope.RcvState += ' print2 error :'+prtres;
+				//$scope.RcvState += ' print2 error :'+prtres;
 			}
 		}
 
@@ -93,13 +94,13 @@
 									handleReceipt();
 								}
 							} else {
-								$scope.RcvState += " recordOrderItem:"+idx+" failure";
+								//$scope.RcvState += " recordOrderItem:"+idx+" failure";
 								ocxlog("recordOrderItem:"+idx+" failure "+ Order.error);
 							}
 						});
 					}
 				} else {
-					$scope.RcvState += " recordPayment failure";
+					//$scope.RcvState += " recordPayment failure";
 					//ocxlog('recordPayment failure '+ Order.error);
 					ocxlog('recordPayment failure '+ Order.error + ' data:'+JSON.stringify(vm.payment));
 					if (--vm.retry>0) {
@@ -123,7 +124,7 @@
 					vm.payment.id = undefined; // make sure
 					recordPayment(vm.payment);
 				} else {
-					$scope.RcvState += " recordOrder failure";
+					//$scope.RcvState += " recordOrder failure";
 					ocxlog('recordOrder failure '+ Order.error);
 					if (--vm.retry>0) {
 						pausecomp(1000);
@@ -148,7 +149,7 @@
                         gotoMenu(1);
                     }, 
                     function errorCallback(response) {
-                        $scope.RcvState = 'updatePayment error '+response.status;
+                        //$scope.RcvState = 'updatePayment error '+response.status;
                     }
                 );
         }
@@ -204,7 +205,7 @@
                         case 'e' :
                             break;
                         case 'g' :
-                            $scope.RcvState = items[i].substr(1);
+                            $scope.RcvState1 = $sce.trustAsHtml(items[i].substr(1));
                             break;
                         case 'h' : // serial no.
                             vm.order.MaeipSeq = items[i].substr(1);
@@ -235,12 +236,12 @@
 					} else if (Trcode.charAt(0)=='B') {
 						vm.state = 13;                
 					} else {
-						$scope.RcvState += ":"+resCode;  
+						//$scope.RcvState += ":"+resCode;  
 						vm.state = 90;
 					}
                 } else {
 					ocxlog('kftc_err:'+resCode);
-                    $scope.RcvState += ":"+resCode;  
+                    //$scope.RcvState += ":"+resCode;  
 					if (resCode=='E87') // 취소
 					{
 						$scope.backtomenu();
@@ -275,31 +276,7 @@
                 }
 				mytimeout = $timeout(checkres,1000);
             }			
-        }
-
-		$scope.zerocheckout = function(amount) {			
-			if (amount<=0) {
-				gotoMenu(0);				
-				return ;
-			}
-			ocxlog('ZEROPAY 거래시작 금액:'+amount+', 주문내역:'+Order.detail);
-			$scope.RcvState = "QR 생성중..";
-			vm.order.id = 0;
-			vm.payment.amount = amount;
-			vm.balance = amount;
-			vm.viewmode = 'cardmode';
-			vm.RevTitle = "ZEROPAY";
-			var status;
-			status = ocxcmd('Z0' + amount);
-			if (status>0) {
-				vm.timecnt = 0;
-				vm.state = 1;
-				mytimeout = $timeout(checkres,1000);
-			} else {
-				vm.state = 90;
-				$scope.RcvState = "ZEROPAY 결제오류";   
-			}  
-		}
+        }		
 		
         $scope.cardcheckout = function(amount) {
 			if ($scope.breceipt1==5){
@@ -308,7 +285,7 @@
                 vm.payment.saletime = $filter('date')(d,'HHmmss'); 
 				vm.payment.amount = amount;
 				vm.payment.appno = '';
-				$scope.RcvState = '외부결제';
+				//$scope.RcvState = '외부결제';
                 vm.order.MaeipSeq = '0000';
                 vm.payment.cardtype = '외부결제';
                 vm.payment.cardno = '****************';
@@ -322,7 +299,8 @@
 				return ;
 			}
 			ocxlog('카드거래시작 금액:'+amount+', 주문내역:'+Order.detail);
-			$scope.RcvState = "카드를 넣고 티켓이 나올 때까지 절대로 카드를 빼지 마세요";
+			//$scope.RcvState = "카드를 넣고 티켓이 나올 때까지 절대로 카드를 빼지 마세요";
+			$scope.RcvState1 = $sce.trustAsHtml('카드를 넣고 티켓이 나올 때까지<br>절대로 카드를 빼지 마세요');
 			vm.order.id = 0;
 			vm.payment.amount = amount;
 			vm.balance = amount;
@@ -336,7 +314,7 @@
 				mytimeout = $timeout(checkres,1000);
 			} else {
 				vm.state = 90;
-				$scope.RcvState = "카드결제오류";   
+				$scope.RcvState1 = $sce.trustAsHtml("카드결제오류");   
 			}  
         }
         
@@ -344,7 +322,7 @@
             vm.payment.orderid = vm.order.id;
             vm.payment.amount = amount;
 			vm.payment.checked_by = type;            
-			$scope.RcvState = "현금영수증";            
+			$scope.RcvState1 = $sce.trustAsHtml("현금영수증");            
 			var status;
 			var rcnostr='';
 			if (vm.cashrcno.length>=0) {
@@ -359,7 +337,7 @@
 				mytimeout = $timeout(checkres,1000);   
             } else {
                 vm.state = 90;
-                $scope.RcvState = "통신오류";   
+                $scope.RcvState1 = $sce.trustAsHtml("통신오류");   
             }                                  
         }
 

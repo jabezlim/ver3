@@ -41,7 +41,8 @@
                 <div class = "panel panel-primary">
                     <div class="panel-heading"><h2>결제금액: {{vm.balance}} 원</h2></div>
                     <div class="panel-body">                        
-                        <h3 class="col-xs-12 col-sm-12 blink_me">{{RcvState}}</h3>
+                        <!-- <h3 class="col-xs-12 col-sm-12 blink_me">{{RcvState}}</h3> -->
+                        <h3 class="col-xs-12 col-sm-12 blink_me" ng-bind-html="RcvState1"></h3>
                         <div class="col-sm-12 col-md-9">
                             <h3><strong>영수증이 필요하시면 체크하세요 :</strong></h3> 
                         </div>
@@ -51,16 +52,13 @@
                     </div>
                 </div>
                 <div>
-                    <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="cardlayout">
                         <img src="{{BASE_URL}}images/{{vm.order.settings.cardimg}}" border="0" alt="">
                     </div>
-                    <div class="col-sm-12 col-md-12 col-lg-12">   
+                    <div class="cardlayout">   
                         <br>
-						<h3>취소시 위쪽 바의 취소 버튼을 먼저 눌러 주세요</h3>
+						<h3>취소시 위쪽 바의 취소 버튼을<br> 먼저 눌러 주세요</h3>
 						<br>
-						<!-- a ng-show="vm.timecnt>15 || vm.state>=90" href="" ng-click="backtomenu()">
-                            <img src="{{BASE_URL}}images/cancel-check.png" alt="cancel">
-                        </a -->
 						<a ng-show="vm.timecnt>15 || vm.state>=90" href="" class="roundbt red" ng-click="backtomenu()">취소 <span>CANCEL</span></a>
                     </div>
                 </div>

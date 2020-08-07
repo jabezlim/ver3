@@ -68,12 +68,6 @@
                 templateUrl: './view/personal.view.html',
                 controllerAs: 'vm'
             }) 
-
-			// .when('/personal2/:id/:gid/:date', {
-            //     controller: 'AccountPersonal2Ctrl',
-            //     templateUrl: './view/personal2.view.html',
-            //     controllerAs: 'vm'
-            // }) 
         
             .when('/payments/:id', {
                 controller: 'PaymentListCtrl',
@@ -104,24 +98,6 @@
                 templateUrl: './view/menu.view.html',
                 controllerAs: 'vm'
             })
-
-			// .when('/viewmenu/:id/:type', {
-            //     controller: 'ViewMenuController',
-            //     templateUrl: './view/charger.view.html',
-            //     controllerAs: 'vm'
-            // })
-
-			// .when('/charger/:id/:catno/:cardid/:amount/:home', {
-            //     controller: 'ChargerController',
-            //     templateUrl: './view/charger2.view.html',
-            //     controllerAs: 'vm'
-            // })
-
-			// .when('/chgpayments/:id', {
-            //     controller: 'PaymentListCtrl',
-            //     templateUrl: './kftc/chgpayments.view.html',
-            //     controllerAs: 'vm'
-            // })
         
 			.when('/paycash', {
                 controller: 'CashController',

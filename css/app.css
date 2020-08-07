@@ -39,7 +39,12 @@ html {
 	}
 	.orderlist {
         display : none;
-    }
+	}
+	
+	.cardlayout {
+		width : 50%;
+		float : left;
+	}
 }
 
 @media (min-width:768px) and (orientation:portrait) {
@@ -70,7 +75,11 @@ html {
 	}
 	.orderlist {
         display : none;
-    }	
+	}	
+	
+	.cardlayout {
+		width : 100%;
+	}
 }
 
 @media (max-width:767px) and (orientation:portrait) {
@@ -114,9 +123,13 @@ html {
 	#myNavbar {
 		background-color:#4d4d4d;
 	}
+	.cardlayout {
+		width : 100%;
+	}
 }
 
 body {
+	height: 100vh;
     padding-top: 3.5rem; 
 
 	background-color:#fcf9e9;
