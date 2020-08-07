@@ -298,7 +298,7 @@
 				// wait zeropay ok
 				ocxcmd('KE'); 
 				$timeout.cancel(mytimeout);
-				mytimeout = $timeout(zeropaytmout,20000);
+				mytimeout = $timeout(zeropaytmout,130000);
 			} 
 			else {				                
 				if (vm.state==10) {
