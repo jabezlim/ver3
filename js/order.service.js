@@ -63,6 +63,7 @@
 
 		order.paytype = paytype;
 		order.InitOrder = initOrder;
+		order.recordOrderAll = recordOrderAll;
 		order.recordOrder = recordOrder;
 		order.recordPayment = recordPayment;
 		order.recordOrderItem = recordOrderItem;
@@ -114,6 +115,37 @@
 			order.error = '';			
         } 
 		
+		function recordOrderAll(payment) {     
+			order.checked_by = payment.checked_by;
+			var order1 = { 
+                siteid : order.site.id,
+                amount : order.amount,
+                checked_by : payment.checked_by,
+                ticketno : order.ticketno,
+				termid : payment.termid,
+				cardtype : payment.cardtype,
+				cardno : payment.cardno,
+				appno : payment.appno,
+				saledate : payment.saledate,
+				saletime : payment.saletime,				
+				selmenus : order.selmenu
+            }						
+            return $http.post(order.settings.apiurl+'orders/saveAll',order1)
+                .then(
+                    function successCallback(response) {                          
+                        order.id = response.data.id; 
+						order.dayindex = response.data.dayindex; 
+                        return true;                         
+                    }, 
+                    function errorCallback(response) {
+						order.id = 0; 
+						order.dayindex = 0; 
+						order.error = response.status;
+						return false;           
+                    }
+                );
+        }
+
 		function recordOrder(checktype) {     
 			order.checked_by = checktype;
 			var order1 = { 

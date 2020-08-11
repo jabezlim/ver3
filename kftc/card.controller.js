@@ -146,6 +146,36 @@
 				}
 				
 			});
+		}
+		
+		function recordOrderAll(checktype) {     
+			//ocxlog('recordOrderAll '+checktype+', vm.order.selmenu.length='+vm.order.selmenu.length);
+			if (Order.selmenu.length==0) {
+				ocxlog("recordOrderItem lost!")
+				if (vm.items.length>0) {
+					ocxlog("copy from backup")
+					Order.selmenu = vm.items;
+				}
+			}
+			vm.payment.checked_by = checktype;
+			Order.recordOrderAll(vm.payment).then(function(res) {				
+				if (res) {
+					ocxlog('recordOrderAll success');
+					vm.retry = 3;
+					handleReceipt();
+				} else {					
+					ocxlog('recordOrderAll failure '+ Order.error);
+					if (--vm.retry>0) {
+						pausecomp(1000);
+						ocxlog('recordOrderAll retry...');
+						recordOrderAll(vm.payment);
+					} else {
+						ocxlog('recordOrderAll aborted !');
+						handleReceipt();
+					}
+				}
+				
+			});
         }
         
         function updatePayment() {         
@@ -273,7 +303,7 @@
                     vm.state = 99;                
                 } else if (vm.state==10) {
                     if (vm.order.id==0) {
-                        recordOrder(1);
+                        recordOrderAll(1);
                     } else {
                         recordPayment();
                     }                    
@@ -300,7 +330,7 @@
                 vm.payment.cardno = '****************';
                 vm.order.BalgubCodeName = '0000';
 				$scope.breceipt1 = 0;
-				recordOrder(1);
+				recordOrderAll(4);
 				return ;
 			}
 			if (amount<=0) {

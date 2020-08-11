@@ -13,6 +13,7 @@
         var mytimeout; 
         		
 		vm.order = Order;
+		vm.items = JSON.parse(JSON.stringify(Order.selmenu));
 		$scope.BASE_URL = Order.BASE_URL;
 		vm.totalpaid = 0;
 
@@ -92,6 +93,13 @@
 				if (res) {
 					//ocxlog('recordPayment finish, vm.order.selmenu.length='+vm.order.selmenu.length);  
 					var idx = 0;
+					if (Order.selmenu.length==0) {
+						ocxlog("recordOrderItem lost!")
+						if (vm.items.length>0) {
+							ocxlog("copy from backup")
+							Order.selmenu = vm.items;
+						}
+					}
 					for (idx=0; idx<vm.order.selmenu.length; idx++) {
 						//ocxlog('recordOrderItem start idx='+idx); 
 						Order.recordOrderItem(idx).then(function(res) {
@@ -141,6 +149,36 @@
 						recordOrder(checktype);
 					} else {
 						ocxlog('recordOrder aborted !');
+						handleReceipt();
+					}
+				}
+				
+			});
+		}
+		
+		function recordOrderAll(checktype) {     
+			//ocxlog('recordOrder '+checktype+', vm.order.selmenu.length='+vm.order.selmenu.length);
+			if (Order.selmenu.length==0) {
+				ocxlog("recordOrderItem lost!")
+				if (vm.items.length>0) {
+					ocxlog("copy from backup")
+					Order.selmenu = vm.items;
+				}
+			}
+			vm.payment.checked_by = checktype;
+			Order.recordOrderAll(vm.payment).then(function(res) {				
+				if (res) {
+					ocxlog('recordOrderAll success');
+					vm.retry = 3;
+					handleReceipt();
+				} else {					
+					ocxlog('recordOrderAll failure '+ Order.error);
+					if (--vm.retry>0) {
+						pausecomp(1000);
+						ocxlog('recordOrderAll retry...');
+						recordOrderAll(vm.payment);
+					} else {
+						ocxlog('recordOrderAll aborted !');
 						handleReceipt();
 					}
 				}
@@ -304,7 +342,7 @@
 				if (vm.state==10) {
 					//ocxlog('vm.state==10 orderid='+vm.order.id);
                     if (vm.order.id==0) {
-                        recordOrder(17);
+                        recordOrderAll(17);
                     } else {
                         recordPayment();
                     }                    

@@ -178,70 +178,21 @@
             }            
             return ocxcmd(rcstr);                
         }
-
-        function cancelOrderItem(orderItem, index) {
-			var data = {status:2};
-            //$http.put(API_URL+'orderItems/printed/'+orderItem.id+'/'+2)
-			$http.post(API_URL+'orderItems/printed/'+orderItem.id, data)
-                .then(
-                    function successCallback(response) {
-                        if (index==$scope.itemlist.length-1) {                            
-                            cancelReceipt(vm.cancelpayment);
-                            alert("취소되었습니다.");
-                            //location.reload();
-							ocxlog('취소 완료');
-							reload();
-                        }
-                    }, 
-                    function errorCallback(response) {
-						ocxlog('cancelOrderItem error '+index);
-                        alert(response.status); //data.message);
-                    }
-                );
-        }
-        
-        function cancelOrderItems(orderid) {
-            $http.get(API_URL+'orderItems/index/'+orderid)
-                .then(
-                    function successCallback(response) { 
-                        $scope.itemlist = response.data;   
-                        if ($scope.itemlist.length) {
-                            $scope.itemlist.forEach(cancelOrderItem);
-                        } 
-                    }, 
-                    function errorCallback(response) {
-						ocxlog('cancelOrderItems error');
-                        alert(response.status); //data.message);
-                    }
-                );
-        }
-        
-        function cancelOrder(orderid) {
-            var data = {active:0};
-            $http.post(API_URL+'orders/save/'+orderid, data)
-                .then(
-                    function successCallback(response) { 
-                        cancelOrderItems(orderid);
-                    }, 
-                    function errorCallback(response) {
-						ocxlog('cancelOrder error');
-                        alert(response.status); //data.message);
-                    }
-                );
-        }
-        
-        
+                
         function cancelPayment(payment) {
 			var d = new Date();
             var data = {refund_on:$filter('date')(d,'MMddHHmmss')};
-            $http.post(API_URL+'payments/cancel/'+payment.id, data)
+            $http.post(API_URL+'payments/cancelorder/'+payment.orderid, data)
                 .then(
                     function successCallback(response) {                         
-                        cancelOrder(payment.orderid);                        
+                        cancelReceipt(vm.cancelpayment);
+                        alert("취소되었습니다.");
+                        ocxlog('취소 완료');
+                        reload();
                     }, 
                     function errorCallback(response) {
-						ocxlog('cancelPayment error');
-                        alert(response.status); //data.message);
+						ocxlog('cancelPayment error '+JSON.stringify(response));
+                        alert('취소 오류'); 
                     }
                 );
         }
@@ -411,7 +362,6 @@
 					if (resCode=='E87') {
 						$scope.backtomenu();
 					} else if (resCode==500 || resCode=='500') { // 이미 취소된 거래
-						//cancelPayment(vm.cancelpayment)
 						vm.state = 13;
 					} else {
 						vm.state = 90;
@@ -428,8 +378,6 @@
 					}					
 				}
 				if (vm.state>=90) {                
-					//if (vm.state==99)
-					//	vm.viewmode = 'listmode';
 					ocxcmd('KE'); //CardService.cardfinish();
 				} 
             }
