@@ -45,12 +45,6 @@
 
 		loadCheck();
 		loadSiteData(vm.siteid);                   
-		
-		window.onkeydown = function(e) {
-			//console.log('onkwydown '+e.keyCode);
-			if (e.keyCode == 8 && e.target == document.body)
-				e.preventDefault();
-		}
         
 		function ocxcmd(cmd) {
 			if (window.external.Test) {			
