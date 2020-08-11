@@ -13,7 +13,7 @@
         var mytimeout; 
         		
 		vm.order = Order;
-		vm.items = JSON.parse(JSON.stringify(Order.selmenu));
+		vm.items = JSON.parse(JSON.stringify(Order));
 		$scope.BASE_URL = Order.BASE_URL;
 		vm.totalpaid = 0;
 
@@ -30,7 +30,7 @@
 		vm.state = 0;
 		vm.RevTitle = "영 수 증";
 		vm.cashrcno = '';
-		vm.retry = 3;
+		vm.retry = 1;
 		vm.timecnt = 0;
 		vm.zeroqr = '';
 
@@ -95,9 +95,9 @@
 					var idx = 0;
 					if (Order.selmenu.length==0) {
 						ocxlog("recordOrderItem lost!")
-						if (vm.items.length>0) {
+						if (vm.items.selmenu.length>0) {
 							ocxlog("copy from backup")
-							Order.selmenu = vm.items;
+							Order = vm.items;
 						}
 					}
 					for (idx=0; idx<vm.order.selmenu.length; idx++) {
@@ -156,29 +156,32 @@
 			});
 		}
 		
-		function recordOrderAll(checktype) {     
+		function recordOrder1(checktype) {     
 			//ocxlog('recordOrder '+checktype+', vm.order.selmenu.length='+vm.order.selmenu.length);
 			if (Order.selmenu.length==0) {
 				ocxlog("recordOrderItem lost!")
-				if (vm.items.length>0) {
+				if (vm.items.selmenu.length>0) {
 					ocxlog("copy from backup")
-					Order.selmenu = vm.items;
+					Order.selmenu = vm.items.selmenu;
+					Order.amount = vm.items.amount;
 				}
 			}
 			vm.payment.checked_by = checktype;
-			Order.recordOrderAll(vm.payment).then(function(res) {				
+			Order.recordOrderAll(vm.payment).then(function(res) {	
+				ocxlog('recordOrder1 res='+JSON.stringify(res));			
 				if (res) {
-					ocxlog('recordOrderAll success');
-					vm.retry = 3;
+					ocxlog('recordOrder1 success '+Order.dayindex);
+					vm.retry = 1;
 					handleReceipt();
 				} else {					
-					ocxlog('recordOrderAll failure '+ Order.error);
+					alert('error '+Order.error);
+					ocxlog('recordOrder1 failure '+ Order.error);
 					if (--vm.retry>0) {
 						pausecomp(1000);
-						ocxlog('recordOrderAll retry...');
-						recordOrderAll(vm.payment);
+						ocxlog('recordOrder1 retry...');
+						recordOrder1(vm.payment);
 					} else {
-						ocxlog('recordOrderAll aborted !');
+						ocxlog('recordOrder1 aborted !');
 						handleReceipt();
 					}
 				}
@@ -342,7 +345,7 @@
 				if (vm.state==10) {
 					//ocxlog('vm.state==10 orderid='+vm.order.id);
                     if (vm.order.id==0) {
-                        recordOrderAll(17);
+                        recordOrder1(17);
                     } else {
                         recordPayment();
                     }                    

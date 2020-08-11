@@ -152,9 +152,10 @@
 			//ocxlog('recordOrderAll '+checktype+', vm.order.selmenu.length='+vm.order.selmenu.length);
 			if (Order.selmenu.length==0) {
 				ocxlog("recordOrderItem lost!")
-				if (vm.items.length>0) {
+				if (vm.items.selmenu.length>0) {
 					ocxlog("copy from backup")
-					Order.selmenu = vm.items;
+					Order.selmenu = vm.items.selmenu;
+					Order.amount = vm.items.amount;
 				}
 			}
 			vm.payment.checked_by = checktype;

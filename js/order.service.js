@@ -129,7 +129,7 @@
 				saledate : payment.saledate,
 				saletime : payment.saletime,				
 				selmenus : order.selmenu
-            }						
+			}
             return $http.post(order.settings.apiurl+'orders/saveAll',order1)
                 .then(
                     function successCallback(response) {                          
@@ -140,7 +140,7 @@
                     function errorCallback(response) {
 						order.id = 0; 
 						order.dayindex = 0; 
-						order.error = response.status;
+						order.error = JSON.stringify(response);
 						return false;           
                     }
                 );

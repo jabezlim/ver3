@@ -80,7 +80,7 @@
         }
 
 		function OrderPrint1(vm, order, selmenu) {
-            var tknum = zero(order.dayindex % 1000,3);
+            var tknum = zero(vm.order.dayindex % 1000,3);
             var tkstr = "PP0L[";			
 			var i, j, cnt = 0;
 			var status = 0;
@@ -96,7 +96,7 @@
 					return 123;
 				}
 				if (selmenu[i].dsporder>=900) {
-					for (j=0; j<selmenu[i].num; j++) {
+					for (j=0; j<selmenu[i].num; j++) {                        
 						status = TicketPrint(vm, selmenu[i], selmenu[i].num>1 ? j+1 : 0);
 						if (status!=123) {
 							return status;
@@ -124,7 +124,7 @@
         }
 
 		function TicketPrint2(vm, menu, idx) {
-            var tknum = zero(menu.id % 1000,3);
+            var tknum = zero((idx+1) % 1000,3);
             var tkcode;            
             var tkstr = "];L" + menu.name + ";L";
             if ((menu.dsporder>=890) && (menu.dsporder<=899)) {
@@ -140,7 +140,7 @@
         }
 
 		function OrderPrint2(vm, order, selmenu) {
-            var tknum = zero(order.dayindex % 1000,3);
+            var tknum = zero(vm.order.dayindex % 1000,3);
             var tkstr = "PP9L ;L ;S------------------------;";			
 			tkstr += "L["+order.saletype+" 주문서:"+tknum+" ];";
 			var mname='';
@@ -148,6 +148,7 @@
             for (i=0; i<selmenu.length; i++) {
 				if (selmenu[i].dsporder>=900) {
 					for (j=0; j<selmenu[i].num; j++) {
+
 						status = TicketPrint2(vm, selmenu[i], selmenu[i].num>1 ? j+1 : 0);
 						if (status!=123) {
 							return status;
