@@ -145,10 +145,10 @@
         $scope.setMenu = function(menu) {    
 			vm.modetimer = new Date();
 			if (vm.viewmode == 'menumode') {
-				if ((vm.totalcnt+menu.qty)>50) {
-					alert('총수량 50개 이하로 주문해주세요');
-					return ;
-				}
+				//if ((vm.totalcnt+menu.qty)>50) {
+				//	alert('총수량 50개 이하로 주문해주세요');
+				//	return ;
+				//}
 				if (vm.selmenu.name.length==0) {
 					vm.optprice = 0;
 					vm.optname = '';
