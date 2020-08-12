@@ -43,7 +43,7 @@
         }
 
         function loadAllProjects() {
-			//if (vm.CTYPE.length==0) 
+			if (vm.CTYPE.length==0) 
 			{
 				$http.get(API_URL+'projects/')
                 .then(
@@ -55,7 +55,7 @@
                     }
                 );
 			} 
-			/* else {
+			else {
 				$http.get(API_URL+'projects/type/'+vm.CTYPE)
 					.then(
 						function successCallback(response) {
@@ -65,7 +65,7 @@
 							
 						}
 					);
-			}*/
+			}
         }
 
         function deleteProject(Project) {

@@ -119,7 +119,7 @@
 			order.checked_by = payment.checked_by;
 			var order1 = { 
                 siteid : order.site.id,
-                amount : order.amount,
+                amount : payment.amount,
                 checked_by : payment.checked_by,
                 ticketno : order.ticketno,
 				termid : payment.termid,
