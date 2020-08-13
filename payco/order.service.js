@@ -63,7 +63,8 @@
 
 		order.payco = {
 			apipath : "https://alpha-dongle.payco.com",
-			proxy: "http://amz4.local.tst/ver3/payco/proxy.php",
+			//proxy: "http://amz4.local.tst/ver3/payco/proxy.php",
+			proxy: "http://amz4.menuroid.co.kr/ver3/payco/proxy.php",
 			vanCorpCode: "CMNKFTC", 
 			vanPosTid: "KK06075399", 
 			registrationNumber: "1098607871"			
