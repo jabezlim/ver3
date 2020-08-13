@@ -1,0 +1,78 @@
+<!--div oncontextmenu="return false" ondragstart="return false" onselectstart="return false" -->
+<nav class="navbar navbar-white navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+        </button>
+        <div ng-show="vm.site.image" class="navbar-brand brandimage">           
+            <a href="" ng-click="vm.reloadsite()" >
+                <img class="brandimage" ng-show="vm.site.image" src="{{CI_URL}}uploads/{{vm.site.image}}" alt="{{vm.site.name}}">
+                <span>&nbsp;{{vm.order.site.name}}</span>
+            </a>
+        </div>
+        <div ng-hide="vm.site.image" class="navbar-brand">
+            <a href="" ng-click="vm.reloadsite()" >{{vm.order.site.name}}</a>
+        </div>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li ng-repeat="cat in vm.categories | filter:{active:1}" ng-class="{'active': cat.id==vm.category.id}" class="category" ng-click="vm.setcat(cat)">
+            <span ng-hide="cat.image" class="cattext" ><strong>{{cat.name}}</strong></span>
+            <img ng-show="cat.image" src="{{CI_URL}}uploads/{{cat.image}}" alt="{{cat.name}}">
+        </li>            
+      </ul>
+      <ul class="nav navbar-nav">        	    
+        <!--li><a href='#/editmenu/{{vm.siteid}}/{{vm.category.id}}'><span class="glyphicon glyphicon-edit"></span> Edit</a></li -->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<section class="container"> 
+    <div class="row">        
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <div class="text-center">                            
+                <br><br><br>               
+                <div class = "panel panel-primary">
+                    <div class="panel-heading"><h2>결제금액: {{vm.balance}} 원</h2></div>
+                    <div class="panel-body">                        
+                        <h3 class="col-xs-12 col-sm-12 blink_me">{{RcvState}}</h3>
+                        <div class="col-sm-12 col-md-9">
+                            <h3><strong>영수증이 필요하시면 체크하세요 :</strong></h3> 
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <input type="checkbox" class="form-control editbox" ng-model="breceipt1" ng-true-value="1" ng-false-value="0">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div ng-show="vm.state==17" class="col-sm-12 col-md-12 col-lg-12">
+                        <div id="qrcode" class="col-md-3 mr-3">
+                            
+                        </div>
+                        <div class="col-md-1">&nbsp;</div>
+                        <div class="text-left col-md-8" >
+                            <h3>페이코 앱에서 QR코드 스캔,<br>결제를 진행해주세요.</h3>
+                        </div>
+                    </div>
+                    <div  class="col-sm-12 col-md-12 col-lg-12">   
+                        <br>
+						<!-- <h3>구매취소시 아래의 취소 버튼을 눌러 주세요</h3> -->
+						<br> 
+                        <!-- <a ng-show="vm.state==17" href="" class="roundbt cobalt" ng-click="zeropaycheck()">확인 <span>OK</span></a> -->
+						<a ng-show="vm.state==17 || vm.timecnt>15 || vm.state>=90" href="" class="roundbt red" ng-click="backtomenu()">취소 <span>CANCEL</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>		
+    </div>
+
+</section>
+</div>
+

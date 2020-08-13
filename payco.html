@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=1,initial-scale=1,user-scalable=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=9"> 
+    <title>Menuroid</title>
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css" />    
+	<link href="./payco/app.css" rel="stylesheet" />
+	<link href="./css/login.css" rel="stylesheet" />
+	 
+</head>
+<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+<!-- <body>	 -->
+    <span id="dummy"></span>
+	<object id="cashif" classid="CLSID:B098E1DC-2708-4997-AE0F-F9B88DBE2DF0" width="0" height="0"></object> 
+    <div ng-view></div>
+
+    <footer class="footer">
+		<div>
+			<p>&copy; 2016~2020 by Menuroid.com all rights reserved.</p>
+		</div>
+	</footer>
+
+
+    <script src="../lib/jquery/jquery.min.js"></script>
+	<script src="../lib/bootstrap/js/bootstrap.min.js"></script> 
+    
+    <script src="../lib/angular/angular.min.js"></script>
+    <script src="../lib/angular/angular-route.min.js"></script>
+    <script src="../lib/angular/angular-cookies.min.js"></script>
+	<script src="../lib/angular/angular-resource.min.js"></script>
+	<!-- <script src="../lib/angular/angular-sanitize.js"></script> -->
+	
+	<script type="text/javascript" src="./payco/jquery.ajax-cross-origin.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac-sha256.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/enc-base64.min.js"></script>
+	
+    <script src="./payco/app.js"></script>
+	<script src="./payco/order.service.js"></script>
+
+    <script src="./js/flash.service.js"></script>	
+    <script src="./js/user.service.js"></script>
+    <script src="./js/login.controller.js"></script>
+    <script src="./js/register.controller.js"></script>
+    <script src="./js/userdetail.controller.js"></script>
+
+    <script src="./js/project.controller.js"></script>  
+	<script src="./js/account.controller.js"></script>
+	<script src="./js/idcard.controller.js"></script>  
+	<script src="./js/personal.controller.js"></script>
+
+	<script src="./js/posprt.service.js"></script>	
+	<script src="./cash/cash.controller.js"></script>
+	<script src="./kftc/card.controller.js"></script>
+	<script src="./lib/qrcode.min.js"></script>
+	<script src="./payco/payco.controller.js"></script>
+	<script src="./payco/payment.controller.js"></script>
+	<script src="./js/manpay.controller.js"></script>
+
+	<script src="./js/editmenu.controller.js"></script>    
+    <script src="./js/pos.controller.js"></script>
+    <script src="./payco/menu.controller.js"></script>
+
+</body>
+</html>

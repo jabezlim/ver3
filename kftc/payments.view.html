@@ -66,21 +66,22 @@
 								</tr>
                             </table>       
                             <br>
-                            <div class="col-xs-12 col-sm-12">                                                                   
-                                <a href="" class="roundbt red" ng-click="backtomenu()">취소 <span>CANCEL</span></a>
-                            </div>                     
+                                                
 					</div>
 					<div ng-hide="bcash">
                         <div class="cardlayout">
                             <img src="{{BASE_URL}}images/{{vm.order.settings.cardimg}}" border="0" alt="">
                         </div>
-                        <div class="cardlayout">   
+                        <div ng-hide="bnoPopup" class="cardlayout">   
                             <br>
                             <h3>취소시 위쪽 바의 취소 버튼을<br> 먼저 눌러 주세요</h3>
-                            <br>
-                            <a ng-show="vm.timecnt>15 || vm.state>=90" href="" class="roundbt red" ng-click="backtomenu()">취소 <span>CANCEL</span></a>
+                            <br>                            
                         </div>
-					</div>                   
+                    </div>    
+                    <div ng-show="vm.timecnt>15 || vm.state>=90 || bcash" class="col-xs-12 col-sm-12">                                                                   
+                        <a href="" class="roundbt red" ng-click="backtomenu()">취소 <span>CANCEL</span></a>                        
+                    </div> 
+                                
                 </div>
             </div>
             <div class="col-sm-2"></div>
