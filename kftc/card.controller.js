@@ -13,7 +13,7 @@
         var mytimeout; 
         
 		vm.order = Order;
-		vm.items = JSON.parse(JSON.stringify(Order.selmenu));
+		vm.items = JSON.parse(JSON.stringify(Order));
 
 		$scope.BASE_URL = Order.BASE_URL;
 		vm.totalpaid = 0;
@@ -91,9 +91,10 @@
 					var idx = 0;
 					if (Order.selmenu.length==0) {
 						ocxlog("recordOrderItem lost!")
-						if (vm.items.length>0) {
+						if (vm.items.selmenu.length>0) {
 							ocxlog("copy from backup")
-							Order.selmenu = vm.items;
+							Order.selmenu = vm.items.selmenu;
+							Order.amount = vm.items.amount;
 						}
 					}
 					for (idx=0; idx<Order.selmenu.length; idx++) {
