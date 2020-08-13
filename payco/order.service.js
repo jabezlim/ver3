@@ -54,8 +54,8 @@
 			manualcheck : 0, 
 			texrecpt : 1, 
 			genrecpt : 0, 
-			zeropay : 1,  
-			option7 : 0,
+			zeropay : 0,  
+			payco : 1,
 			option8 : 0,
 			option9 : 0,
 			option10 : 0

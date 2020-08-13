@@ -184,7 +184,7 @@
 					<span>CARD</span></a>
 				<a ng-show="vm.order.check.cashcheck" href="" class="roundbt orange" ng-click="cachcheckout()">현금
 					<span>CASH</span></a>				
-                <a ng-show="vm.order.check.zeropay" href="" class="roundbt payco" ng-click="paycocheckout()">
+                <a ng-show="vm.order.check.payco" href="" class="roundbt payco" ng-click="paycocheckout()">
 					<img src="./payco/payco.png" width="90"/>
 					<span>페이코</span>
 				</a>
@@ -307,8 +307,8 @@
 								ng-change="vm.saveCheck()" ng-model="vm.order.check.genrecpt" ng-true-value="1"
 								ng-false-value="0"></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-						<td>제로페이&nbsp;&nbsp;<input type="checkbox" class="form-control editbox"
-								ng-change="vm.saveCheck()" ng-model="vm.order.check.zeropay" ng-true-value="1"
+						<td>페이코&nbsp;&nbsp;<input type="checkbox" class="form-control editbox"
+								ng-change="vm.saveCheck()" ng-model="vm.order.check.payco" ng-true-value="1"
 								ng-false-value="0"></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 						<td></td>
