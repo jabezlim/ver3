@@ -76,8 +76,27 @@
 			}
 		}
 
+		function lostcheck()
+		{
+			if (Order.selmenu.length==0) {
+				ocxlog("OrderItem lost!");
+				if (vm.items.selmenu.length>0) {
+					ocxlog("copy from backup amount:"+vm.items.amount);
+					Order.selmenu = vm.items.selmenu;
+					Order.amount = vm.items.amount;
+				} else {
+					ocxlog("OrderItem lost backup failed !");
+					return false;
+				}
+			}
+			return true;
+		}
+
         function handleReceipt()
         {            
+			if (!lostcheck()) {
+				gotoMenu(1);
+			}
 			printOrder();
 			if ($scope.breceipt1==1) {
 				PrintService.receiptPrint(vm, Order.selmenu, vm.payment);			
@@ -89,17 +108,10 @@
 			Order.recordPayment(payment).then(function(res) {
 				if (res) {
 					var idx = 0;
-					if (Order.selmenu.length==0) {
-						ocxlog("OrderItem lost!");
-						if (vm.items.selmenu.length>0) {
-							ocxlog("copy from backup amount:"+vm.items.amount);
-							Order.selmenu = vm.items.selmenu;
-							Order.amount = vm.items.amount;
-						} else {
-							ocxlog("backup lost!");
-							handleReceipt();
-						}
-					}
+					if (!lostcheck()) {
+						handleReceipt();
+						return ;
+					}					
 					for (idx=0; idx<Order.selmenu.length; idx++) {
 						Order.recordOrderItem(idx).then(function(res) {
 							if (res>=0) {
@@ -154,16 +166,9 @@
 		
 		function recordOrderAll(checktype) {     
 			//ocxlog('recordOrderAll '+checktype+', vm.order.selmenu.length='+vm.order.selmenu.length);
-			if (Order.selmenu.length==0) {
-				ocxlog("OrderItem lost!");
-				if (vm.items.selmenu.length>0) {
-					ocxlog("copy from backup amount:"+vm.items.amount);
-					Order.selmenu = vm.items.selmenu;
-					Order.amount = vm.items.amount;
-				} else {
-					ocxlog("backup lost!");
-					handleReceipt();
-				}
+			if (!lostcheck()) {				
+				handleReceipt();
+				return ;
 			}
 			vm.payment.checked_by = checktype;
 			Order.recordOrderAll(vm.payment).then(function(res) {				
