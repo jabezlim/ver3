@@ -18,7 +18,7 @@
 			bnval : 1000,
 			pageSize : 10,
 			apiurl : order.CI_URL+'index.php/api2/',
-			ctype : 'ver3/',
+			ctype : '', //'ver3/',
 			cardimg : 'insertcardv.png'
 		};
 

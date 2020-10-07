@@ -18,7 +18,7 @@
 			bnval : 1000,
 			pageSize : 10,
 			apiurl : order.CI_URL+'index.php/api2/',
-			ctype : 'ver3/',
+			ctype : '', //'ver3/',
 			cardimg : 'insertcardv.png'
 		};
 
@@ -63,8 +63,8 @@
 
 		order.payco = {
 			apipath : "https://alpha-dongle.payco.com",
-			//proxy: "http://amz4.local.tst/ver3/payco/proxy.php",
-			proxy: "http://amz4.menuroid.co.kr/ver3/payco/proxy.php",
+			proxy: "http://menuroid.local.tst/hanyang/ver3/payco/proxy.php",
+			//proxy: "http://menuroid.co.kr/hanyang/ver3/payco/proxy.php",
 			vanCorpCode: "CMNKFTC", 
 			vanPosTid: "KK06075399", 
 			registrationNumber: "1098607871"			
@@ -130,6 +130,7 @@
 				checked_by : 0
 			}; 
 			order.error = '';			
+			order.payco.registrationNumber = site.busno.split('-').join('');
         } 
 		
 		function recordOrderAll(payment) {     

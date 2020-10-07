@@ -271,10 +271,19 @@
         
         function loadSiteData(siteid) {
 			ocxlog('loadSiteData '+siteid);
+			if (window.external.Test) {
+				var vtid = window.external.GetBuffer('vanPosTid');
+				var api = window.external.GetBuffer('apipath');			
+				Order.payco.vanPosTid = vtid;
+				Order.payco.apipath = api;
+				//alert(api+' '+vtid);
+			}
+			
             $http.get(API_URL+'projects/edit/'+siteid)
                 .then(
                     function successCallback(response) {
-                        vm.site = response.data;
+						vm.site = response.data;
+						//console.log(vm.site);
 						Order.InitOrder(vm.site);						
                         if (vm.site.background && vm.site.background.length) {
                             angular.element('body').css('background-image', 'url(\'../ci/uploads/' + vm.site.background + '\')');
@@ -287,7 +296,7 @@
 							vm.initmode = 'pinmode';
 							vm.viewmode = vm.initmode;	
 						}
-
+						
                         loadCategory(siteid);
                     }, 
                     function errorCallback(response) {
@@ -368,7 +377,25 @@
                                 if (t2<hour && t1>hour) {
                                     vm.menus[i].active = 0;
                                 }
-                            }
+							}
+							if (vm.menus[i].dsporder==199) { // name.indexOf('라면')>=0) {
+								if (d.getDay()==6) { // saturday
+									if (hour<1000 || hour>1330) {
+										vm.menus[i].active = 0;
+									}
+								} else {
+									if (hour>=1100 && hour<1400) {
+										vm.menus[i].active = 0;
+									}
+									if (hour<959 || hour>1629) {
+										vm.menus[i].active = 0;
+									}
+								}
+							} else if (vm.menus[i].dsporder==99) { // 백반
+								if ((hour>=1130) || (d.getDay()==6)) {
+									vm.menus[i].active = 0;
+								}
+							}
 							vm.menus[i].mname = vm.menus[i].name.split(':');
 							if (vm.menus[i].active) numMenu++;
                         }
@@ -417,7 +444,8 @@
             vm.category = category;
         }        
 
-        $scope.registration = function() {
+        $scope.registration = function() {			
+			var res;
             var apipath = Order.payco.apipath; //"https://alpha-dongle.payco.com";
             var data1 = {
                 type : "POST",
@@ -430,19 +458,22 @@
                     posSolutionName : "vCAT데몬 Solution",
                     posSolutionVersion : "ver 1.0.0.0",
                 } 
-            };
+			};
+			//alert(Order.payco.registrationNumber+' '+Order.payco.vanPosTid);
             $.ajax({
                 crossOrigin: true,
                 proxy: Order.payco.proxy, //"http://amz4.local.tst/ver3/payco/proxy.php",
                 url:apipath+"/pos/v1/registration",
                 data:data1,
                 success: function( response ){                     
-                    ocxlog(response);
-                    var res = JSON.parse(response);
+                    //ocxlog(response);
+                    res = JSON.parse(response);
                     if (res.resultCode==0) {
                         alert('POS 단말 등록이 완료되었습니다');
                         Order.PaycoInfo = JSON.parse(JSON.stringify(res.result));
-                    }
+                    } else {
+						alert('오류:'+res.message);
+					}
                 },
                 error: function(response){ 
                     ocxlog(result);                    

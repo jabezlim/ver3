@@ -22,15 +22,15 @@ if ($type=='POST') {
 	if ($is_allowed) {
 		$res = file_get_contents($url, false, $context);
 		if ($res === FALSE) {
-			$string = 'fail file_get_contents';
+			$string = '{"resultCode":100, "message":"fail file_get_contents"}';
 		} else {
 			$string = $res; //utf8_encode($res);
 		}
 	} else {
-		$string = 'You are not allowed to use this proxy!';
+		$string = '{"resultCode":100, "message":"You are not allowed to use this proxy!"}';
 	}
 } else {
-	$string = ($is_allowed) ? file_get_contents($url) : 'You are not allowed to use this proxy!';
+	$string = ($is_allowed) ? file_get_contents($url) : '{"resultCode":100, "message":"You are not allowed to use this proxy!"}';
 }
 
 $json = json_encode($string);
