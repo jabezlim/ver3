@@ -15,7 +15,8 @@
 		vm.order = Order;
 		vm.items = JSON.parse(JSON.stringify(Order));
 		$scope.BASE_URL = Order.BASE_URL;
-		vm.totalpaid = 0;
+        vm.totalpaid = 0;
+        vm.PrtMsgs = "";
 
         //vm.viewmode = 'cardmode';
         $scope.breceipt1 = Number($routeParams.checktype);
@@ -107,6 +108,9 @@
 		function recordPayment(payment) {   
             var idx = 0, cnt = 0;
             var payment1 = [];
+            var paystr = "           PAYCO 승인정보                ;";
+            paystr += "P------------------------------------------";
+            vm.PrtMsgs = "";
             for (idx=0; idx<paydt.approvalResultList.length; idx++) {
                 var pay = paydt.approvalResultList[idx];         
                 if (pay.paymentMethodCode==0) {
@@ -126,7 +130,9 @@
                     }
                     payment1.push(pay1);
                 }
+                paystr += "F%-34s%8s|"+pay.paymentMethodName+"|"+$filter('number')(pay.approvalAmount)+";";
             }
+            vm.PrtMsgs = paystr+"P==========================================;";
             for (idx=0; idx<payment1.length; idx++) {
 			    Order.recordPayment(payment1[idx], idx).then(function(res) {
                     if (res>=0) {	                        

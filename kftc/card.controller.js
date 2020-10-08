@@ -17,6 +17,7 @@
 
 		$scope.BASE_URL = Order.BASE_URL;
 		vm.totalpaid = 0;
+		vm.PrtMsgs = "";
 
         vm.viewmode = 'cardmode';
         $scope.breceipt1 = Number($routeParams.checktype);
