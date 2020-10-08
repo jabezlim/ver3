@@ -173,6 +173,22 @@
 			return 123;
         }
 
+        function getMaxLength(str, maxlen) {
+            var len = 0;
+            var ret = '';
+            for (var i = 0; i < str.length; i++) {
+                ret += str.charAt(i);
+                if (escape(str.charAt(i)).length == 6) {
+                    len++;
+                }
+                len++;
+                if (len>=maxlen) {
+                    return ret;
+                }
+            }
+            return ret;
+        }
+
 		function receiptPrint(vm, selmenu, payment) {
             var i;
             var mname;
@@ -190,7 +206,7 @@
                 ';P==========================================';
             for (i=0; i<selmenu.length; i++) {
 				mname = selmenu[i].name.split(":");
-                rcstr += ';F%-24s%6s%4s%8s|'+mname[0]+'|';
+                rcstr += ';F%-24s%6s%4s%8s|'+getMaxLength(mname[0], 23)+'|';
                 rcstr += $filter('number')(selmenu[i].price)+
                     '|'+selmenu[i].num+
                     '|'+$filter('number')(selmenu[i].price*selmenu[i].num);

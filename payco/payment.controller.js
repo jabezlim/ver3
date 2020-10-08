@@ -47,6 +47,8 @@
         $scope.bnoPopup = false;
         vm.PrtMsgs = "";
 
+        var paydt = {};
+
         if (vm.cardtype && (vm.cardtype.slice(0, 7)=="cancel_")) {
             vm.cardtype = vm.cardtype.slice(7);
             vm.bcancel = true;
@@ -316,6 +318,21 @@
                     ocxlog(response);
                     var res = JSON.parse(response);
                     if (res.resultCode==0) {
+                        paydt = res.result; 
+                        var paystr = "";
+                        var idx;
+                        for (idx=0; idx<paydt.cancelResultList.length; idx++) {
+                            var pay = paydt.cancelResultList[idx];                                     
+                            if (pay.cancelAmount>0) {
+                                paystr += "F%-34s%8s|"+pay.paymentMethodName+"|-"+$filter('number')(pay.cancelAmount)+";";
+                            }
+                        }
+                        if (paystr.length>0) {
+                            vm.PrtMsgs = "               PAYCO 취소정보                ;";
+                            vm.PrtMsgs += "P------------------------------------------;";
+                            vm.PrtMsgs += paystr;
+                            vm.PrtMsgs += "P==========================================;";
+                        }
                         ocxlog('취소거래완료');
 						cancelPayment(vm.cancelpayment);
                     } else {
@@ -451,7 +468,7 @@
                 if (!confirm("승인번호 "+payment.appno+ " 거래를 취소하시겠습니까?")) {
                     return ;
                 }
-                vm.RevTitle = "영수증취소";
+                vm.RevTitle = "반품 영수증";
                 if (payment.cardtype=="현금") {
 					ocxlog('현금영수증취소시작 '+payment.orderid);
 					vm.cashrcno = '';
