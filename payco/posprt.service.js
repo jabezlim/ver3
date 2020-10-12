@@ -217,7 +217,7 @@
             rcstr += $filter('number')(totalamt)+';P과    세 : ';
             rcstr += $filter('number')(totalamt-tax) + ';P세    금 : ';             
             rcstr += $filter('number')(tax); 
-            if ((payment.checked_by == 1) || (payment.checked_by == 18)) {
+            if (payment.checked_by == 1) {
                 rcstr += ';P신용카드 : '+$filter('number')(totalamt) +
                          ';P카드번호 : '+payment.cardno +
                          ';P매 입 사 : '+payment.cardtype +
@@ -227,7 +227,7 @@
                 rcstr += ';P현    금 : '+$filter('number')(totalamt)                
             }            
             else {
-                rcstr += ';P현    금 : '+$filter('number')(totalamt) +
+                rcstr += ';P금    액 : '+$filter('number')(totalamt) +
                          ';P식별번호 : '+payment.cardno +
                          ';P승인번호 : '+payment.appno;                    
             }
