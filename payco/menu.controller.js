@@ -476,7 +476,7 @@
 					}
                 },
                 error: function(response){ 
-                    ocxlog(result);                    
+                    ocxlog(response);                    
                 },
                 complete: function(){ 
                     //ocxlog('complete');  
