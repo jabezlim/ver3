@@ -472,8 +472,8 @@
                         alert('POS 단말 등록이 완료되었습니다');
                         Order.PaycoInfo = JSON.parse(JSON.stringify(res.result));
                     } else {
-						alert('오류:'+res.message);
-					}
+											alert('오류:'+res.message);
+										}
                 },
                 error: function(response){ 
                     ocxlog(response);                    

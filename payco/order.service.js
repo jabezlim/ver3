@@ -62,9 +62,10 @@
 		};
 
 		order.payco = {
-			apipath : "https://alpha-dongle.payco.com",
-			proxy: "http://menuroid.local.tst/hanyang/ver3/payco/proxy.php",
-			//proxy: "http://menuroid.co.kr/hanyang/ver3/payco/proxy.php",
+			//apipath : "https://alpha-dongle.payco.com",
+			apipath : "https://dongle.payco.com",
+			//proxy: "http://menuroid.local.tst/hanyang/ver3/payco/proxy.php",
+			proxy: "http://menuroid.co.kr/hanyang/ver3/payco/proxy.php",
 			vanCorpCode: "CMNKFTC", 
 			vanPosTid: "KK06075399", 
 			registrationNumber: "1098607871"			
