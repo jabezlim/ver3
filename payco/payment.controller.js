@@ -311,7 +311,7 @@
             vm.PrtMsgs = "";
             $.ajax({
                 crossOrigin: true,
-                proxy: Order.payco.proxy, //"http://amz4.local.tst/ver3/payco/proxy.php",
+                proxy: Order.payco_proxy, //"http://amz4.local.tst/ver3/payco/proxy.php",
                 url:apipath+"/payment/v1/cancel/simple",
                 data:data1,
                 success: function( response ){                     

@@ -14,6 +14,7 @@
 		n = base.lastIndexOf('/');
 		order.BASE_URL = url.slice(0,n+1)+'/'; 
 		order.CI_URL = order.BASE_URL+'../../ci/'; 
+		order.payco_proxy = order.BASE_URL+'payco/proxy.php';
 		order.settings = {
 			bnval : 1000,
 			pageSize : 10,
@@ -64,11 +65,9 @@
 		order.payco = {
 			//apipath : "https://alpha-dongle.payco.com",
 			apipath : "https://dongle.payco.com",
-			//proxy: "http://menuroid.local.tst/hanyang/ver3/payco/proxy.php",
-			proxy: "http://menuroid.co.kr/hanyang/ver3/payco/proxy.php",
 			vanCorpCode: "CMNKFTC", 
-			vanPosTid: "KK06075399", 
-			registrationNumber: "1098607871"			
+			vanPosTid: "0162910000904293", 
+			registrationNumber: "2178114493"			
 		}
 
 		order.PaycoInfo = {

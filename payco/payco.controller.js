@@ -238,7 +238,7 @@
             ocxlog(data1.data);
             $.ajax({
                 crossOrigin: true,
-                proxy: Order.payco.proxy,
+                proxy: Order.payco_proxy,
                 url:Order.payco.apipath+"/payment/v1/approval/simple",
                 data:data1,
                 success: function( response ){                     
@@ -276,7 +276,7 @@
             
             $.ajax({
                 crossOrigin: true,
-                proxy: Order.payco.proxy,
+                proxy: Order.payco_proxy,
                 url:Order.payco.apipath+"/qr/v1/authentication/status",
                 data:data1,
                 success: function( response ){                     
@@ -348,7 +348,7 @@
             
             $.ajax({
                 crossOrigin: true,
-                proxy: Order.payco.proxy,
+                proxy: Order.payco_proxy,
                 url:Order.payco.apipath+"/qr/v1/qrIssue",
                 data:data1,
                 success: function( response ){                     
