@@ -266,14 +266,16 @@
 			$scope.menuname = '';
 			var total = 0;
 			var totalcnt = 0;
-			var i;
+			var i, add = 0;
 			for (i = 0; i < Order.selmenu.length; i++) {
-				if ($scope.menuname.length > 0)
-					$scope.menuname += ', ';
-				$scope.menuname += Order.selmenu[i].name;
+				if ($scope.menuname.length == 0) 
+					$scope.menuname = Order.selmenu[i].name;
+				add += Order.selmenu[i].num;				
 				total += Order.selmenu[i].price * Order.selmenu[i].num;
 				totalcnt += Order.selmenu[i].num;
 			}
+			add--;
+			if (add>0) $scope.menuname += ' 외 '+add+' 건';
 			Order.amount = total;
 			vm.totalcnt = totalcnt;
 			vm.order.ticketno = vm.siteid + Date.now().toString();
