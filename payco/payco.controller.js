@@ -122,7 +122,7 @@
                         saledate : pay.approvalDatetime.substr(0,8),
                         saletime : pay.approvalDatetime.substr(8,6),
                         amount : paydt.totalTaxableAmount + paydt.totalVatAmount,
-                        cardno : paydt.tradeNo,
+                        cardno : pay.approvalCardNo,
                         param1 : resdata.pinCode,
                         param2 : pay.approvalAmount
                     }
@@ -214,6 +214,7 @@
             var hash = CryptoJS.HmacSHA256(tidcode, Order.PaycoInfo.apiKey);
             var hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
             var today = new Date();
+            var i;
             var refkey = $filter('date')($scope.today,'yyyyMMddHHmmsssss');
             data1.data = {
                 signature : hashInBase64,
@@ -227,15 +228,22 @@
                 posReferenceKey : refkey,
                 totalAmount : Order.amount,
                 currency : 'KRW',
-                productName : '식권',
-                productInfoList : [{
-                    productCode : 'MENU01',
-                    productName : 'TICKET',
-                    productUnitAmount : Order.amount,
-                    productQuantity : 1
-                }]
-            } 
-            ocxlog(data1.data);
+                productName : Order.detail,
+                productInfoList : [],
+                extras : {
+                    posVersion : '1.0.0.0'
+                }
+            }             
+			for (i = 0; i < Order.selmenu.length; i++) {
+                var item1 = {
+                    productCode : Order.selmenu[i].dsporder,
+                    productName : Order.selmenu[i].name,
+                    productUnitAmount : Order.selmenu[i].price,
+                    productQuantity : Order.selmenu[i].num
+                };
+                data1.data.productInfoList.push(item1);
+            }
+            ocxlog(JSON.stringify(data1.data));
             $.ajax({
                 crossOrigin: true,
                 proxy: Order.payco_proxy,
@@ -305,6 +313,7 @@
 			                $scope.backtomenu();
                         }
                         else {
+                            ocxlog(response);
                             $scope.RcvState = "PAYCO res : "+res.result.statusCode+'('+res.result.failMessage+')';
                             vm.state = 90;
                         }

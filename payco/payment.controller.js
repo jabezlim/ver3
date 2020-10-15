@@ -305,7 +305,10 @@
                     approvalAmount : payment.param2,
                     pinCode : payment.param1,
                     nocvmYn : 'Y',
-                    deviceType : 'KIOSK'                    
+                    deviceType : 'KIOSK',
+                    extras : {
+                        posVersion : '1.0.0.0'
+                    }                    
                 } 
             };
             vm.PrtMsgs = "";
