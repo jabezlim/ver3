@@ -157,16 +157,20 @@
             rcstr += Order.site.regname + ';P사업자번호:';
             rcstr += Order.site.busno + '  대표자:'+ Order.site.ownername+';P';
             rcstr += Order.site.addr + ';P전화번호:';
-            rcstr += Order.site.tel +';;P';
-            rcstr += payment.saledate+' '+payment.saletime+' OrderNo:';
-            rcstr += payment.orderid;
-			rcstr += ';P==========================================;P판매금액 : ';
+            rcstr += Order.site.tel +';';
+            rcstr += ';POrderNo : ' + payment.orderid;
+            rcstr += ';P==========================================';
+            if (vm.PrtMsgs.length>0) {                
+                rcstr += ';P'+vm.PrtMsgs;
+                rcstr += ";P------------------------------------------";
+            }    
+			rcstr += ';P판매금액 : ';
             rcstr += payment.amount +';P세    금 : ';
             rcstr += tax+';P취소금액 : ' + payment.amount;
             if (payment.appno.length>0) {
                 rcstr += ';P승인번호 : '+payment.appno;
             }
-            if (payment.cardno.length>0) {
+            if (payment.cardno) {
                 if (payment.checked_by!=1) 
                     rcstr += ';P식별번호 : '+payment.cardno;
                 else    
@@ -175,11 +179,9 @@
             if (payment.cardtype.length>0) {
                     ';P매입사 : '+payment.cardtype;
             } 
+            rcstr += ';P취소시간 : '+payment.saledate+' '+payment.saletime;
             rcstr += ';P==========================================;';
-            if (vm.PrtMsgs.length>0) {
-                var spstr = vm.PrtMsgs.split('\x1E');
-                rcstr += ';P'+spstr.join(' ');
-            }            
+                    
             return ocxcmd(rcstr);                
         }
                 
@@ -293,7 +295,7 @@
                     signature : hashInBase64,
                     tradeRequestNo : payment.termid,
                     deviceAuthType : 'QR',
-                    tradeNo : payment.cardno,
+                    tradeNo : payment.cardno ? payment.cardno : payment.termid,
                     serviceType : 'PAYCO',
                     registrationNumber:  Order.payco.registrationNumber, //"1098607871", //Order.site.busno,
                     posTid : Order.PaycoInfo.posTid, //payment.cardtype,
@@ -305,10 +307,13 @@
                     approvalAmount : payment.param2,
                     pinCode : payment.param1,
                     nocvmYn : 'Y',
-                    deviceType : 'KIOSK',
+                    deviceType : 'KIOSK',                               
                     extras : {
-                        posVersion : '1.0.0.0'
-                    }                    
+                        posVersion : '1.0.0.0',
+                        posDevCorpName : 'NETPAY',
+                        posSolutionName : 'MENUROID',
+                        posSolutionVersion : 'ver3'
+                    }         
                 } 
             };
             vm.PrtMsgs = "";
@@ -328,19 +333,21 @@
                             var pay = paydt.cancelResultList[idx];                                     
                             if (pay.cancelAmount>0) {
                                 paystr += "F%-34s%8s|"+pay.paymentMethodName+"|-"+$filter('number')(pay.cancelAmount)+";";
+                                vm.cancelpayment.saledate = pay.cancelDatetime.substr(0,8);
+                                vm.cancelpayment.saletime = pay.cancelDatetime.substr(8,6);
                             }
                         }
                         if (paystr.length>0) {
                             vm.PrtMsgs = "               PAYCO 취소정보                ;";
                             vm.PrtMsgs += "P------------------------------------------;";
                             vm.PrtMsgs += paystr;
-                            vm.PrtMsgs += "P==========================================;";
                         }
                         ocxlog('취소거래완료');
 						cancelPayment(vm.cancelpayment);
                     } else {
                         $scope.RcvState = res.message+'('+res.resultCode+')';  
                         vm.state = 90;
+                        $scope.$apply();
                     }
                 },
                 error: function(response){ 

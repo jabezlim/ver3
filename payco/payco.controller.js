@@ -127,6 +127,8 @@
                         param2 : pay.approvalAmount
                     }
                     payment1.push(pay1);
+                    vm.payment.saledate = pay.approvalDatetime.substr(0,8);
+                    vm.payment.saletime = pay.approvalDatetime.substr(8,6);
                     vm.payment.appno = pay.approvalNo;
                     vm.payment.cardtype = pay.vanApprovalCompanyName;
                     vm.payment.cardno = pay.approvalCardNo ? pay.approvalCardNo : '';
@@ -139,7 +141,6 @@
                 vm.PrtMsgs = "               PAYCO 승인정보                ;";
                 vm.PrtMsgs += "P------------------------------------------;";
                 vm.PrtMsgs += paystr;
-                vm.PrtMsgs += "P==========================================;";
             }
             for (idx=0; idx<payment1.length; idx++) {
 			    Order.recordPayment(payment1[idx], idx).then(function(res) {
@@ -231,7 +232,10 @@
                 productName : Order.detail,
                 productInfoList : [],
                 extras : {
-                    posVersion : '1.0.0.0'
+                    posVersion : '1.0.0.0',
+                    posDevCorpName : 'NETPAY',
+                    posSolutionName : 'MENUROID',
+                    posSolutionVersion : 'ver3'
                 }
             }             
 			for (i = 0; i < Order.selmenu.length; i++) {
@@ -314,7 +318,10 @@
                         }
                         else {
                             ocxlog(response);
-                            $scope.RcvState = "PAYCO res : "+res.result.statusCode+'('+res.result.failMessage+')';
+                            $scope.RcvState = "PAYCO res : "+res.result.statusCode;
+                            if (res.result.failMessage) {
+                                $scope.RcvState += '('+res.result.failMessage+')';
+                            }
                             vm.state = 90;
                         }
                     } else {

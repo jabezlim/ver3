@@ -195,13 +195,12 @@
             var totalamt = payment.amount; 
             var tax = parseInt(totalamt/11+0.5);
             var rcstr = "PP0L"+vm.RevTitle+";S;P상 호 : ";
-            rcstr += vm.order.site.regname + ';P사업자번호:';
-            rcstr += vm.order.site.busno + '  대표자:'+ vm.order.site.ownername+';P';
-            rcstr += vm.order.site.addr + ';P전화번호:';
-            rcstr += vm.order.site.tel +';;P';
-            rcstr += payment.saledate+' '+payment.saletime+' OrderNo:';
-            rcstr += payment.orderid + 
-                ';P=========================================='+
+            rcstr += vm.order.site.regname + ';P사업자번호 : ';
+            rcstr += vm.order.site.busno + '  대표자 : '+ vm.order.site.ownername+';P';
+            rcstr += vm.order.site.addr + ';P전화번호 : ';
+            rcstr += vm.order.site.tel +';';
+            rcstr += ';POrderNo : ' + payment.orderid;
+            rcstr += ';P=========================================='+
                 ';P메뉴명                   단가  수량   금액'+
                 ';P==========================================';
             for (i=0; i<selmenu.length; i++) {
@@ -211,7 +210,10 @@
                     '|'+selmenu[i].num+
                     '|'+$filter('number')(selmenu[i].price*selmenu[i].num);
             }
-                     
+            if (vm.PrtMsgs && vm.PrtMsgs.length>0) {                
+                rcstr += ';P------------------------------------------';
+                rcstr += ';P'+vm.PrtMsgs;
+            }
             rcstr += ';P------------------------------------------'+
                 ';P합계금액 : ';
             rcstr += $filter('number')(totalamt)+';P과    세 : ';
@@ -231,11 +233,9 @@
                          ';P식별번호 : '+payment.cardno +
                          ';P승인번호 : '+payment.appno;                    
             }
+            rcstr += ';P승인시간 : '+payment.saledate+' '+payment.saletime;
             rcstr += ';P==========================================';
-            if (vm.PrtMsgs && vm.PrtMsgs.length>0) {
-                var spstr = vm.PrtMsgs.split('\x1E');
-                rcstr += ';P'+spstr.join(' ');
-            }
+            
             return Prtout(vm, rcstr);                
         }
 
