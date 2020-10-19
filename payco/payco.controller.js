@@ -295,7 +295,7 @@
                     //ocxlog(response);
                     var res = JSON.parse(response);
                     if (res.resultCode==0) {
-                        if (res.result.statusCode=='AUTHENTICATED') {
+                        if (res.result.statusCode=='AUTHENTICATED' || res.result.statusCode=='REQUEST_SIGN') {
                             $timeout.cancel(mytimeout);      
                             $scope.RcvState = "PAYCO 결제확인"; 
                             resdata.pinCode = res.result.pinCode;											
