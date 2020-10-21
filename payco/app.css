@@ -9,9 +9,13 @@ html {
 	font-size: 16px;
 }
 
+.paycologo {
+	width : 90px;
+}
+
 @media (orientation:landscape) {
 	html {
-		font-size: 16px;
+		font-size: 14px;
 	}
 	.mainwidth {
 		width : 70%;
@@ -47,40 +51,6 @@ html {
 	}
 }
 
-@media (min-width:768px) and (orientation:portrait) {
-	
-    .mainwidth {
-		width : 70%;
-		padding : 0;
-		margin : 0;
-		float: left;
-	}
-	.sidewidth {
-		width : 30%;
-		padding : 0;
-		margin : 0;
-		float: left;		
-	}
-	.menuwidth {
-		width : 50%;
-		padding : 1rem 2rem 0 0;
-	}
-	.menuwidth9 {
-		width : 33%;
-		padding : 1rem 1rem 0 0;
-	}
-	.menuwidth16 {
-		width : 33%;
-		padding : 1rem 1rem 0 0;
-	}
-	.orderlist {
-        display : none;
-	}	
-	
-	.cardlayout {
-		width : 100%;
-	}
-}
 
 @media (max-width:767px) and (orientation:portrait) {
 	html {
@@ -126,7 +96,97 @@ html {
 	.cardlayout {
 		width : 100%;
 	}
+
 }
+
+@media (min-width:768px) and (orientation:portrait) {
+	
+	html {
+		font-size: 12px;
+	}
+
+	.mainwidth {
+	width : 70%;
+	padding : 0;
+	margin : 0;
+	float: left;
+}
+.sidewidth {
+	width : 30%;
+	padding : 0;
+	margin : 0;
+	float: left;		
+}
+.menuwidth {
+	width : 50%;
+	padding : 1rem 2rem 0 0;
+}
+.menuwidth9 {
+	width : 33%;
+	padding : 1rem 1rem 0 0;
+}
+.menuwidth16 {
+	width : 33%;
+	padding : 1rem 1rem 0 0;
+}
+.orderlist {
+			display : none;
+}	
+
+.cardlayout {
+	width : 100%;
+}
+.paycologo {
+	width : 75px;
+}
+
+}
+
+
+@media (min-width:1024px) and (orientation:portrait) {
+	
+	html {
+		font-size: 16px;
+	}
+
+    .mainwidth {
+		width : 70%;
+		padding : 0;
+		margin : 0;
+		float: left;
+	}
+	.sidewidth {
+		width : 30%;
+		padding : 0;
+		margin : 0;
+		float: left;		
+	}
+	.menuwidth {
+		width : 50%;
+		padding : 1rem 2rem 0 0;
+	}
+	.menuwidth9 {
+		width : 33%;
+		padding : 1rem 1rem 0 0;
+	}
+	.menuwidth16 {
+		width : 33%;
+		padding : 1rem 1rem 0 0;
+	}
+	.orderlist {
+        display : none;
+	}	
+	
+	.cardlayout {
+		width : 100%;
+	}
+
+	.paycologo {
+		width : 90px;
+	}
+}
+
+
 
 body {
 	height: 100vh;
@@ -210,11 +270,11 @@ body {
 }
 
 .menutitle {    
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .menutitlemd {
-    font-size: 1.5rem;
+    font-size: 1.0rem;
 }
 
 .menutitlesm {
@@ -344,7 +404,7 @@ a:hover { text-decoration: none;}
 }
 
 .payco {
-	border: 0.5rem solid #cccccc;
+	border: 0.5rem solid #fa2828;
 	vertical-align: top;
     padding-top: 1.3rem;
 }
