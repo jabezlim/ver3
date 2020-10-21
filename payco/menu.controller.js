@@ -102,6 +102,7 @@
 		function saveCheck() {
 			localStorage.checkconf = JSON.stringify(vm.order.check);
 			localStorage.pinnum = JSON.stringify(vm.pinnum);
+			localStorage.PaycoInfo = JSON.stringify(vm.order.PaycoInfo);
 		}
 
 		function loadCheck() {
@@ -113,6 +114,11 @@
 			}
 			vm.order.check = JSON.parse(localStorage.checkconf);
 			vm.pinnum = JSON.parse(localStorage.pinnum);
+			if (vm.order.check.payco) {
+				if (localStorage.PaycoInfo) {					
+					vm.order.PaycoInfo = JSON.parse(localStorage.PaycoInfo);
+				}
+			}
 		}
 
 		$scope.optclose = function () {
@@ -411,7 +417,9 @@
 							if (vm.menus[i].active) numMenu++;
 						}
 						$scope.numMenu = numMenu;
-						$scope.registration();
+						if (vm.order.check.payco && vm.order.PaycoInfo.apiKey.length<1) {
+							$scope.registration();
+						}
 					},
 					function errorCallback(response) {
 
@@ -471,20 +479,21 @@
 					posSolutionVersion: "ver 1.0.0.0",
 				}
 			};
-			//alert(Order.payco.registrationNumber+' '+Order.payco.vanPosTid);
+			ocxlog('POS reg : '+Order.payco.registrationNumber+' '+Order.payco.vanPosTid);
 			$.ajax({
 				crossOrigin: true,
 				proxy: Order.payco_proxy, //"http://amz4.local.tst/ver3/payco/proxy.php",
 				url: apipath + "/pos/v1/registration",
 				data: data1,
 				success: function (response) {
-					//ocxlog(response);
+					ocxlog(response);
 					res = JSON.parse(response);
 					if (res.resultCode == 0) {
 						//alert('POS 단말 등록이 완료되었습니다');
 						Order.PaycoInfo = JSON.parse(JSON.stringify(res.result));
+						saveCheck();
 					} else {
-						ocxlog(response);
+						//ocxlog(response);
 						alert('POS 단말 등록 오류:' + res.message);
 					}
 				},

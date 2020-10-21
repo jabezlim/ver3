@@ -49,7 +49,7 @@
 			saletime: '',
 			checked_by : 0
 		}; 
-        order.check = {
+    order.check = {
 			cardcheck : 1,	
 			cashcheck : 1,	
 			manualcheck : 0, 
@@ -72,7 +72,7 @@
 
 		order.PaycoInfo = {
             posTid : 'P2008144577',
-            apiKey : '5407d0d647465df8d8b6ad422d682791'
+            apiKey : '' //'5407d0d647465df8d8b6ad422d682791'
         };
 
 		order.paytype = paytype;
