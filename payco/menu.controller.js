@@ -23,6 +23,7 @@
 		vm.type = $routeParams.type;
 		vm.setcat = setCategory;
 		vm.saveCheck = saveCheck;
+		vm.paycoCheck = paycoCheck;
 
 		vm.order = Order;
 		$scope.BASE_URL = Order.BASE_URL;
@@ -103,6 +104,15 @@
 			localStorage.checkconf = JSON.stringify(vm.order.check);
 			localStorage.pinnum = JSON.stringify(vm.pinnum);
 			localStorage.PaycoInfo = JSON.stringify(vm.order.PaycoInfo);
+		}
+
+		function paycoCheck() {
+			if (!vm.order.check.payco) {
+				vm.order.PaycoInfo.apiKey = '';
+				saveCheck();
+			} else {
+				$scope.registration();
+			}			
 		}
 
 		function loadCheck() {
