@@ -117,7 +117,7 @@
                         orderid : Order.id,
                         checked_by : 18,
                         termid : paydt.tradeRequestNo,
-                        cardtype : pay.vanApprovalCompanyName, //Order.PaycoInfo.posTid,
+                        cardtype : 'PAYCO', //pay.vanApprovalCompanyName, //Order.PaycoInfo.posTid,
                         appno : pay.approvalNo,
                         saledate : pay.approvalDatetime.substr(0,8),
                         saletime : pay.approvalDatetime.substr(8,6),
@@ -130,7 +130,7 @@
                     vm.payment.saledate = pay.approvalDatetime.substr(0,8);
                     vm.payment.saletime = pay.approvalDatetime.substr(8,6);
                     vm.payment.appno = pay.approvalNo;
-                    vm.payment.cardtype = pay.vanApprovalCompanyName;
+                    vm.payment.cardtype = 'PAYCO'; //pay.vanApprovalCompanyName;
                     vm.payment.cardno = pay.approvalCardNo ? pay.approvalCardNo : '';
                 }
                 if (pay.approvalAmount>0) {
