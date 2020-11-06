@@ -41,7 +41,7 @@
 
             .when('/account/:id', {
                 controller: 'AccountListCtrl',
-                templateUrl: './view/account.view.html',
+                templateUrl: './payco/account.view.html',
                 controllerAs: 'vm'
             })  
         
@@ -53,7 +53,7 @@
         
             .when('/account/:id/:date', {
                 controller: 'AccountListCtrl',
-                templateUrl: './view/account.view.html',
+                templateUrl: './payco/account.view.html',
                 controllerAs: 'vm'
             })  
         

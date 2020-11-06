@@ -278,6 +278,8 @@
 
         }
         
+        vm.chkcnt = 0;
+
         function checkres() {
             data1.data = {
                 posTid : Order.PaycoInfo.posTid,
@@ -285,6 +287,10 @@
                 vanPosTid: Order.payco.vanPosTid, 
                 reserveOrderNo : resdata.resOrderNo
             } 
+            
+            if (++vm.chkcnt>30) {
+                ocxlog('payco : warn for too much time for check '+vm.chkcnt);
+            }
             
             $.ajax({
                 crossOrigin: true,
@@ -325,6 +331,7 @@
                             vm.state = 90;
                         }
                     } else {
+                        ocxlog(response);
                         $scope.RcvState = "PAYCO 결과확인 오류";                      
                     }
                 },

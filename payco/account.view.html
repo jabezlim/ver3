@@ -1,0 +1,91 @@
+<nav class="navbar navbar-white navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+          </button>
+          
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">                 
+              <li><a href='' ng-click="vm.print()"><span class="glyphicon glyphicon-print"></span>인쇄</a></li>
+              <li><a href='#/accmenu/{{vm.siteid}}/{{accdate}}'><span class="glyphicon glyphicon-usd"></span> 메뉴별</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href='#/payments/{{vm.siteid}}' back-button class="link-back"><span class="glyphicon glyphicon-arrow-left"></span> 뒤로</a></li>
+          </ul>
+        </div>
+      </div>
+</nav>
+
+<section class="container">
+    <div class="row">
+        <h3>
+            <button ng-click="prevDate()" class="btn btn-default btn-mini"><span class="glyphicon glyphicon-arrow-left"></span></button>
+            {{accdate}}
+            <button ng-click="nextDate()" class="btn btn-default btn-mini"><span class="glyphicon glyphicon-arrow-right"></span></button>
+        </h3>
+        
+    </div>
+    <div class="row">
+    <table class="table table-hover menulist">
+      <thead>
+      <tr>
+          <th>매입사</th>
+          <th class="text-right">수량</th>
+          <th class="text-right">금액</th>
+          <th></th>
+      </tr>
+      </thead>
+      <tbody>          
+          <tr class="trtotal">
+              <td>카드 합계 : </td>
+              <td class="text-right">{{cardnumtotal | number}}</td>
+              <td class="text-right">{{cardtotal | number}}</td>
+              <td></td>
+          </tr>
+          <tr class="trtotal">
+              <td>합계 : </td>
+              <td class="text-right">{{numtotal | number}}</td>
+              <td class="text-right">{{totalamount | number}}</td>
+              <td></td>
+          </tr>
+		  <tr ng-repeat="accitem in vm.checkouts">
+              <td>{{accitem.cardtype}}</td>
+              <td class="text-right">{{accitem.count | number}}</td>
+              <td class="text-right">{{accitem.amount | number}}</td>              
+              <td>
+                  <a ng-hide="vm.monthly" class="btn btn-default btn-mini" href='#/payments/{{vm.siteid}}/{{accdate}}/{{accitem.cardtype}}'>내역</a>
+                  <span ng-show="accitem.points"> 포인트 : {{ accitem.points | number }}</span>
+              </td>
+          </tr>
+
+		  <tr class="trtotal" ng-show="cardcancel>0" >
+              <td>카드 취소 합계 : </td>
+              <td class="text-right">{{numcardcancel | number}}</td>
+              <td class="text-right">{{cardcancel | number}}</td>
+              <td></td>
+          </tr>
+          <tr class="trtotal" ng-show="totalcancel>0" >
+              <td>취소 합계 : </td>
+              <td class="text-right">{{numcancel | number}}</td>
+              <td class="text-right">{{totalcancel | number}}</td>
+              <td></td>
+          </tr>
+          <tr ng-show="vm.cancellist.length>0" ng-repeat="accitem in vm.cancellist">
+              <td>{{accitem.cardtype}} Cancel</td>
+              <td class="text-right">{{accitem.count | number}}</td>
+              <td class="text-right">{{accitem.amount | number}}</td>
+              <td>
+                  <a ng-hide="vm.monthly" class="btn btn-default btn-mini" href='#/payments/{{vm.siteid}}/{{accdate}}/cancel_{{accitem.cardtype}}'>내역</a>
+              </td>
+          </tr>
+          
+		  	
+      </tbody>    
+    </table>
+    </div>
+        
+</section>
