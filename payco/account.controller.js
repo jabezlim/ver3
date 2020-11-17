@@ -152,6 +152,7 @@
     vm.print = function () {
       var i = 0;
       var cashidx = -1;
+      var paycoidx = -1;
       vm.recprtport = "0"; // 
       var tkstr = "PP" + vm.recprtport;
       tkstr += "S<" + Order.site.name + ">;"
@@ -161,20 +162,31 @@
       for (i = 0; i < vm.checkouts.length; i++) {
         if (vm.checkouts[i].cardtype.indexOf("현금") >= 0) {
           cashidx = i;
-        } else {
+        }
+        else if (vm.checkouts[i].cardtype.indexOf("PAYCO") >= 0) {
+          paycoidx = i;
+        } 
+        else {
           tkstr += ";F%-20s%8s%12s|" + vm.checkouts[i].cardtype + "|" + $filter('number')(vm.checkouts[i].count) + "|" + $filter('number')(vm.checkouts[i].amount);
         }
       }
       tkstr += ";F%-20s%8s%12s|[카드합계]|" + $filter('number')($scope.cardnumtotal) + "|" + $filter('number')($scope.cardtotal);
       tkstr += ";----------------------------------------";
+      if (paycoidx >= 0) {
+        for (i = 0; i < vm.checkouts.length; i++) {
+          if (vm.checkouts[i].cardtype.indexOf("PAYCO") >= 0) {
+            tkstr += ";F%-20s%8s%12s|" + vm.checkouts[i].cardtype + "|" + $filter('number')(vm.checkouts[i].count) + "|" + $filter('number')(vm.checkouts[i].amount);
+          }
+        }        
+      }
       if (cashidx >= 0) {
         for (i = 0; i < vm.checkouts.length; i++) {
           if (vm.checkouts[i].cardtype.indexOf("현금") >= 0) {
             tkstr += ";F%-20s%8s%12s|" + vm.checkouts[i].cardtype + "|" + $filter('number')(vm.checkouts[i].count) + "|" + $filter('number')(vm.checkouts[i].amount);
           }
-        }
-        //tkstr += ";F%-20s%8s%12s|"+vm.checkouts[cashidx].cardtype+"|"+$filter('number')(vm.checkouts[cashidx].count)+"|"+$filter('number')(vm.checkouts[cashidx].amount);
+        }        
       }
+      
       tkstr += ";F%-20s%8s%12s|합계|" + $filter('number')($scope.numtotal) + "|" + $filter('number')($scope.totalamount);
       tkstr += ";----------------------------------------";
 
