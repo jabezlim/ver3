@@ -160,34 +160,33 @@
       tkstr += ";F%-20s%8s%12s|매입사|건수|금액";
       tkstr += ";========================================";
       for (i = 0; i < vm.checkouts.length; i++) {
-        if (vm.checkouts[i].cardtype.indexOf("현금") >= 0) {
-          cashidx = i;
-        }
-        else if (vm.checkouts[i].cardtype.indexOf("PAYCO") >= 0) {
+        if (vm.checkouts[i].cardtype.indexOf("PAYCO") >= 0) {
           paycoidx = i;
         } 
+        if (vm.checkouts[i].cardtype.indexOf("현금") >= 0) {
+          cashidx = i;
+        }        
         else {
           tkstr += ";F%-20s%8s%12s|" + vm.checkouts[i].cardtype + "|" + $filter('number')(vm.checkouts[i].count) + "|" + $filter('number')(vm.checkouts[i].amount);
         }
       }
       tkstr += ";F%-20s%8s%12s|[카드합계]|" + $filter('number')($scope.cardnumtotal) + "|" + $filter('number')($scope.cardtotal);
       tkstr += ";----------------------------------------";
-      if (paycoidx >= 0) {
-        for (i = 0; i < vm.checkouts.length; i++) {
-          if (vm.checkouts[i].cardtype.indexOf("PAYCO") >= 0) {
-            tkstr += ";F%-20s%8s%12s|" + vm.checkouts[i].cardtype + "|" + $filter('number')(vm.checkouts[i].count) + "|" + $filter('number')(vm.checkouts[i].amount);
-          }
-        }        
-      }
       if (cashidx >= 0) {
         for (i = 0; i < vm.checkouts.length; i++) {
           if (vm.checkouts[i].cardtype.indexOf("현금") >= 0) {
             tkstr += ";F%-20s%8s%12s|" + vm.checkouts[i].cardtype + "|" + $filter('number')(vm.checkouts[i].count) + "|" + $filter('number')(vm.checkouts[i].amount);
           }
         }        
-      }
-      
+      }      
       tkstr += ";F%-20s%8s%12s|합계|" + $filter('number')($scope.numtotal) + "|" + $filter('number')($scope.totalamount);
+      if (paycoidx >= 0) {
+        for (i = 0; i < vm.checkouts.length; i++) {
+          if (vm.checkouts[i].cardtype.indexOf("PAYCO") >= 0) {
+            tkstr += ";F%-20s%8s%12s|PAYCO 쿠폰+포인트|"  + $filter('number')(vm.checkouts[i].count) + "|" + $filter('number')(vm.checkouts[i].points);
+          }
+        }        
+      }
       tkstr += ";----------------------------------------";
 
       if (vm.cancellist && vm.cancellist.length > 0) {
