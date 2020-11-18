@@ -121,6 +121,7 @@
                   allcheckouts[i].amount = param2;
                   $scope.cardtotal += param2;
                   $scope.cardnumtotal += cnt;
+                  $scope.totalamount -= points;                  
                 }
                 else if (allcheckouts[i].cardtype != '현금') {
                   $scope.cardtotal += amount;
