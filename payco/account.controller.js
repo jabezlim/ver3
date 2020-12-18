@@ -192,7 +192,7 @@
           if (vm.checkouts[i].cardtype.indexOf("PAYCO") >= 0) {
             tkstr += ";F%-20s%8s%12s|PAYCO 쿠폰+포인트|"  + $filter('number')(vm.checkouts[i].count) + "|" + $filter('number')(vm.checkouts[i].points);
             gtcnt += Number(vm.checkouts[i].count);
-            gtamt += Number(vm.checkouts[i].amount);
+            gtamt += Number(vm.checkouts[i].points);
           }
         }        
       }
