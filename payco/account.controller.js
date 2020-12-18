@@ -154,6 +154,8 @@
       var i = 0;
       var cashidx = -1;
       var paycoidx = -1;
+      var gtcnt = 0;
+      var gtamt = 0;
       vm.recprtport = "0"; // 
       var tkstr = "PP" + vm.recprtport;
       tkstr += "S<" + Order.site.name + ">;"
@@ -173,21 +175,28 @@
       }
       tkstr += ";F%-20s%8s%12s|[카드합계]|" + $filter('number')($scope.cardnumtotal) + "|" + $filter('number')($scope.cardtotal);
       tkstr += ";----------------------------------------";
+      gtcnt = $scope.cardnumtotal;
+      gtamt = $scope.cardtotal;
       if (cashidx >= 0) {
         for (i = 0; i < vm.checkouts.length; i++) {
           if (vm.checkouts[i].cardtype.indexOf("현금") >= 0) {
             tkstr += ";F%-20s%8s%12s|" + vm.checkouts[i].cardtype + "|" + $filter('number')(vm.checkouts[i].count) + "|" + $filter('number')(vm.checkouts[i].amount);
+            gtcnt += vm.checkouts[i].count;
+            gtamt += vm.checkouts[i].amount;
           }
         }        
       }      
-      tkstr += ";F%-20s%8s%12s|합계|" + $filter('number')($scope.numtotal) + "|" + $filter('number')($scope.totalamount);
+      //tkstr += ";F%-20s%8s%12s|합계|" + $filter('number')($scope.numtotal) + "|" + $filter('number')($scope.totalamount);
       if (paycoidx >= 0) {
         for (i = 0; i < vm.checkouts.length; i++) {
           if (vm.checkouts[i].cardtype.indexOf("PAYCO") >= 0) {
             tkstr += ";F%-20s%8s%12s|PAYCO 쿠폰+포인트|"  + $filter('number')(vm.checkouts[i].count) + "|" + $filter('number')(vm.checkouts[i].points);
+            gtcnt += vm.checkouts[i].count;
+            gtamt += vm.checkouts[i].amount;
           }
         }        
       }
+      tkstr += ";F%-20s%8s%12s|합계|" + $filter('number')(gtcnt) + "|" + $filter('number')(gtamt);
       tkstr += ";----------------------------------------";
 
       if (vm.cancellist && vm.cancellist.length > 0) {
