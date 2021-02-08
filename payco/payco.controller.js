@@ -290,6 +290,10 @@
             
             if (++vm.chkcnt>30) {
                 ocxlog('payco : warn for too much time for check '+vm.chkcnt);
+                $scope.RcvState = "불편을 끼쳐드려 죄송합니다. 거래 중 오류가 발생했습니다. 처음부터 다시 시도해 주시기 바랍니다.";
+                //$scope.backtomenu();
+                vm.state = 90;
+                return ;
             }
             
             $.ajax({

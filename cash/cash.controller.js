@@ -313,6 +313,11 @@
 			vm.balance = amount;
 			var status = ocxcmd('RESET');
 			status = ocxcmd('CV' + vm.order.site.coinval);
+			if (vm.order.check.bnval) {
+				status = ocxcmd('AV5000');
+			} else {
+				status = ocxcmd('AV1000');
+			}
 			status = ocxcmd('BA' + vm.balance);
 			if (status == vm.balance) {
 				Order.checked_by = 2;
