@@ -419,7 +419,8 @@
 									}
 								}
 							} else if (vm.menus[i].dsporder == 99) { // 백반
-								if ((hour >= 1130) || (d.getDay() == 6)) {
+								//if ((hour >= 1140) || (d.getDay() == 6)) {
+								if (d.getDay() == 6) {
 									vm.menus[i].active = 0;
 								}
 							}
