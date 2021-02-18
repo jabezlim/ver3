@@ -414,7 +414,10 @@
 									if (hour >= 1100 && hour < 1400) {
 										vm.menus[i].active = 0;
 									}
-									if (hour < 959 || hour > 1559) {
+									if (hour >= 1500 && hour < 1600) {
+										vm.menus[i].active = 0;
+									}
+									if (hour < 959 || hour > 1659) {
 										vm.menus[i].active = 0;
 									}
 								}
