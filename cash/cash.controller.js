@@ -31,9 +31,18 @@
 		vm.RevTitle = "영 수 증";
 		vm.retry = 3;
 
+		function ocxcmd1(cmd) {
+			if (window.external.Test) {
+				return window.external.BNCmd(cmd);
+			}
+			return -1;
+		}
+		
 		function ocxcmd(cmd) {
 			if (window.external.Test) {
 				return window.external.BNCmd(cmd);
+			} else if ("ActiveXObject" in window) {
+				return cashif.BNCmd(cmd);
 			}
 			return -1;
 		}
