@@ -414,12 +414,16 @@
 									if (hour >= 1100 && hour < 1400) {
 										vm.menus[i].active = 0;
 									}
-									if (hour < 959 || hour > 1629) {
+									if (hour >= 1500 && hour < 1600) {
+										vm.menus[i].active = 0;
+									}
+									if (hour < 959 || hour > 1659) {
 										vm.menus[i].active = 0;
 									}
 								}
 							} else if (vm.menus[i].dsporder == 99) { // 백반
-								if ((hour >= 1130) || (d.getDay() == 6)) {
+								//if ((hour >= 1140) || (d.getDay() == 6)) {
+								if (d.getDay() == 6) {
 									vm.menus[i].active = 0;
 								}
 							}
