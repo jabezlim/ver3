@@ -42,10 +42,11 @@
 
 		vm.totalcnt = 0;
 
-		vm.modetimer = new Date();
+		//vm.modetimer = new Date();
 		vm.bPinin = false;
 		vm.pinnum = '1234';
 		vm.password = '';
+		vm.count = 0;
 
 		loadCheck();
 		loadSiteData(vm.siteid);
@@ -70,8 +71,8 @@
 		}
 
 		$scope.dinein = function () {
-			vm.order.saletype = 98; //'매장';
-			vm.modetimer = new Date();
+			vm.order.saletype = 98; //'매장';			
+			vm.count = 0;
 			if ((vm.category == undefined) || ((vm.category.dsporder % 100) == 99)) {
 				var i;
 				for (i = 0; i < vm.categories.length; i++) {
@@ -87,7 +88,7 @@
 
 		$scope.takeout = function () {
 			vm.order.saletype = 99; //'포장';
-			vm.modetimer = new Date();
+			vm.count = 0;
 			if ((vm.category == undefined) || ((vm.category.dsporder % 100) == 98)) {
 				var i;
 				for (i = 0; i < vm.categories.length; i++) {
@@ -164,7 +165,7 @@
 		}
 
 		$scope.setMenu = function (menu) {
-			vm.modetimer = new Date();
+			vm.count = 0;
 			if (vm.viewmode == 'menumode') {
 				//if ((vm.totalcnt+menu.qty)>50) {
 				//	alert('총수량 50개 이하로 주문해주세요');
@@ -275,6 +276,7 @@
 			$scope.selection = [];
 			vm.viewmode = vm.initmode;
 			vm.bPinin = false;
+			vm.count = 0;
 			draworder();
 		}
 
@@ -675,17 +677,14 @@
 
 		function blinker() {
 			$('.blink_me').fadeOut(500).fadeIn(500);
-			var curtime = new Date();
-			if (vm.initmode != 'menumode' && vm.viewmode == 'menumode') {
-				var diff = curtime - vm.modetimer;
-				if ((diff) >= 20 * 1000) {
-					$interval.cancel(vm.mytmout);
-					$scope.backtomenu();
-				}
+			vm.count++;
+			if (vm.count>60) {		
+				vm.count = 0;
+				loadCategory(vm.siteid);
+				$scope.backtomenu();				
 			}
 		}
-
-		//setInterval(blinker, 500); //Runs every second		
+		
 		$interval(blinker, 1000);
 	}
 
