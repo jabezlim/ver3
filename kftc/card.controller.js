@@ -100,6 +100,7 @@
 			if ($scope.breceipt1 == 1) {
 				PrintService.receiptPrint(vm, Order.selmenu, vm.payment);
 			}
+			ocxcmd('SOvoices\\10_THANK.wav');
 			gotoMenu(1);
 		}
 
@@ -314,6 +315,7 @@
 					vm.state = 99;
 				} else if (vm.state == 10) {
 					if (vm.order.id == 0) {
+						ocxcmd('SOvoices\\09_NOREMOVE.wav');
 						recordOrderAll(1);
 					} else {
 						recordPayment();
@@ -362,6 +364,7 @@
 				vm.timecnt = 0;
 				vm.state = 1;
 				mytimeout = $timeout(checkres, 1000);
+				ocxcmd('SOvoices\\04_CARD.wav');
 			} else {
 				vm.state = 90;
 				$scope.RcvState1 = $sce.trustAsHtml("카드결제오류");

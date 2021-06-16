@@ -90,6 +90,7 @@
 				if ($scope.breceipt1 == '1') {
 					PrintService.receiptPrint(vm, Order.selmenu, vm.payment);
 				}
+				ocxcmd('SOvoices\\10_THANK.wav');
 				gotoMenu();
 			}
 		}
@@ -338,6 +339,7 @@
 				$scope.RcvState = "지폐를 넣어주세요";
 				vm.viewmode = 'cashmode';
 				mytimeout = $timeout($scope.onTimeout, 1000);
+				ocxcmd('SOvoices\\05_CASH.wav');
 			} else {
 				$scope.RcvState = "!! 지폐인식기 오류 !!";
 			}

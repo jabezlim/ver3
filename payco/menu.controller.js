@@ -247,6 +247,7 @@
 						}
 						Order.selmenu.push(newmenu);
 						Order.amount += newmenu.price * newmenu.num;
+						if (Order.selmenu.length==1) ocxcmd('SOvoices\\03_CHECKOUT.wav');
 					}
 				}
 				vm.selmenu = {
@@ -436,6 +437,7 @@
 						if (vm.order.check.payco && vm.order.PaycoInfo.apiKey.length<1) {
 							$scope.registration();
 						}
+						ocxcmd('SOvoices\\01_MENU.wav');
 					},
 					function errorCallback(response) {
 
