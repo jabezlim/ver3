@@ -42,7 +42,7 @@
 
 		vm.totalcnt = 0;
 
-		//vm.modetimer = new Date();
+		vm.modetimer = new Date();
 		vm.bPinin = false;
 		vm.pinnum = '1234';
 		vm.password = '';
@@ -71,7 +71,8 @@
 		}
 
 		$scope.dinein = function () {
-			vm.order.saletype = 98; //'매장';			
+			vm.order.saletype = 98; //'매장';		
+			vm.modetimer = new Date();	
 			vm.count = 0;
 			if ((vm.category == undefined) || ((vm.category.dsporder % 100) == 99)) {
 				var i;
@@ -88,6 +89,7 @@
 
 		$scope.takeout = function () {
 			vm.order.saletype = 99; //'포장';
+			vm.modetimer = new Date();
 			vm.count = 0;
 			if ((vm.category == undefined) || ((vm.category.dsporder % 100) == 98)) {
 				var i;
@@ -679,11 +681,19 @@
 
 		function blinker() {
 			$('.blink_me').fadeOut(500).fadeIn(500);
+			var curtime = new Date();
+			if (vm.initmode != 'menumode' && vm.viewmode == 'menumode') {
+				var diff = curtime - vm.modetimer;
+				if ((diff) >= 20 * 1000) {
+					$interval.cancel(vm.mytmout);
+					$scope.backtomenu();
+				}
+			}
 			vm.count++;
 			if (vm.count>60) {		
 				vm.count = 0;
-				loadCategory(vm.siteid);
-				$scope.backtomenu();				
+				//loadCategory(vm.siteid);
+				//$scope.backtomenu();				
 			}
 		}
 		
